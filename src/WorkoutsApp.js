@@ -1,10 +1,10 @@
 import React from "react";
-import { Sidebar } from "./components/ui/Sidebar";
+import { Navbar } from "./components/ui/Navbar";
 
 export const WorkoutsApp = () => {
   return (
     <div className="WorkoutsApp">
-      <Sidebar />
+      <Navbar id="mainWorkout" />
     </div>
   );
 };
