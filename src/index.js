@@ -2,10 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { WorkoutsApp } from "./WorkoutsApp";
-import "./styles/index.scss";
+import { Provider } from "react-redux";
+import { store } from "./store";
+
+import "./styles/main.scss";
 ReactDOM.render(
   <React.StrictMode>
-    <WorkoutsApp />
+    <Provider store={store}>
+      <WorkoutsApp />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
