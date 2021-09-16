@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { HomeScreen } from "./components/HomeScreen";
+import { MusclesList } from "./components/muscles/MusclesList";
 import { Navbar } from "./components/ui/Navbar";
 import { Sidebar } from "./components/ui/Sidebar";
 
@@ -15,7 +16,8 @@ export const WorkoutsApp = () => {
       <Sidebar openCloseSidebar={openCloseSidebar} openSidebar={openSidebar} />
       <div className={`${openSidebar ? "background-inactive" : ""}`}>
         <Navbar openCloseSidebar={openCloseSidebar} />
-        <HomeScreen />
+        {/* <HomeScreen /> */}
+        <MusclesList />
       </div>
     </div>
   );
