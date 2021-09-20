@@ -1,31 +1,24 @@
 import { types } from "../types/types";
 
 const initialState = {
-  muscleList: [],
+  exerciseList: [],
   loading: true,
-  current: null,
 };
 
-export const muscleReducer = (state = initialState, action) => {
+export const exerciseReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.successGetMuscles:
+    case types.successGetExercises:
       return {
         ...state,
         loading: false,
-        muscleList: action.payload,
+        exerciseList: action.payload,
       };
 
-    case types.failureGetMuscles:
+    case types.failureGetExercises:
       return {
         ...state,
         loading: false,
         error: action.payload,
-      };
-
-    case types.setCurrentMuscle:
-      return {
-        ...state,
-        current: action.payload,
       };
 
     default:

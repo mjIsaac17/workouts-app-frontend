@@ -23,3 +23,8 @@ export const startGettingMuscles = () => {
     }
   };
 };
+
+export const setCurrentMuscle = (muscle) => ({
+  type: types.setCurrentMuscle,
+  payload: muscle,
+});

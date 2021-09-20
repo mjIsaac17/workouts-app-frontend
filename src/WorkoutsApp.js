@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { HomeScreen } from "./components/HomeScreen";
-import { MusclesList } from "./components/muscles/MusclesList";
+// import { HomeScreen } from "./components/HomeScreen";
+import { MusclesList } from "./components/muscles/MuscleList";
 import { Navbar } from "./components/ui/Navbar";
 import { Sidebar } from "./components/ui/Sidebar";
+import { AppRouter } from "./routers/AppRouter";
 
 export const WorkoutsApp = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -18,7 +19,7 @@ export const WorkoutsApp = () => {
         <Navbar openCloseSidebar={openCloseSidebar} />
         {/* <HomeScreen /> */}
         <div className="container">
-          <MusclesList />
+          <AppRouter />
         </div>
       </div>
     </div>

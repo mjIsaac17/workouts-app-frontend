@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { startGettingMuscles } from "../../actions/muscles";
+import { startGettingMuscles } from "../../actions/muscles.action";
 import { MuscleItem } from "./MuscleItem";
 
 export const MusclesList = () => {
@@ -13,19 +13,15 @@ export const MusclesList = () => {
   }, [dispatch]);
 
   const { muscleList, loading } = useSelector((state) => state.muscles);
-  console.log(muscleList);
+  // console.log(muscleList);
 
   return (
-    <div className="muscle__list">
+    <div className="card__list">
       {loading ? (
         <h1>Loading...</h1>
       ) : (
         muscleList.map((muscle) => (
-          <MuscleItem
-            key={muscle.id}
-            muscle={muscle.name}
-            image={muscle.image}
-          />
+          <MuscleItem key={muscle.id} muscle={muscle} />
         ))
       )}
     </div>
