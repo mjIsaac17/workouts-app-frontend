@@ -1,4 +1,12 @@
-.main {
-  width: 100vw;
-  height: 100vh;
+.container {
+  margin: 0 0.5rem;
+}
+
+.muscle__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  max-width: 1500px;
+  text-align: center;
 }

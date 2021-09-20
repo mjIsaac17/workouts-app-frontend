@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { startGettingMuscles } from "../../actions/muscles";
+import { MuscleItem } from "./MuscleItem";
 
 export const MusclesList = () => {
   const dispatch = useDispatch();
@@ -11,8 +12,22 @@ export const MusclesList = () => {
     dispatch(startGettingMuscles());
   }, [dispatch]);
 
-  const { muscles, loading } = useSelector((state) => state.muscles);
-  console.log(muscles);
+  const { muscleList, loading } = useSelector((state) => state.muscles);
+  console.log(muscleList);
 
-  return <div>{loading ? <h1>Loading...</h1> : <h1>Muscles</h1>}</div>;
+  return (
+    <div className="muscle__list">
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        muscleList.map((muscle) => (
+          <MuscleItem
+            key={muscle.id}
+            muscle={muscle.name}
+            image={muscle.image}
+          />
+        ))
+      )}
+    </div>
+  );
 };

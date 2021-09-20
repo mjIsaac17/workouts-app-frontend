@@ -1,0 +1,30 @@
+.card {
+  border: white solid 1px;
+  box-shadow: 1px solid black;
+  box-shadow: 0.2rem 0.2rem 0.5rem;
+  max-width: 400px;
+  margin: 0.5rem;
+
+  transition: background-color $timeCardTransition;
+  transition: ease $timeCardTransition;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $primary;
+    border: black solid 1px;
+    opacity: 0.6;
+  }
+
+  &:hover img {
+    opacity: 0.3;
+  }
+}
+
+.card img {
+  transition: ease $timeCardTransition;
+  max-width: 400px;
+}
+
+.card__title {
+  font-size: 2rem;
+}

@@ -17,7 +17,9 @@ export const WorkoutsApp = () => {
       <div className={`${openSidebar ? "background-inactive" : ""}`}>
         <Navbar openCloseSidebar={openCloseSidebar} />
         {/* <HomeScreen /> */}
-        <MusclesList />
+        <div className="container">
+          <MusclesList />
+        </div>
       </div>
     </div>
   );
