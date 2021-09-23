@@ -24,6 +24,8 @@ export const startGettingMuscles = () => {
   };
 };
 
+export const clearMuscles = () => ({ type: types.clearMuscles });
+
 export const setCurrentMuscle = (muscle) => ({
   type: types.setCurrentMuscle,
   payload: muscle,

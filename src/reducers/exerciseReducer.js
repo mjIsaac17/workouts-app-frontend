@@ -21,6 +21,8 @@ export const exerciseReducer = (state = initialState, action) => {
         error: action.payload,
       };
 
+    case types.clearExercises:
+      return initialState;
     default:
       return state;
   }

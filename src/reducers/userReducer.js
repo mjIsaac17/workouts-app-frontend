@@ -25,6 +25,8 @@ export const userReducer = (state = initialState, action) => {
     //     error: action.payload,
     //   };
 
+    case types.clearUser:
+      return initialState;
     default:
       return state;
   }

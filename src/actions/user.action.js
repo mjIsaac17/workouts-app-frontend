@@ -1,5 +1,7 @@
 import { fetchNoToken } from "../helpers/fetch";
 import { types } from "../types/types";
+import { clearExercises } from "./exercise.action";
+import { clearMuscles } from "./muscles.action";
 import { setSnackbar } from "./snackbar.action";
 
 const successLogin = (user) => ({
@@ -31,5 +33,15 @@ export const startLogin = (userData) => {
 
       console.log("error", error);
     }
+  };
+};
+
+const clearUser = () => ({ type: types.clearUser });
+
+export const logout = () => {
+  return (dispatch) => {
+    dispatch(clearUser());
+    dispatch(clearMuscles());
+    dispatch(clearExercises());
   };
 };

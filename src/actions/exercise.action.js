@@ -24,3 +24,5 @@ export const startGettingExercises = (id) => {
     }
   };
 };
+
+export const clearExercises = () => ({ type: types.clearExercises });

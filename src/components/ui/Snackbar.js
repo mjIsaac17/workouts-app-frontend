@@ -7,11 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 export const CustomSnackbar = () => {
   const snackbar = useSelector((state) => state.snackbar);
   const dispatch = useDispatch();
-  //   const [open, setOpen] = React.useState(false);
-
-  //   const handleClick = () => {
-  //     dispatch(setSnackbar())
-  //   };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
