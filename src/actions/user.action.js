@@ -1,4 +1,4 @@
-import { fetchNoToken } from "../helpers/fetch";
+import { fetchNoToken, fetchToken } from "../helpers/fetch";
 import { types } from "../types/types";
 import { clearExercises } from "./exercise.action";
 import { clearMuscles } from "./muscles.action";
@@ -24,6 +24,7 @@ export const startLogin = (userData) => {
         // dispatch(failureLogin(body.error));
         dispatch(setSnackbar("error", body.error, true));
       } else {
+        localStorage.setItem("token", body.token);
         dispatch(successLogin(body));
         dispatch(setSnackbar("error", "", false));
       }
@@ -36,10 +37,24 @@ export const startLogin = (userData) => {
   };
 };
 
+export const startRenewToken = () => {
+  return async (dispatch) => {
+    const resp = await fetchToken("user/renew");
+    const body = await resp.json();
+    if (resp.ok) {
+      localStorage.setItem("token", body.token);
+      dispatch(successLogin({ uid: body.uid, name: body.name }));
+    } else dispatch(finishRenewToken());
+  };
+};
+
+export const finishRenewToken = () => ({ type: types.finishRenewToken });
+
 const clearUser = () => ({ type: types.clearUser });
 
 export const logout = () => {
   return (dispatch) => {
+    localStorage.clear();
     dispatch(clearUser());
     dispatch(clearMuscles());
     dispatch(clearExercises());

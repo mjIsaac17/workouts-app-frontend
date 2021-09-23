@@ -5,7 +5,7 @@ export const SidebarItem = ({ title, icon, link }) => {
     <li
       id={window.location.pathname === link ? "active" : ""}
       className="row"
-      onClick={() => (window.location.pathname = link)}
+      //onClick={() => (window.location.pathname = link)}
     >
       <div id="icon">{icon}</div>
       <div id="title">{title}</div>

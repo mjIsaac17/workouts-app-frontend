@@ -24,6 +24,11 @@ export const userReducer = (state = initialState, action) => {
     //     user: {},
     //     error: action.payload,
     //   };
+    case types.finishRenewToken:
+      return {
+        ...state,
+        checking: false,
+      };
 
     case types.clearUser:
       return initialState;

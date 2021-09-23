@@ -1,4 +1,4 @@
-import { fetchNoToken } from "../helpers/fetch";
+import { fetchToken } from "../helpers/fetch";
 import { types } from "../types/types";
 
 const successGetExercises = (exercises) => ({
@@ -14,7 +14,7 @@ const failureGetExercises = (error) => ({
 export const startGettingExercises = (id) => {
   return async (dispatch) => {
     try {
-      const resp = await fetchNoToken(`exercise/${id}`);
+      const resp = await fetchToken(`exercise/${id}`);
       const body = await resp.json();
       console.log(body);
       dispatch(successGetExercises(body));

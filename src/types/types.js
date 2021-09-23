@@ -11,7 +11,8 @@ export const types = {
 
   startLogin: "startLogin",
   successLogin: "successLogin",
-  failureLogin: "failureLogin",
+  // failureLogin: "failureLogin",
+  finishRenewToken: "finishRenewToken",
   clearUser: "clearUser",
   logout: "logout",
 
