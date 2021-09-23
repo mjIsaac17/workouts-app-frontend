@@ -1,18 +1,28 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { ExerciseList } from "../components/exercises/ExerciseList";
+import { LoginScreen } from "../components/login/LoginScreen";
 
-import { MusclesList } from "../components/muscles/MuscleList";
+import { DashboardRoutes } from "./DashboardRoutes";
+import { PrivateRoute } from "./PrivateRoute";
+import { PublicRoute } from "./PublicRoute";
 
 export const AppRouter = () => {
-  //   const { user } = useContext(AuthContext);
-
+  const { user } = useSelector((state) => state.user);
   return (
     <Router>
       <div>
         <Switch>
-          <Route exact path="/" component={MusclesList} />
-          <Route path="/exercise" component={ExerciseList} />
+          <PublicRoute
+            path="/login"
+            isAuthenticated={!!user.name}
+            component={LoginScreen}
+          />
+          <PrivateRoute
+            path="/"
+            isAuthenticated={!!user.name}
+            component={DashboardRoutes}
+          />
         </Switch>
       </div>
     </Router>

@@ -11,7 +11,6 @@ export const PublicRoute = ({
     <Route
       {...rest}
       component={(props) =>
-        //if the user is not authenticated will be redirected to the login, this is defined in AppRouter.js
         !isAuthenticated ? <Component {...props} /> : <Redirect to="/" />
       }
     />

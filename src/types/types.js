@@ -7,4 +7,10 @@ export const types = {
   startGettingExercises: "startGettingExercises",
   successGetExercises: "successGetExercises",
   failureGetExercises: "failureGetExercises",
+
+  startLogin: "startLogin",
+  successLogin: "successLogin",
+  failureLogin: "failureLogin",
+
+  setSnackbar: "setSnackbar",
 };
