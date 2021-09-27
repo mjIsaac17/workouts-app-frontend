@@ -7,6 +7,7 @@ export const PublicRoute = ({
   component: Component,
   ...rest
 }) => {
+  // console.log("auth login: ", isAuthenticated);
   return (
     <Route
       {...rest}

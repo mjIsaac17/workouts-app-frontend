@@ -1,0 +1,32 @@
+.searchArea {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  //   background-color: red;
+}
+input {
+  border: none;
+  box-sizing: border-box;
+  color: rgb(82, 82, 82);
+  font-size: 1.1rem;
+  height: 2rem;
+  // margin: 1rem 0;
+  text-align: center;
+  // width: 100%;
+  &:focus {
+    // border: black 1px solid;
+    outline: none;
+  }
+}
+
+.inputSearch {
+  display: flex;
+  align-items: center;
+  border: black 1px solid;
+}
+
+.resultsText {
+  font-size: 1.7rem;
+}

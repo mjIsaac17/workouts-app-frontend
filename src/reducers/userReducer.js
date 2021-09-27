@@ -31,7 +31,7 @@ export const userReducer = (state = initialState, action) => {
       };
 
     case types.clearUser:
-      return initialState;
+      return { ...initialState, checking: false };
     default:
       return state;
   }

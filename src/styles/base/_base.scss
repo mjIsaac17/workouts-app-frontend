@@ -53,3 +53,7 @@ body {
     background-color: lighten($color: $secondary, $amount: 10);
   }
 }
+
+select {
+  font-size: 1.2rem;
+}

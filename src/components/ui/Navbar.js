@@ -8,7 +8,6 @@ import { logout } from "../../actions/user.action";
 export const Navbar = ({ openCloseSidebar }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const userName = `${user.name} ${user.lastname}`;
   console.log("render nav");
 
   const handleLogout = () => {
@@ -28,7 +27,7 @@ export const Navbar = ({ openCloseSidebar }) => {
         </div>
         <div className="navUser">
           <ul>
-            <li>{userName}</li>
+            <li>{user.name}</li>
             <li className="logout" onClick={handleLogout}>
               Logout
             </li>

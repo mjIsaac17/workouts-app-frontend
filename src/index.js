@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { WorkoutsApp } from "./WorkoutsApp";
-import { Provider } from "react-redux";
-import { store } from "./store";
 
 import "./styles/main.scss";
 ReactDOM.render(<WorkoutsApp />, document.getElementById("root"));
