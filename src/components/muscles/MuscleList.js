@@ -5,15 +5,20 @@ import { MuscleItem } from "./MuscleItem";
 
 export const MusclesList = () => {
   const dispatch = useDispatch();
+  const { muscleList, loading } = useSelector((state) => state.muscles);
+
   console.log("render musclesList");
 
   useEffect(() => {
-    console.log("effect startgettingMuscles");
     dispatch(startGettingMuscles());
+    console.log("effect startgettingMuscles");
   }, [dispatch]);
 
-  const { muscleList, loading } = useSelector((state) => state.muscles);
-  // console.log(muscleList);
+  useEffect(() => {
+    console.log("effect saveMuscleList");
+    if (muscleList.length > 0)
+      localStorage.setItem("muscleList", JSON.stringify(muscleList));
+  }, [muscleList]);
 
   return (
     <div className="card__list">

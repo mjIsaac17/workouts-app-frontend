@@ -12,7 +12,9 @@ export const ExerciseList = () => {
   console.log("render <ExerciseList/>");
 
   const { exerciseList, loading } = useSelector((state) => state.exercises);
-  const { muscleList } = useSelector((state) => state.muscles);
+  // const { muscleList } = useSelector((state) => state.muscles);
+  const muscleList = JSON.parse(localStorage.getItem("muscleList"));
+
   const totalExercises = exerciseList.length;
 
   const handleSelect = () => {
