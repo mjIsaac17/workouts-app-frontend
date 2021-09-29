@@ -21,8 +21,21 @@ export const exerciseReducer = (state = initialState, action) => {
         error: action.payload,
       };
 
+    case types.failureAction:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
     case types.clearExercises:
       return initialState;
+
+    case types.successAddExercise:
+      return {
+        ...state,
+        exerciseList: [action.payload, ...state.exerciseList],
+      };
     default:
       return state;
   }

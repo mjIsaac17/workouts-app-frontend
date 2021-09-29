@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { AddExercise } from "../components/exercises/AddExercise";
+// import { AddExercise } from "../components/exercises/ModalAddExercise";
 import { ExerciseList } from "../components/exercises/ExerciseList";
 import { MusclesList } from "../components/muscles/MuscleList";
 

@@ -1,4 +1,6 @@
 export const types = {
+  failureAction: "failureAction",
+
   successGetMuscles: "successGetMuscles",
   failureGetMuscles: "failureGetMuscles",
   setCurrentMuscle: "setCurrentMuscle",
@@ -8,6 +10,8 @@ export const types = {
   successGetExercises: "successGetExercises",
   failureGetExercises: "failureGetExercises",
   clearExercises: "clearExercises",
+  successAddExercise: "successAddExercise",
+  failureAddExercise: "failureAddExercise",
 
   startLogin: "startLogin",
   successLogin: "successLogin",

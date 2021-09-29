@@ -1,9 +1,11 @@
-import { Search } from "@material-ui/icons";
-import React, { useEffect } from "react";
+import { Add, Search } from "@material-ui/icons";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { startGettingExercises } from "../../actions/exercise.action";
+import { Modal } from "../ui/Modal";
+import { AddExerciseForm } from "./AddExerciseForm";
 import { ExerciseItem } from "./ExerciseItem";
 
 export const ExerciseList = () => {
@@ -20,6 +22,14 @@ export const ExerciseList = () => {
   const handleSelect = () => {
     const id = document.getElementById("ddlMuscle").value;
     dispatch(startGettingExercises(id));
+  };
+
+  const [showModal, setShowModal] = useState(false);
+  const handleOpen = () => {
+    setShowModal(true);
+  };
+  const handleClose = () => {
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -41,17 +51,13 @@ export const ExerciseList = () => {
             >
               <option value="0">All</option>
               {muscleList.map((muscle) => (
-                <option key={muscle.id} value={muscle.id}>
+                <option key={`ddlMuscle-${muscle.id}`} value={muscle.id}>
                   {muscle.name}
                 </option>
               ))}
             </select>
-            <div className="inputSearch">
-              <input
-                type="text"
-                className="searchArea__input"
-                placeholder="Search"
-              />
+            <div className="inputIcon">
+              <input type="text" placeholder="Search" />
               <Search></Search>
             </div>
           </div>
@@ -67,6 +73,24 @@ export const ExerciseList = () => {
               />
             ))}
           </div>
+          <button
+            type="button"
+            className="fab fab-primary"
+            onClick={handleOpen}
+          >
+            <Add />
+          </button>
+          <Modal
+            show={showModal}
+            handleClose={handleClose}
+            header="Add new exercise"
+          >
+            <AddExerciseForm
+              muscleList={muscleList}
+              handleClose={handleClose}
+              defaultValue={muscleId}
+            />
+          </Modal>
         </>
       )}
     </div>

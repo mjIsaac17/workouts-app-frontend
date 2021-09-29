@@ -31,5 +31,21 @@ const fetchToken = (endpoint, data, method = "GET") => {
   }
 };
 
+const fetchTokenFormData = (endpoint, data) => {
+  const url = `${baseUrl}/${endpoint}`;
+  const token = localStorage.getItem("token") || "";
+
+  const formData = new FormData();
+  for (const name in data) {
+    formData.append(name, data[name]);
+  }
+
+  return fetch(url, {
+    method: "POST",
+    headers: { "x-token": token },
+    body: formData,
+  });
+};
+
 //Another way to export, we could have used: export const fetchToken ...
-export { fetchNoToken, fetchToken };
+export { fetchNoToken, fetchToken, fetchTokenFormData };

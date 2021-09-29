@@ -39,12 +39,20 @@ export const startLogin = (userData) => {
 
 export const startRenewToken = () => {
   return async (dispatch) => {
-    const resp = await fetchToken("user/renew");
-    const body = await resp.json();
-    if (resp.ok) {
-      localStorage.setItem("token", body.token);
-      dispatch(successLogin({ uid: body.uid, name: body.name }));
-    } else dispatch(finishRenewToken());
+    try {
+      const resp = await fetchToken("user/renew");
+      const body = await resp.json();
+      if (resp.ok) {
+        localStorage.setItem("token", body.token);
+        dispatch(successLogin({ uid: body.uid, name: body.name }));
+      } else dispatch(finishRenewToken());
+    } catch (error) {
+      //Internal server error
+      console.log(error);
+      dispatch(
+        setSnackbar("error", "It was no possible to retrieve the data", true)
+      );
+    }
   };
 };
 
