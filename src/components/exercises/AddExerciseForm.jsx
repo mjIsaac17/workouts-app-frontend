@@ -57,7 +57,7 @@ export const AddExerciseForm = ({
           name="name"
         />
       </div>
-      <div className="inputIcon ">
+      <div className="inputIcon">
         <textarea
           rows="3"
           placeholder="Description"

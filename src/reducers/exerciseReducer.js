@@ -3,6 +3,7 @@ import { types } from "../types/types";
 const initialState = {
   exerciseList: [],
   loading: true,
+  current: null,
 };
 
 export const exerciseReducer = (state = initialState, action) => {
@@ -35,6 +36,12 @@ export const exerciseReducer = (state = initialState, action) => {
       return {
         ...state,
         exerciseList: [action.payload, ...state.exerciseList],
+      };
+
+    case types.setCurrentExercise:
+      return {
+        ...state,
+        current: action.payload,
       };
     default:
       return state;

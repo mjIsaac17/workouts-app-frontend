@@ -3,12 +3,15 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../../actions/modal.action";
 import { startGettingMuscles } from "../../actions/muscles.action";
+import { componentsModal } from "../../helpers/componentsModal";
 import { Modal } from "../ui/Modal";
 import { MuscleItem } from "./MuscleItem";
 
 export const MusclesList = () => {
   const dispatch = useDispatch();
+
   const { muscleList, loading } = useSelector((state) => state.muscles);
+  const modalState = useSelector((state) => state.modal);
 
   console.log("render musclesList");
 
@@ -35,14 +38,19 @@ export const MusclesList = () => {
         <button
           type="button"
           className="fab fab-primary"
-          onClick={() => dispatch(setModal(true, "Add new muscle"))}
+          onClick={() =>
+            dispatch(
+              setModal(true, "Add new muscle", componentsModal.muscleList)
+            )
+          }
         >
           <Add />
         </button>
-
-        <Modal>
-          <h3>child component</h3>
-        </Modal>
+        {modalState.componentName === componentsModal.muscleList && (
+          <Modal>
+            <h3>child component</h3>
+          </Modal>
+        )}
       </div>
     );
 };

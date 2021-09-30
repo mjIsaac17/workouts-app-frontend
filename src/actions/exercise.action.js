@@ -59,4 +59,9 @@ export const startAddingExercise = (newExercise) => {
   };
 };
 
+export const setCurrentExercise = (exercise) => ({
+  type: types.setCurrentExercise,
+  payload: exercise,
+});
+
 export const clearExercises = () => ({ type: types.clearExercises });

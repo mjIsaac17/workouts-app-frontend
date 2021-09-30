@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { setModal } from "../../actions/modal.action";
 
 export const Modal = ({ children }) => {
+  console.log("render Modal");
   const handleClose = () => {
     dispatch(setModal(false, ""));
   };

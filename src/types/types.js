@@ -12,6 +12,7 @@ export const types = {
   clearExercises: "clearExercises",
   successAddExercise: "successAddExercise",
   failureAddExercise: "failureAddExercise",
+  setCurrentExercise: "setCurrentExercise",
 
   startLogin: "startLogin",
   successLogin: "successLogin",

@@ -3,13 +3,19 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { startGettingExercises } from "../../actions/exercise.action";
+import {
+  startGettingExercises,
+  setCurrentExercise,
+} from "../../actions/exercise.action";
 import { setModal } from "../../actions/modal.action";
+import { componentsModal } from "../../helpers/componentsModal";
 import { Modal } from "../ui/Modal";
 import { AddExerciseForm } from "./AddExerciseForm";
+import { DetailsExercise } from "./DetailsExercise";
 import { ExerciseItem } from "./ExerciseItem";
 
 export const ExerciseList = () => {
+  const modalState = useSelector((state) => state.modal);
   const { muscleId } = useParams();
   const dispatch = useDispatch();
   console.log("render <ExerciseList/>");
@@ -24,8 +30,13 @@ export const ExerciseList = () => {
     dispatch(startGettingExercises(id));
   };
 
-  const handleModal = (isOpen, title) => {
-    dispatch(setModal(isOpen, title));
+  const handleModal = (isOpen, title, componentName) => {
+    dispatch(setModal(isOpen, title, componentName));
+  };
+
+  const handleClick = (exercise) => {
+    dispatch(setCurrentExercise(exercise));
+    dispatch(setModal(true, exercise.name, componentsModal.exerciseItem));
   };
 
   useEffect(() => {
@@ -63,26 +74,41 @@ export const ExerciseList = () => {
           </div>
           <div className="card__list">
             {exerciseList.map((exercise) => (
-              <ExerciseItem
+              <div
                 key={exercise.name + exercise.id}
-                exercise={exercise}
-              />
+                onClick={() => handleClick(exercise)}
+              >
+                <ExerciseItem exercise={exercise} />
+              </div>
             ))}
           </div>
           <button
             type="button"
             className="fab fab-primary"
-            onClick={() => handleModal(true, "Add new exercise")}
+            onClick={() =>
+              handleModal(
+                true,
+                "Add new exercise",
+                componentsModal.exerciseList
+              )
+            }
           >
             <Add />
           </button>
-          <Modal>
-            <AddExerciseForm
-              muscleList={muscleList}
-              defaultValue={muscleId}
-              handleModal={handleModal}
-            />
-          </Modal>
+          {modalState.componentName === componentsModal.exerciseList && (
+            <Modal>
+              <AddExerciseForm
+                muscleList={muscleList}
+                defaultValue={muscleId}
+                handleModal={handleModal}
+              />
+            </Modal>
+          )}
+          {modalState.componentName === componentsModal.exerciseItem && (
+            <Modal>
+              <DetailsExercise />
+            </Modal>
+          )}
         </>
       )}
     </div>
