@@ -7,8 +7,8 @@ import { useForm } from "../../hooks/useForm";
 
 export const AddExerciseForm = ({
   muscleList,
-  handleClose,
   defaultValue = 0,
+  handleModal,
 }) => {
   const dispatch = useDispatch();
 
@@ -41,7 +41,7 @@ export const AddExerciseForm = ({
     // console.log(formValues);
     if (isFormValid()) {
       dispatch(startAddingExercise(formValues));
-      handleClose();
+      handleModal(false, "");
     }
   };
 
@@ -90,7 +90,7 @@ export const AddExerciseForm = ({
         <button
           className="btn btn-secondary margin-x-1"
           type="button"
-          onClick={handleClose}
+          onClick={() => handleModal(false, "")}
         >
           Cancel
         </button>

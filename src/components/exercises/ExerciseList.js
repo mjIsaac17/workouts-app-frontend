@@ -1,9 +1,10 @@
 import { Add, Search } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { startGettingExercises } from "../../actions/exercise.action";
+import { setModal } from "../../actions/modal.action";
 import { Modal } from "../ui/Modal";
 import { AddExerciseForm } from "./AddExerciseForm";
 import { ExerciseItem } from "./ExerciseItem";
@@ -14,7 +15,6 @@ export const ExerciseList = () => {
   console.log("render <ExerciseList/>");
 
   const { exerciseList, loading } = useSelector((state) => state.exercises);
-  // const { muscleList } = useSelector((state) => state.muscles);
   const muscleList = JSON.parse(localStorage.getItem("muscleList"));
 
   const totalExercises = exerciseList.length;
@@ -24,12 +24,8 @@ export const ExerciseList = () => {
     dispatch(startGettingExercises(id));
   };
 
-  const [showModal, setShowModal] = useState(false);
-  const handleOpen = () => {
-    setShowModal(true);
-  };
-  const handleClose = () => {
-    setShowModal(false);
+  const handleModal = (isOpen, title) => {
+    dispatch(setModal(isOpen, title));
   };
 
   useEffect(() => {
@@ -76,19 +72,15 @@ export const ExerciseList = () => {
           <button
             type="button"
             className="fab fab-primary"
-            onClick={handleOpen}
+            onClick={() => handleModal(true, "Add new exercise")}
           >
             <Add />
           </button>
-          <Modal
-            show={showModal}
-            handleClose={handleClose}
-            header="Add new exercise"
-          >
+          <Modal>
             <AddExerciseForm
               muscleList={muscleList}
-              handleClose={handleClose}
               defaultValue={muscleId}
+              handleModal={handleModal}
             />
           </Modal>
         </>

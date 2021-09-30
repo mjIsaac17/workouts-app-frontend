@@ -45,7 +45,7 @@ export const LoginScreen = () => {
               onChange={handleChange}
             />
           </div>
-          <button className="btn" type="submit">
+          <button className="btn btn-secondary" type="submit">
             Login
           </button>
         </form>

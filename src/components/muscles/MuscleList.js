@@ -1,8 +1,8 @@
 import { Add } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setModal } from "../../actions/modal.action";
 import { startGettingMuscles } from "../../actions/muscles.action";
-import { AddExerciseForm } from "../exercises/AddExerciseForm";
 import { Modal } from "../ui/Modal";
 import { MuscleItem } from "./MuscleItem";
 
@@ -23,14 +23,6 @@ export const MusclesList = () => {
       localStorage.setItem("muscleList", JSON.stringify(muscleList));
   }, [muscleList]);
 
-  const [showModal, setShowModal] = useState(false);
-  const handleOpen = () => {
-    setShowModal(true);
-  };
-  const handleClose = () => {
-    setShowModal(false);
-  };
-
   if (loading) return <h1>Loading...</h1>;
   else
     return (
@@ -40,15 +32,16 @@ export const MusclesList = () => {
             <MuscleItem key={muscle.id} muscle={muscle} />
           ))}
         </div>
-        <button type="button" className="fab fab-primary" onClick={handleOpen}>
+        <button
+          type="button"
+          className="fab fab-primary"
+          onClick={() => dispatch(setModal(true, "Add new muscle"))}
+        >
           <Add />
         </button>
-        <Modal
-          show={showModal}
-          handleClose={handleClose}
-          header="Add new exercise"
-        >
-          {/* <AddExerciseForm muscleList={muscleList} handleClose={handleClose} /> */}
+
+        <Modal>
+          <h3>child component</h3>
         </Modal>
       </div>
     );

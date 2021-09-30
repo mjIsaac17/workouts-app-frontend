@@ -21,4 +21,6 @@ export const types = {
   logout: "logout",
 
   setSnackbar: "setSnackbar",
+
+  setModal: "setModal",
 };

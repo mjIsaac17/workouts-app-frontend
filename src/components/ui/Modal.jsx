@@ -1,13 +1,18 @@
 import { Close } from "@material-ui/icons";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { setModal } from "../../actions/modal.action";
 
-export const Modal = ({
-  handleClose,
-  show,
-  children,
-  header = "Modal Title",
-}) => {
-  const showHideClassName = show ? "modal display-block" : "modal display-none";
+export const Modal = ({ children }) => {
+  const handleClose = () => {
+    dispatch(setModal(false, ""));
+  };
+  const dispatch = useDispatch();
+  const { isOpen, header } = useSelector((state) => state.modal);
+  const showHideClassName = isOpen
+    ? "modal display-block"
+    : "modal display-none";
 
   return (
     <div className={showHideClassName}>
