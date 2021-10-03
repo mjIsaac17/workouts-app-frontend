@@ -1,4 +1,5 @@
 import { fetchNoToken, fetchToken } from "../helpers/fetch";
+import { adminData } from "../types/adminData";
 import { types } from "../types/types";
 import { clearExercises } from "./exercise.action";
 import { clearMuscles } from "./muscles.action";
@@ -25,6 +26,11 @@ export const startLogin = (userData) => {
         dispatch(setSnackbar("error", body.error, true));
       } else {
         localStorage.setItem("token", body.token);
+        if (body.role_id === adminData.ROLE_ID) body.isAdmin = true;
+        else body.isAdmin = false;
+
+        delete body.token;
+        console.log(body);
         dispatch(successLogin(body));
         dispatch(setSnackbar("error", "", false));
       }
@@ -42,9 +48,15 @@ export const startRenewToken = () => {
     try {
       const resp = await fetchToken("user/renew");
       const body = await resp.json();
+
       if (resp.ok) {
         localStorage.setItem("token", body.token);
-        dispatch(successLogin({ uid: body.uid, name: body.name }));
+
+        if (body.role_id === adminData.ROLE_ID) body.isAdmin = true;
+        else body.isAdmin = false;
+
+        delete body.token;
+        dispatch(successLogin(body));
       } else dispatch(finishRenewToken());
     } catch (error) {
       //Internal server error

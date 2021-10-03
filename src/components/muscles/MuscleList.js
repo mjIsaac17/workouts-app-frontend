@@ -13,7 +13,7 @@ export const MusclesList = () => {
   const { muscleList, loading } = useSelector((state) => state.muscles);
   const modalState = useSelector((state) => state.modal);
 
-  console.log("render musclesList");
+  console.log("render <musclesList/>");
 
   useEffect(() => {
     dispatch(startGettingMuscles());

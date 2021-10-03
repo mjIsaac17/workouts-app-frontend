@@ -1,5 +1,5 @@
 import { Add, Search } from "@material-ui/icons";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
@@ -15,9 +15,11 @@ import { DetailsExercise } from "./DetailsExercise";
 import { ExerciseItem } from "./ExerciseItem";
 
 export const ExerciseList = () => {
-  const modalState = useSelector((state) => state.modal);
-  const { muscleId } = useParams();
   const dispatch = useDispatch();
+  const { urlMuscleId } = useParams();
+  const modalState = useSelector((state) => state.modal);
+  // console.log(urlMuscleId);
+  const [muscleId, setMuscleId] = useState(urlMuscleId);
   console.log("render <ExerciseList/>");
 
   const { exerciseList, loading } = useSelector((state) => state.exercises);
@@ -27,7 +29,8 @@ export const ExerciseList = () => {
 
   const handleSelect = () => {
     const id = document.getElementById("ddlMuscle").value;
-    dispatch(startGettingExercises(id));
+    window.history.replaceState(null, "", `/exercises/${id}`);
+    setMuscleId(id);
   };
 
   const handleModal = (isOpen, title, componentName) => {

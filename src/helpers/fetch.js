@@ -31,7 +31,7 @@ const fetchToken = (endpoint, data, method = "GET") => {
   }
 };
 
-const fetchTokenFormData = (endpoint, data) => {
+const fetchTokenFormData = (endpoint, data, method = "POST") => {
   const url = `${baseUrl}/${endpoint}`;
   const token = localStorage.getItem("token") || "";
 
@@ -41,7 +41,7 @@ const fetchTokenFormData = (endpoint, data) => {
   }
 
   return fetch(url, {
-    method: "POST",
+    method,
     headers: { "x-token": token },
     body: formData,
   });

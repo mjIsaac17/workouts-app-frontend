@@ -20,7 +20,11 @@ export const DashboardRoutes = () => {
       <div className={`${openSidebar ? "background-inactive" : ""}`}>
         <Navbar openCloseSidebar={openCloseSidebar} />
         <Switch>
-          <Route exact path="/exercises/:muscleId?" component={ExerciseList} />
+          <Route
+            exact
+            path="/exercises/:urlMuscleId?"
+            component={ExerciseList}
+          />
           <Route exact path="/muscles" component={MusclesList} />
 
           <Redirect to="/muscles" />
