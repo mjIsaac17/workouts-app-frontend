@@ -53,7 +53,7 @@ export const exerciseReducer = (state = initialState, action) => {
         ),
       };
 
-    case types.successRemoveUpdatedExercise:
+    case types.successRemoveExercise:
       const exerciseIdToRemove = action.payload;
       return {
         ...state,

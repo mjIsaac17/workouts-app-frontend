@@ -67,6 +67,14 @@ body {
   }
 }
 
+.btn-danger {
+  background-color: $danger;
+  color: $text-primary;
+  &:hover {
+    background-color: lighten($color: $danger, $amount: 10);
+  }
+}
+
 select {
   font-size: 1.2rem;
   text-align: center;

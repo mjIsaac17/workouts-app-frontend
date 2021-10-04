@@ -2,7 +2,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { startUpdatingExercise } from "../../actions/exercise.action";
+import {
+  startDeletingExercise,
+  startUpdatingExercise,
+} from "../../actions/exercise.action";
 import { setModal } from "../../actions/modal.action";
 import { useForm } from "../../hooks/useForm";
 
@@ -14,7 +17,7 @@ export const DetailsExercise = () => {
   const muscleList = JSON.parse(localStorage.getItem("muscleList"));
 
   const [formValues, handleInputChange, setSpecificValue] = useForm({
-    ...current,
+    ...current, //it contains the data of the selected exercise
     muscleId: urlMuscleId,
     newImage: null,
   });
@@ -23,6 +26,9 @@ export const DetailsExercise = () => {
     e.preventDefault();
     console.log("form", formValues);
     dispatch(startUpdatingExercise(formValues, urlMuscleId));
+  };
+  const handleDelete = () => {
+    dispatch(startDeletingExercise(formValues.id));
   };
 
   return (
@@ -57,6 +63,7 @@ export const DetailsExercise = () => {
         defaultValue={urlMuscleId}
         onChange={handleInputChange}
         name="muscleId"
+        disabled={!isAdmin}
         // onChange={handleSelect}
       >
         <option value={0}>Select muscle</option>
@@ -74,27 +81,38 @@ export const DetailsExercise = () => {
           alt={current.image}
         />
       </div>
-      <div>
-        <label>New image</label>
-        <input
-          className="margin-y-1"
-          type="file"
-          name="newImage"
-          onChange={(e) => setSpecificValue("newImage", e.target.files[0])}
-        />
-      </div>
+      {isAdmin && (
+        <div>
+          <label>New image</label>
+          <input
+            className="margin-y-1"
+            type="file"
+            name="newImage"
+            onChange={(e) => setSpecificValue("newImage", e.target.files[0])}
+          />
+        </div>
+      )}
       <div className="right">
         <button
-          className="btn btn-secondary margin-x-1"
+          className="btn btn-secondary"
           type="button"
           onClick={() => dispatch(setModal(false, ""))}
         >
           Close
         </button>
         {isAdmin && (
-          <button className="btn btn-primary" type="submit">
-            Save
-          </button>
+          <>
+            <button
+              className="btn btn-danger margin-x-1"
+              type="button"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+            <button className="btn btn-primary" type="submit">
+              Save
+            </button>
+          </>
         )}
       </div>
     </form>

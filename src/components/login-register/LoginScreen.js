@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { startLogin } from "../../actions/user.action";
 
 export const LoginScreen = () => {
-  // console.log("render loginScreen");
   const dispatch = useDispatch();
   const [body, setBody] = useState({ email: "", password: "" });
 
@@ -17,6 +17,7 @@ export const LoginScreen = () => {
     e.preventDefault();
     dispatch(startLogin(body));
   };
+
   return (
     <div className="container">
       <div className="login__screen">
@@ -45,9 +46,17 @@ export const LoginScreen = () => {
               onChange={handleChange}
             />
           </div>
+
           <button className="btn btn-secondary" type="submit">
             Login
           </button>
+          <div>
+            <Link to="/register">
+              <button className="btn btn-secondary" type="button">
+                Register
+              </button>
+            </Link>
+          </div>
         </form>
       </div>
     </div>

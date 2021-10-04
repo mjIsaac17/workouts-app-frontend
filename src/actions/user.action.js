@@ -43,6 +43,32 @@ export const startLogin = (userData) => {
   };
 };
 
+export const startRegister = (userData) => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchNoToken("user/register", userData, "POST");
+      const body = await resp.json();
+
+      if (!resp.ok) {
+        dispatch(setSnackbar("error", body.error, true));
+      } else {
+        localStorage.setItem("token", body.token);
+        body.isAdmin = false;
+
+        delete body.token;
+        console.log(body);
+        dispatch(successLogin(body));
+        dispatch(setSnackbar("error", "", false)); //close snanckbar if open
+      }
+    } catch (error) {
+      //   dispatch(failureLogin(error.message));
+      dispatch(setSnackbar("error", error.message, false));
+
+      console.log("error", error);
+    }
+  };
+};
+
 export const startRenewToken = () => {
   return async (dispatch) => {
     try {

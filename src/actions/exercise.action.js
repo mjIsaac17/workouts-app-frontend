@@ -71,8 +71,8 @@ const successUpdateExercise = (exercise) => ({
   payload: exercise,
 });
 
-const successRemoveUpdatedExercise = (exerciseIdToRemove) => ({
-  type: types.successRemoveUpdatedExercise,
+const successRemoveExercise = (exerciseIdToRemove) => ({
+  type: types.successRemoveExercise,
   payload: exerciseIdToRemove,
 });
 
@@ -90,9 +90,32 @@ export const startUpdatingExercise = (exercise, originalMuscleId) => {
         delete exercise.newImage;
         if (exercise.muscleId === originalMuscleId)
           dispatch(successUpdateExercise(exercise));
-        else dispatch(successRemoveUpdatedExercise(exercise.id));
+        else dispatch(successRemoveExercise(exercise.id));
 
         dispatch(setSnackbar("success", "Exercise updated", true));
+      } else {
+        //Invalid data
+        const body = await resp.json();
+        dispatch(setSnackbar("error", body.error, true));
+      }
+      dispatch(setModal(false));
+    } catch (error) {
+      //Server error
+      dispatch(failureAction(error.message));
+      dispatch(setSnackbar("error", error.message, true));
+      console.log(error);
+    }
+  };
+};
+
+export const startDeletingExercise = (exerciseId) => {
+  return async (dispatch) => {
+    try {
+      //Update current image name with the new name selected
+      const resp = await fetchToken(`exercise/${exerciseId}`, {}, "DELETE");
+      if (resp.ok) {
+        dispatch(successRemoveExercise(exerciseId));
+        dispatch(setSnackbar("success", "Exercise deleted", true));
       } else {
         //Invalid data
         const body = await resp.json();

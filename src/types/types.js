@@ -15,8 +15,12 @@ export const types = {
   setCurrentExercise: "setCurrentExercise",
 
   successUpdateExercise: "successUpdateExercise",
-  successRemoveUpdatedExercise: "successRemoveUpdatedExercise",
+  successRemoveExercise: "successRemoveExercise",
   failureUpdateExercise: "failureUpdateExercise",
+
+  successDeleteExercise: "successDeleteExercise",
+
+  startRegister: "stateRegister",
 
   startLogin: "startLogin",
   successLogin: "successLogin",

@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { finishRenewToken, startRenewToken } from "../actions/user.action";
 
-import { LoginScreen } from "../components/login/LoginScreen";
+import { LoginScreen } from "../components/login-register/LoginScreen";
+import { RegisterScreen } from "../components/login-register/RegisterScreen";
 import { DashboardRoutes } from "./DashboardRoutes";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
@@ -36,6 +37,12 @@ export const AppRouter = () => {
               path="/login"
               isAuthenticated={user.isLogged}
               component={LoginScreen}
+            />
+            <PublicRoute
+              exact
+              path="/register"
+              isAuthenticated={user.isLogged}
+              component={RegisterScreen}
             />
             <PrivateRoute
               path="/"
