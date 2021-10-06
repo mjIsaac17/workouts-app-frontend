@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../../actions/modal.action";
-import { startGettingMuscles } from "../../actions/muscles.action";
+import {
+  setCurrentMuscle,
+  startGettingMuscles,
+} from "../../actions/muscles.action";
 import { componentsModal } from "../../helpers/componentsModal";
 import { Modal } from "../ui/Modal";
 import { AddMuscle } from "./AddMuscle";
@@ -10,6 +13,7 @@ import Fab from "@mui/material/Fab";
 import { Add, Close, Edit } from "@mui/icons-material";
 import Stack from "@mui/material/Stack";
 import { setSnackbar } from "../../actions/snackbar.action";
+import { MuscleDetails } from "./MuscleDetails";
 
 export const MusclesList = () => {
   const dispatch = useDispatch();
@@ -34,9 +38,12 @@ export const MusclesList = () => {
 
   const handleEditMode = () => {
     setEditMode(!editMode);
-    if (!editMode)
-      dispatch(setSnackbar("info", "Select a muscle to edit it", true));
-    else dispatch(setSnackbar("info", "Select a muscle to edit it", false));
+    dispatch(setSnackbar("info", "Select a muscle to edit it", !editMode));
+  };
+  //set current muscle in the state
+  const handleMuscleClick = (currentMuscle) => {
+    dispatch(setCurrentMuscle(currentMuscle));
+    dispatch(setModal(true, "Edit muscle", componentsModal.muscleItem));
   };
 
   if (loading) return <h1>Loading...</h1>;
@@ -44,9 +51,15 @@ export const MusclesList = () => {
     return (
       <div>
         <div className="card__list">
-          {muscleList.map((muscle) => (
-            <MuscleItem key={muscle.id} muscle={muscle} editMode={editMode} />
-          ))}
+          {muscleList.map((muscle) =>
+            !editMode ? (
+              <MuscleItem key={muscle.id} muscle={muscle} editMode={editMode} />
+            ) : (
+              <div key={muscle.id} onClick={() => handleMuscleClick(muscle)}>
+                <MuscleItem muscle={muscle} editMode={editMode} />
+              </div>
+            )
+          )}
         </div>
         {isAdmin && (
           <Stack
@@ -82,6 +95,11 @@ export const MusclesList = () => {
         {modalState.componentName === componentsModal.muscleList && (
           <Modal>
             <AddMuscle />
+          </Modal>
+        )}
+        {modalState.componentName === componentsModal.muscleItem && (
+          <Modal>
+            <MuscleDetails />
           </Modal>
         )}
       </div>

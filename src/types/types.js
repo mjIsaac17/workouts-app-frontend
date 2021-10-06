@@ -14,6 +14,7 @@ export const types = {
   successAddMuscle: "successAddMuscle",
   successGetMuscles: "successGetMuscles",
   successUpdateMuscle: "successUpdateMuscle",
+  successRemoveMuscle: "successRemoveMuscle",
 
   //Exercises
   startGettingExercises: "startGettingExercises",

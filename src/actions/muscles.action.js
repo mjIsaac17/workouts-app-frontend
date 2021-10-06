@@ -13,10 +13,10 @@ const failureGetMuscles = (error) => ({
   payload: error,
 });
 
-const failureAction = (error) => ({
-  types: types.failureAction,
-  payload: error,
-});
+// const failureAction = (error) => ({
+//   types: types.failureAction,
+//   payload: error,
+// });
 
 export const startGettingMuscles = () => {
   return async (dispatch) => {
@@ -55,9 +55,39 @@ export const startAddingMuscle = (muscle) => {
       }
       dispatch(setModal(false));
     } catch (error) {
-      dispatch(failureAction(error.message));
+      //dispatch(failureAction(error.message));
       dispatch(setSnackbar("error", error.message, true));
       console.log(error);
+    }
+  };
+};
+
+const successRemoveMuscle = (muscleId) => ({
+  type: types.successRemoveMuscle,
+  payload: muscleId,
+});
+
+export const startDeletingMuscle = (muscleId, imageName, deleteExercises) => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchToken(
+        `muscle/${muscleId}`,
+        { imageName, deleteExercises },
+        "DELETE"
+      );
+      if (resp.ok) {
+        dispatch(successRemoveMuscle(muscleId));
+        dispatch(setSnackbar("success", "Muscle deleted", true));
+        dispatch(setModal(false));
+      } else {
+        const error = await resp.json();
+        console.log(error);
+        dispatch(setSnackbar("error", error, true));
+      }
+    } catch (error) {
+      console.log(error);
+      //dispatch(failureAction(error.message));
+      dispatch(setSnackbar("error", error.message, true));
     }
   };
 };
