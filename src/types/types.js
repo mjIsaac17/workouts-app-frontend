@@ -1,11 +1,21 @@
 export const types = {
   failureAction: "failureAction",
 
-  successGetMuscles: "successGetMuscles",
-  failureGetMuscles: "failureGetMuscles",
-  setCurrentMuscle: "setCurrentMuscle",
+  //Muscles
   clearMuscles: "clearMuscle",
+  failureGetMuscles: "failureGetMuscles",
 
+  setCurrentMuscle: "setCurrentMuscle",
+
+  startAddingMuscle: "startAddingMuscle",
+  startUpdatingMuscle: "startUpdatingMuscle",
+  startDeletingMuscle: "startDeletingMuscle",
+
+  successAddMuscle: "successAddMuscle",
+  successGetMuscles: "successGetMuscles",
+  successUpdateMuscle: "successUpdateMuscle",
+
+  //Exercises
   startGettingExercises: "startGettingExercises",
   successGetExercises: "successGetExercises",
   failureGetExercises: "failureGetExercises",

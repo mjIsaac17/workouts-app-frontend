@@ -42,7 +42,7 @@ export const startAddingExercise = (newExercise) => {
     try {
       const resp = await fetchTokenFormData("exercise", newExercise);
       if (resp.ok) {
-        newExercise.image_name = newExercise.image.name;
+        newExercise.imageName = newExercise.image.name;
         delete newExercise.image;
         dispatch(successAddExercise(newExercise));
         dispatch(setSnackbar("success", "Exercise added", true));
@@ -80,7 +80,10 @@ export const startUpdatingExercise = (exercise, originalMuscleId) => {
   return async (dispatch) => {
     try {
       //Update current image name with the new name selected
-      if (exercise.newImage) exercise.image_name = exercise.newImage.name;
+      if (exercise.newImage) {
+        exercise.originalImageName = exercise.imageName;
+        exercise.imageName = exercise.newImage.name;
+      }
       const resp = await fetchTokenFormData(
         `exercise/${exercise.id}`,
         exercise,
@@ -88,6 +91,7 @@ export const startUpdatingExercise = (exercise, originalMuscleId) => {
       );
       if (resp.ok) {
         delete exercise.newImage;
+        //Check if the muscle id of the updated exercise changed to remove it of the state
         if (exercise.muscleId === originalMuscleId)
           dispatch(successUpdateExercise(exercise));
         else dispatch(successRemoveExercise(exercise.id));
@@ -96,7 +100,7 @@ export const startUpdatingExercise = (exercise, originalMuscleId) => {
       } else {
         //Invalid data
         const body = await resp.json();
-        dispatch(setSnackbar("error", body.error, true));
+        dispatch(setSnackbar("error", body, true));
       }
       dispatch(setModal(false));
     } catch (error) {
@@ -108,11 +112,15 @@ export const startUpdatingExercise = (exercise, originalMuscleId) => {
   };
 };
 
-export const startDeletingExercise = (exerciseId) => {
+export const startDeletingExercise = (exerciseId, imageName) => {
   return async (dispatch) => {
     try {
       //Update current image name with the new name selected
-      const resp = await fetchToken(`exercise/${exerciseId}`, {}, "DELETE");
+      const resp = await fetchToken(
+        `exercise/${exerciseId}`,
+        { imageName },
+        "DELETE"
+      );
       if (resp.ok) {
         dispatch(successRemoveExercise(exerciseId));
         dispatch(setSnackbar("success", "Exercise deleted", true));

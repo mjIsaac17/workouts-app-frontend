@@ -5,7 +5,7 @@ export const ExerciseItem = ({ exercise }) => {
     <>
       <div className="card">
         <img
-          src={`../img/exercises/${exercise.image_name}`}
+          src={`../img/exercises/${exercise.imageName}`}
           alt={exercise.name}
         />
         <div className="card__title">

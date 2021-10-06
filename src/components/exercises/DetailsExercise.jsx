@@ -19,7 +19,7 @@ export const DetailsExercise = () => {
   const [formValues, handleInputChange, setSpecificValue] = useForm({
     ...current, //it contains the data of the selected exercise
     muscleId: urlMuscleId,
-    newImage: null,
+    newImage: null, //image file
   });
 
   const handleSubmit = (e) => {
@@ -28,7 +28,7 @@ export const DetailsExercise = () => {
     dispatch(startUpdatingExercise(formValues, urlMuscleId));
   };
   const handleDelete = () => {
-    dispatch(startDeletingExercise(formValues.id));
+    dispatch(startDeletingExercise(formValues.id, formValues.imageName));
   };
 
   return (
@@ -77,8 +77,8 @@ export const DetailsExercise = () => {
         <label>Current image</label>
         <img
           style={{ marginTop: "0.5rem" }}
-          src={`../img/exercises/${current.image_name}`}
-          alt={current.image}
+          src={`../img/exercises/${current.imageName}`}
+          alt={current.imageName}
         />
       </div>
       {isAdmin && (

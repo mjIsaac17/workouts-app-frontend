@@ -80,6 +80,13 @@ select {
   text-align: center;
 }
 
+.fab-floating {
+  left: auto;
+  padding: 1rem;
+  position: fixed;
+  right: 20px;
+}
+
 .fab {
   border: none;
   border-radius: 30px;

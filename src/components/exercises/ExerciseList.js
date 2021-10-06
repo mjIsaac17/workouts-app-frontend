@@ -1,4 +1,4 @@
-import { Add, Search } from "@material-ui/icons";
+import { Add, Search } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -68,7 +68,7 @@ export const ExerciseList = () => {
             </select>
             <div className="inputIcon">
               <input type="text" placeholder="Search" />
-              <Search></Search>
+              <Search />
             </div>
           </div>
           <div className="searchArea resultsText">

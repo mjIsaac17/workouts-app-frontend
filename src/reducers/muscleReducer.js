@@ -28,6 +28,12 @@ export const muscleReducer = (state = initialState, action) => {
         current: action.payload,
       };
 
+    case types.successAddMuscle:
+      return {
+        ...state,
+        muscleList: [...state.muscleList, action.payload],
+      };
+
     case types.clearMuscles:
       return initialState;
     default:

@@ -1,22 +1,20 @@
+import { Accessibility, Directions, FitnessCenter } from "@mui/icons-material";
 import React from "react";
-import AccessibilityIcon from "@material-ui/icons/Accessibility";
-import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
-import { DirectionsRun } from "@material-ui/icons";
 
 export const SidebarData = [
   {
     title: "Muscles",
-    icon: <AccessibilityIcon />,
+    icon: <Accessibility />,
     link: "/home",
   },
   {
     title: "Exercises",
-    icon: <FitnessCenterIcon />,
+    icon: <FitnessCenter />,
     link: "/my-workouts",
   },
   {
     title: "My workouts",
-    icon: <DirectionsRun />,
+    icon: <Directions />,
     link: "/my-workouts",
   },
 ];

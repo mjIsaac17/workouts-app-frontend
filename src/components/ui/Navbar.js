@@ -1,9 +1,8 @@
 import React from "react";
-import MenuIcon from "@material-ui/icons/Menu";
-
-import { IconButton } from "@material-ui/core";
+import { IconButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/user.action";
+import { Menu } from "@mui/icons-material";
 
 export const Navbar = ({ openCloseSidebar }) => {
   const dispatch = useDispatch();
@@ -19,7 +18,7 @@ export const Navbar = ({ openCloseSidebar }) => {
       <div className="nav">
         <div className="navIconMenu">
           <IconButton onClick={openCloseSidebar}>
-            <MenuIcon className="navIcon" fontSize="large" />
+            <Menu className="navIcon" fontSize="large" />
           </IconButton>
         </div>
         <div className="navTitle">

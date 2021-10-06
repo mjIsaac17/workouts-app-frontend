@@ -1,4 +1,4 @@
-import { Close } from "@material-ui/icons";
+import { Close } from "@mui/icons-material";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
