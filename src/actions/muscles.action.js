@@ -1,7 +1,10 @@
 import { fetchNoToken, fetchToken, fetchTokenFormData } from "../helpers/fetch";
+import { renameImage } from "../helpers/renameImage";
 import { types } from "../types/types";
 import { setModal } from "./modal.action";
 import { setSnackbar } from "./snackbar.action";
+
+const muscleEndpoint = "muscle";
 
 const successGetMuscles = (muscles) => ({
   type: types.successGetMuscles,
@@ -21,9 +24,10 @@ const failureGetMuscles = (error) => ({
 export const startGettingMuscles = () => {
   return async (dispatch) => {
     try {
-      const resp = await fetchNoToken("muscle");
+      const resp = await fetchNoToken(muscleEndpoint);
       const body = await resp.json();
-      dispatch(successGetMuscles(body));
+      if (resp.ok) dispatch(successGetMuscles(body));
+      else dispatch(failureGetMuscles(body.error));
     } catch (error) {
       dispatch(failureGetMuscles(error.message));
       console.log(error);
@@ -40,24 +44,55 @@ export const startAddingMuscle = (muscle) => {
   console.log(muscle);
   return async (dispatch) => {
     try {
-      const resp = await fetchTokenFormData("muscle", muscle);
+      muscle.imageName = renameImage(muscle.image.name);
+      const resp = await fetchTokenFormData(muscleEndpoint, muscle);
       if (resp.ok) {
         const body = await resp.json();
         muscle.id = body.muscleId;
-        muscle.imageName = muscle.image.name;
         delete muscle.image;
         dispatch(successAddMuscle(muscle));
         dispatch(setSnackbar("success", "Muscle added", true));
       } else {
         //Invalid data
-        const body = await resp.json();
-        dispatch(setSnackbar("error", body, true));
+        const { error } = await resp.json();
+        dispatch(setSnackbar("error", error, true));
       }
       dispatch(setModal(false));
     } catch (error) {
       //dispatch(failureAction(error.message));
       dispatch(setSnackbar("error", error.message, true));
       console.log(error);
+    }
+  };
+};
+
+const successUpdateMuscle = (muscle) => ({
+  type: types.successUpdateMuscle,
+  payload: muscle,
+});
+
+export const startUpdatingMuscle = (muscle) => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchTokenFormData(
+        `${muscleEndpoint}/${muscle.id}`,
+        muscle,
+        "PUT"
+      );
+      if (resp.ok) {
+        delete muscle.newImage;
+        delete muscle.originalImageName;
+        dispatch(successUpdateMuscle(muscle));
+        dispatch(setSnackbar("success", "Muscle updated", true));
+        dispatch(setModal(false));
+      } else {
+        const { error } = await resp.json();
+        console.log(error);
+        dispatch(setSnackbar("error", error, true));
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch(setSnackbar("error", error.message, true));
     }
   };
 };
@@ -71,7 +106,7 @@ export const startDeletingMuscle = (muscleId, imageName, deleteExercises) => {
   return async (dispatch) => {
     try {
       const resp = await fetchToken(
-        `muscle/${muscleId}`,
+        `${muscleEndpoint}/${muscleId}`,
         { imageName, deleteExercises },
         "DELETE"
       );
@@ -80,7 +115,7 @@ export const startDeletingMuscle = (muscleId, imageName, deleteExercises) => {
         dispatch(setSnackbar("success", "Muscle deleted", true));
         dispatch(setModal(false));
       } else {
-        const error = await resp.json();
+        const { error } = await resp.json();
         console.log(error);
         dispatch(setSnackbar("error", error, true));
       }

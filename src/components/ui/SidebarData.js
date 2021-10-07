@@ -5,12 +5,12 @@ export const SidebarData = [
   {
     title: "Muscles",
     icon: <Accessibility />,
-    link: "/home",
+    link: "/muscles",
   },
   {
     title: "Exercises",
     icon: <FitnessCenter />,
-    link: "/my-workouts",
+    link: "/exercises",
   },
   {
     title: "My workouts",

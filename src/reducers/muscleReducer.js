@@ -42,6 +42,14 @@ export const muscleReducer = (state = initialState, action) => {
           (muscle) => muscle.id !== deletedMuscleId
         ),
       };
+    case types.successUpdateMuscle:
+      const updatedMuscle = action.payload;
+      return {
+        ...state,
+        muscleList: state.muscleList.map((muscle) =>
+          muscle.id !== updatedMuscle.id ? muscle : updatedMuscle
+        ),
+      };
 
     case types.clearMuscles:
       return initialState;

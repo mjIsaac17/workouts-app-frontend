@@ -1,11 +1,10 @@
 .nav {
-  display: flex;
-  background-color: $primary;
-  /* background-color: rgb(18, 45, 46); */
-  width: 100%;
-  // font-family: sans-serif;
-  padding: 2rem 0;
   align-items: center;
+  background-color: $primary;
+  display: flex;
+  padding: 2rem 0;
+  width: 100%;
+  z-index: 1;
 }
 
 .nav p {
@@ -56,7 +55,7 @@
   width: 15rem;
   // width: 300px;
   background-color: #2f4050;
-  z-index: 1;
+  z-index: 10;
   position: fixed;
   left: -100%;
   transition: 1s;

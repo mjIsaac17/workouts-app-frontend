@@ -15,24 +15,26 @@ export const Navbar = ({ openCloseSidebar }) => {
 
   return (
     <>
-      <div className="nav">
-        <div className="navIconMenu">
-          <IconButton onClick={openCloseSidebar}>
-            <Menu className="navIcon" fontSize="large" />
-          </IconButton>
+      <nav>
+        <div className="nav">
+          <div className="navIconMenu">
+            <IconButton onClick={openCloseSidebar}>
+              <Menu className="navIcon" fontSize="large" />
+            </IconButton>
+          </div>
+          <div className="navTitle">
+            <p>iWorkout</p>
+          </div>
+          <div className="navUser">
+            <ul>
+              <li>{user.name}</li>
+              <li className="logout" onClick={handleLogout}>
+                Logout
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="navTitle">
-          <p>iWorkout</p>
-        </div>
-        <div className="navUser">
-          <ul>
-            <li>{user.name}</li>
-            <li className="logout" onClick={handleLogout}>
-              Logout
-            </li>
-          </ul>
-        </div>
-      </div>
+      </nav>
     </>
   );
 };

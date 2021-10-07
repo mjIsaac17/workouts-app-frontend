@@ -7,10 +7,9 @@ import SaveIcon from "@mui/icons-material/Save";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../../actions/modal.action";
 import {
-  startAddingMuscle,
   startDeletingMuscle,
+  startUpdatingMuscle,
 } from "../../actions/muscles.action";
-import { setSnackbar } from "../../actions/snackbar.action";
 import { Delete } from "@mui/icons-material";
 import { componentsModal } from "../../helpers/componentsModal";
 import Radio from "@mui/material/Radio";
@@ -19,30 +18,34 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { FormHelperText } from "@mui/material";
+import { renameImage } from "../../helpers/renameImage";
 
 export const MuscleDetails = () => {
   console.log("render <MuscleDetails/>");
   const dispatch = useDispatch();
   const currentMuscle = useSelector((state) => state.muscles.current);
+  const [muscleName, setMuscleName] = useState(currentMuscle.name);
   const [error, setError] = useState("");
   const [deleteExercises, setDeleteExercises] = useState(null);
 
   const [deleteMode, setDeleteMode] = useState(false);
 
+  //Update muscle
   const handleSubmit = (e) => {
     e.preventDefault();
-    //Get muscle data
-    const name = document.getElementById("muscleName").value.trim();
-    const image = document.getElementById("image").files[0];
-    if (!name) {
+    if (!muscleName.trim()) {
       setError("Invalid muscle name");
       return;
     }
-    if (!image) {
-      dispatch(setSnackbar("error", "The image is required", true));
-      return;
+
+    const image = document.getElementById("image").files[0];
+    currentMuscle.name = muscleName.trim();
+    currentMuscle.originalImageName = currentMuscle.imageName;
+    currentMuscle.newImage = image;
+    if (image) {
+      currentMuscle.imageName = renameImage(image.name);
     }
-    dispatch(startAddingMuscle({ name, image }));
+    dispatch(startUpdatingMuscle(currentMuscle));
   };
 
   const handleDeleteMode = () => {
@@ -85,7 +88,8 @@ export const MuscleDetails = () => {
           name="muscleName"
           required
           fullWidth
-          value={currentMuscle.name}
+          value={muscleName}
+          onChange={(e) => setMuscleName(e.target.value)}
           label="Muscle name"
           helperText={error}
           error={!!error}

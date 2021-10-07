@@ -16,9 +16,8 @@ import { ExerciseItem } from "./ExerciseItem";
 
 export const ExerciseList = () => {
   const dispatch = useDispatch();
-  const { urlMuscleId } = useParams();
+  const { urlMuscleId = "0" } = useParams();
   const modalState = useSelector((state) => state.modal);
-  // console.log(urlMuscleId);
   const [muscleId, setMuscleId] = useState(urlMuscleId);
   console.log("render <ExerciseList/>");
 
