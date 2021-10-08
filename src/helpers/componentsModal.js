@@ -3,4 +3,5 @@ export const componentsModal = {
   muscleItem: "MuscleItem",
   exerciseList: "ExerciseList",
   exerciseItem: "ExerciseItem",
+  workoutsAdd: "WorkoutsAdd",
 };

@@ -23,7 +23,6 @@ export const startGettingExercises = (id) => {
     try {
       const resp = await fetchToken(`exercise/${id}`);
       const body = await resp.json();
-      console.log(body);
       dispatch(successGetExercises(body));
     } catch (error) {
       dispatch(failureGetExercises(error.message));

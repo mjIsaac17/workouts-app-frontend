@@ -13,8 +13,8 @@ export const SidebarData = [
     link: "/exercises",
   },
   {
-    title: "My workouts",
+    title: "Workouts",
     icon: <Directions />,
-    link: "/my-workouts",
+    link: "/workouts",
   },
 ];

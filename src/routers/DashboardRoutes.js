@@ -6,6 +6,7 @@ import { MusclesList } from "../components/muscles/MuscleList";
 
 import { Navbar } from "../components/ui/Navbar";
 import { Sidebar } from "../components/ui/Sidebar";
+import { WorkoutsScreen } from "../components/workouts/WorkoutScreen";
 
 export const DashboardRoutes = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -26,7 +27,7 @@ export const DashboardRoutes = () => {
             component={ExerciseList}
           />
           <Route exact path="/muscles" component={MusclesList} />
-
+          <Route exact path="/workouts" component={WorkoutsScreen} />
           <Redirect to="/muscles" />
         </Switch>
       </div>
