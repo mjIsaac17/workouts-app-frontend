@@ -30,7 +30,6 @@ export const startLogin = (userData) => {
         else body.isAdmin = false;
 
         delete body.token;
-        console.log(body);
         dispatch(successLogin(body));
         dispatch(setSnackbar("error", "", false));
       }

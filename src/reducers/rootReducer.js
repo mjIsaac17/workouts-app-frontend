@@ -4,6 +4,7 @@ import { exerciseReducer } from "./exerciseReducer";
 import { userReducer } from "./userReducer";
 import { snackbarReducer } from "./snackbarReducer";
 import { modalReducer } from "./modalReducer";
+import { workoutReducer } from "./workoutReducer";
 
 export const rootReducer = combineReducers({
   muscles: muscleReducer,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
   user: userReducer,
   snackbar: snackbarReducer,
   modal: modalReducer,
+  workouts: workoutReducer,
 });

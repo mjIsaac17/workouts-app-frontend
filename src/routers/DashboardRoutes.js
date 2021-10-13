@@ -6,6 +6,7 @@ import { MusclesList } from "../components/muscles/MuscleList";
 
 import { Navbar } from "../components/ui/Navbar";
 import { Sidebar } from "../components/ui/Sidebar";
+import { WorkoutExercisesList } from "../components/workouts/WorkoutExercisesList";
 import { WorkoutsScreen } from "../components/workouts/WorkoutScreen";
 
 export const DashboardRoutes = () => {
@@ -28,6 +29,11 @@ export const DashboardRoutes = () => {
           />
           <Route exact path="/muscles" component={MusclesList} />
           <Route exact path="/workouts" component={WorkoutsScreen} />
+          <Route
+            exact
+            path="/workouts/:workoutName"
+            component={WorkoutExercisesList}
+          />
           <Redirect to="/muscles" />
         </Switch>
       </div>

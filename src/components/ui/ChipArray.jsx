@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
@@ -9,19 +9,6 @@ const ListItem = styled("li")(({ theme }) => ({
 
 export const ChipsArray = ({ chips = [], title = "", handleDelete }) => {
   console.log("render ChipsArray");
-  //   const [chipData, setChipData] = useState([
-  //     { key: 0, label: "Angular" },
-  //     { key: 1, label: "jQuery" },
-  //     { key: 2, label: "Polymer" },
-  //     { key: 3, label: "React" },
-  //     { key: 4, label: "Vue.js" },
-  //   ]);
-
-  //   const handleDelete = (chipToDelete) => () => {
-  //     setChipData((chips) =>
-  //       chips.filter((chip) => chip.key !== chipToDelete.key)
-  //     );
-  //   };
 
   return (
     <>

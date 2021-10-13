@@ -28,9 +28,9 @@ export const types = {
   successUpdateExercise: "successUpdateExercise",
   successRemoveExercise: "successRemoveExercise",
   failureUpdateExercise: "failureUpdateExercise",
-
   successDeleteExercise: "successDeleteExercise",
 
+  //User/Login
   startRegister: "stateRegister",
 
   startLogin: "startLogin",
@@ -40,7 +40,17 @@ export const types = {
   clearUser: "clearUser",
   logout: "logout",
 
-  setSnackbar: "setSnackbar",
+  //Workouts
+  startGettingMyWorkouts: "startGettingMyWorkouts",
+  successGetMyWorkouts: "successGetMyWorkouts",
+  startAddingWorkout: "startAddingWorkout",
+  successAddWorkout: "successAddWorkout",
+  startGettingWorkoutExercises: "startGettingWorkoutExercises",
+  successGetWorkoutExercises: "successGetWorkoutExercises",
+  setCurrentWorkout: "setCurrentWorkout",
+  startUpdatingWorkout: "startUpdatingWorkout",
 
+  //UI
+  setSnackbar: "setSnackbar",
   setModal: "setModal",
 };

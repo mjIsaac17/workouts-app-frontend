@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -6,7 +6,8 @@ import Tab from "@mui/material/Tab";
 import { useDispatch } from "react-redux";
 import { startGettingExercises } from "../../actions/exercise.action";
 
-export const VerticalTabs = ({ muscleList }) => {
+export const VerticalTabs = memo(({ muscleList }) => {
+  console.log("render <VerticalTabs>");
   const dispatch = useDispatch();
   const [value, setValue] = useState(1);
 
@@ -34,4 +35,4 @@ export const VerticalTabs = ({ muscleList }) => {
       ))}
     </Tabs>
   );
-};
+});

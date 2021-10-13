@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
-import { ChipsArray } from "./ChipArray";
 import { Popover, Typography } from "@mui/material";
 
 const columns = [
@@ -9,10 +8,9 @@ const columns = [
   { field: "exerciseDescription", headerName: "Description", width: 250 },
 ];
 
-export const DataTableSelect = () => {
+export const DataTableSelect = ({ handleAdd }) => {
   console.log("render <DataTableSelect />");
   const { exerciseList } = useSelector((state) => state.exercises);
-  const [chips, setChips] = useState([]);
   const [hoverExercise, setHoverExercise] = useState({});
   const divRef = useRef();
 
@@ -22,21 +20,11 @@ export const DataTableSelect = () => {
     exerciseDescription: ex.description,
     imageName: ex.imageName,
   }));
-  //console.log(rows);
-
-  const handleAdd = (e) => {
-    setChips([...chips, { key: Date.now(), label: e.row.exerciseName }]);
-  };
-
-  const handleDelete = (chipToDelete) => {
-    setChips(chips.filter((chip) => chip.key !== chipToDelete.key));
-  };
 
   const [anchorEl, setAnchorEl] = useState(null);
   const handlePopoverOpen = (e) => {
     setAnchorEl(divRef.current);
     setHoverExercise({ name: e.row.exerciseName, imageName: e.row.imageName });
-    // console.log(event);
   };
 
   const handlePopoverClose = () => {
@@ -47,7 +35,6 @@ export const DataTableSelect = () => {
 
   return (
     <>
-      <ChipsArray chips={chips} handleDelete={handleDelete} />
       <div style={{ height: 275 }}>
         <DataGrid
           ref={divRef}
