@@ -1,22 +1,22 @@
-import { Add } from "@mui/icons-material";
-import { Fab } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
+import { Fab } from "@mui/material";
+import { Add } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { setModal } from "../../actions/modal.action";
-import { setCurrentWorkout } from "../../actions/workout.action";
-import { componentsModal } from "../../helpers/componentsModal";
-import { Modal } from "../ui/Modal";
-import { WorkoutAdd } from "./WorkoutAdd";
 import { WorkoutList } from "./WorkoutList";
+import { setModal } from "../../actions/modal.action";
+import {
+  setCurrentWorkout,
+  successGetWorkoutExercises,
+} from "../../actions/workout.action";
+import { componentsModal } from "../../helpers/componentsModal";
 
 export const WorkoutsScreen = () => {
+  console.log("render <WorkoutScreen/>");
   const dispatch = useDispatch();
-  const { componentName } = useSelector((state) => state.modal);
 
   const handleAdd = () => {
-    dispatch(setCurrentWorkout({ workoutExercises: [] }));
-
+    dispatch(setCurrentWorkout({}));
+    dispatch(successGetWorkoutExercises([]));
     dispatch(setModal(true, "Add new workout", componentsModal.workoutsAdd));
   };
 
@@ -37,12 +37,6 @@ export const WorkoutsScreen = () => {
       >
         <Add />
       </Fab>
-
-      {componentName === componentsModal.workoutsAdd && (
-        <Modal>
-          <WorkoutAdd action={"add"} />
-        </Modal>
-      )}
     </>
   );
 };

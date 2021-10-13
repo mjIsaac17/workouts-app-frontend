@@ -4,5 +4,6 @@ export const componentsModal = {
   exerciseList: "ExerciseList",
   exerciseItem: "ExerciseItem",
   workoutsAdd: "WorkoutsAdd",
-  workoutsUpdate: "workoutsUpdate",
+  workoutsUpdate: "WorkoutsUpdate",
+  workoutsDelete: "WorkoutsDelete",
 };

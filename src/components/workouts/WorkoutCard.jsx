@@ -15,6 +15,10 @@ export const WorkoutCard = ({ workout }) => {
   const handleEdit = () => {
     dispatch(setModal(true, "Update workout", componentsModal.workoutsUpdate));
   };
+
+  const handleDelete = () => {
+    dispatch(setModal(true, "Delete workout", componentsModal.workoutsDelete));
+  };
   return (
     <Card sx={{ width: 320, margin: "1rem" }}>
       <CardActionArea>
@@ -41,7 +45,12 @@ export const WorkoutCard = ({ workout }) => {
         </Link>
       </CardActionArea>
       <CardActions sx={{ justifyContent: "flex-end" }}>
-        <Button size="small" color="secondary" endIcon={<Delete />}>
+        <Button
+          size="small"
+          color="secondary"
+          endIcon={<Delete />}
+          onClick={handleDelete}
+        >
           Delete
         </Button>
         <Button

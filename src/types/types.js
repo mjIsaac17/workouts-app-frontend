@@ -50,8 +50,11 @@ export const types = {
   setCurrentWorkout: "setCurrentWorkout",
   startUpdatingWorkout: "startUpdatingWorkout",
   successUpdateWorkout: "successUpdateWorkout",
+  startDeletingWorkout: "startDeletingWorkout",
+  successRemoveWorkout: "successRemoveWorkout",
 
   //UI
   setSnackbar: "setSnackbar",
   setModal: "setModal",
+  setLoading: "setLoading",
 };

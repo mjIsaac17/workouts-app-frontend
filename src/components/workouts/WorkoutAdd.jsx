@@ -6,7 +6,7 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { VerticalTabs } from "../ui/VerticalTabs";
 import { DataTableSelect } from "../ui/DataTableSelect";
 import { Save } from "@mui/icons-material";
@@ -15,54 +15,43 @@ import { setModal } from "../../actions/modal.action";
 import { ChipsArray } from "../ui/ChipArray";
 import { setSnackbar } from "../../actions/snackbar.action";
 import {
-  setCurrentWorkout,
   startAddingWorkout,
   startUpdatingWorkout,
 } from "../../actions/workout.action";
 import { useForm } from "../../hooks/useForm";
 
 export const WorkoutAdd = ({ action }) => {
-  const dispatch = useDispatch();
-  //const { workoutExercises } = useSelector((state) => state.workouts);
-  const { current: currentWorkout } = useSelector((state) => state.workouts);
-  const [newImageName, setNewImageName] = useState("");
+  console.log("render <WorkoutsAdd />");
 
-  const [formValues, handleInputChange, , setForm] = useForm({
-    name: "",
-    description: "",
-  });
-  const { name, description } = formValues;
+  const dispatch = useDispatch();
+  const { currentWorkout, currentWorkoutExercises } = useSelector(
+    (state) => state.workouts
+  );
+
+  const [newImageName, setNewImageName] = useState(
+    currentWorkout.imageName ? currentWorkout.imageName : "No image selected"
+  );
 
   const muscleList = useMemo(
     () => JSON.parse(localStorage.getItem("muscleList")),
     []
   );
-  //console.log("Current", currentWorkout);
-  const [chips, setChips] = useState([]);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    if (action === "update") {
-      if (currentWorkout.name) {
-        setNewImageName(
-          currentWorkout.imageName
-            ? currentWorkout.imageName
-            : "No image selected"
-        );
-        setForm({
-          name: currentWorkout.name,
-          description: currentWorkout.description,
-        });
-      }
-      setChips(
-        currentWorkout.workoutExercises.map((e, index) => ({
+  const [chips, setChips] = useState(
+    currentWorkoutExercises
+      ? currentWorkoutExercises.map((e, index) => ({
           id: e.id,
           label: e.name,
           key: index,
         }))
-      );
-    }
-  }, [dispatch, currentWorkout, action]);
+      : []
+  );
+  const [error, setError] = useState("");
+
+  const [formValues, handleInputChange] = useForm({
+    name: currentWorkout.name,
+    description: currentWorkout.description,
+  });
+  const { name, description } = formValues;
 
   const handleAddChip = (e) => {
     setChips([
@@ -75,7 +64,9 @@ export const WorkoutAdd = ({ action }) => {
     setChips(chips.filter((chip) => chip.key !== chipToDelete.key));
   };
 
-  console.log("render <WorkoutsAdd />");
+  const handleCloseModal = () => {
+    dispatch(setModal(false));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -106,9 +97,7 @@ export const WorkoutAdd = ({ action }) => {
       );
     else if (action === "update") {
       //Check if the workout exercises were updated
-      const previousIds = currentWorkout.workoutExercises
-        .map((e) => e.id)
-        .join(",");
+      const previousIds = currentWorkoutExercises.map((e) => e.id).join(",");
       if (previousIds === exerciseIds) exerciseIds = null;
 
       dispatch(
@@ -124,11 +113,6 @@ export const WorkoutAdd = ({ action }) => {
     }
 
     handleCloseModal();
-  };
-
-  const handleCloseModal = () => {
-    dispatch(setModal(false));
-    dispatch(setCurrentWorkout({ workoutExercises: [] }));
   };
 
   return (

@@ -5,6 +5,11 @@ import { setSnackbar } from "./snackbar.action";
 
 const workoutEndpoint = "workout";
 
+export const setLoading = (loading) => ({
+  type: types.setLoading,
+  payload: loading,
+});
+
 const successGetMyWorkouts = (workouts) => ({
   type: types.successGetMyWorkouts,
   payload: workouts,
@@ -28,7 +33,7 @@ export const startGettingMyWorkouts = () => {
   };
 };
 
-const successGetWorkoutExercises = (exercises) => ({
+export const successGetWorkoutExercises = (exercises) => ({
   type: types.successGetWorkoutExercises,
   payload: exercises,
 });
@@ -42,8 +47,6 @@ export const startGettingWorkoutExercises = (workoutName) => {
       const body = await resp.json();
       if (resp.ok) {
         dispatch(successGetWorkoutExercises(body));
-        return body;
-        //dispatch(setCurrentWorkout(workout, body));
       } else {
         dispatch(failureAction());
         dispatch(setSnackbar("error", body.error, true));
@@ -60,20 +63,6 @@ export const setCurrentWorkout = (workout) => ({
   type: types.setCurrentWorkout,
   payload: workout,
 });
-
-export const startSettingCurrentWorkout = (workout) => {
-  return async (dispatch) => {
-    try {
-      const workoutExercises = await dispatch(
-        startGettingWorkoutExercises(workout.name)
-      );
-      dispatch(setCurrentWorkout({ ...workout, workoutExercises }));
-    } catch (error) {
-      console.log(error);
-      dispatch(setSnackbar("error", error.message, true));
-    }
-  };
-};
 
 const successAddWorkout = (workout) => ({
   type: types.successAddWorkout,
@@ -124,6 +113,32 @@ export const startUpdatingWorkout = (workout) => {
         }
         dispatch(successUpdateWorkout(workout));
         dispatch(setSnackbar("success", "Workout updated", true));
+        dispatch(setModal(false));
+      } else dispatch(setSnackbar("error", body.error, true));
+    } catch (error) {
+      console.log(error);
+      dispatch(setSnackbar("error", error.message, true));
+    }
+  };
+};
+
+const successRemoveWorkout = (id) => ({
+  type: types.successRemoveWorkout,
+  payload: id,
+});
+
+export const startDeletingWorkout = ({ id, imageName }) => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchToken(
+        `${workoutEndpoint}/${id}`,
+        { id, imageName },
+        "DELETE"
+      );
+      const body = await resp.json();
+      if (resp.ok) {
+        dispatch(successRemoveWorkout(id));
+        dispatch(setSnackbar("success", "Workout deleted", true));
         dispatch(setModal(false));
       } else dispatch(setSnackbar("error", body.error, true));
     } catch (error) {

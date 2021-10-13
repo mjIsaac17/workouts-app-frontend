@@ -3,9 +3,8 @@ import { types } from "../types/types";
 const initialState = {
   myWorkouts: [],
   loading: true,
-  current: {
-    workoutExercises: [],
-  },
+  currentWorkout: {},
+  currentWorkoutExercises: [],
 };
 export const workoutReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -20,13 +19,13 @@ export const workoutReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        current: { ...state.current, workoutExercises: action.payload },
+        currentWorkoutExercises: action.payload,
       };
 
     case types.setCurrentWorkout:
       return {
         ...state,
-        current: { ...action.payload },
+        currentWorkout: { ...action.payload },
       };
 
     case types.successAddWorkout:
@@ -46,10 +45,24 @@ export const workoutReducer = (state = initialState, action) => {
         ],
       };
 
+    case types.successRemoveWorkout:
+      const deletedWorkoutId = action.payload;
+      return {
+        ...state,
+        myWorkouts: [
+          ...state.myWorkouts.filter((w) => w.id !== deletedWorkoutId),
+        ],
+      };
     case types.failureAction:
       return {
         ...state,
         loading: false,
+      };
+
+    case types.setLoading:
+      return {
+        ...state,
+        loading: action.payload,
       };
 
     default:
