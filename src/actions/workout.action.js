@@ -102,27 +102,36 @@ export const startAddingWorkout = (workout) => {
   };
 };
 
-// export const startUpdatingWorkout = () => {
-//   return async (dispatch) => {
-//     try {
-//       const resp = await fetchTokenFormData(workoutEndpoint, workout, "POST");
-//       const body = await resp.json();
-//       if (resp.ok) {
-//         if (workout.image) {
-//           workout.imageName = workout.image.name;
-//           delete workout.image;
-//         }
-//         workout.id = body.workoutId;
-//         dispatch(successAddWorkout(workout));
-//         dispatch(setSnackbar("success", "Workout added", true));
-//         dispatch(setModal(false));
-//       } else dispatch(setSnackbar("error", body.error, true));
-//     } catch (error) {
-//       console.log(error);
-//       dispatch(setSnackbar("error", error.message, true));
-//     }
-//   };
-// };
+const successUpdateWorkout = (workout) => ({
+  type: types.successUpdateWorkout,
+  payload: workout,
+});
+
+export const startUpdatingWorkout = (workout) => {
+  console.log(workout);
+  return async (dispatch) => {
+    try {
+      const resp = await fetchTokenFormData(
+        `${workoutEndpoint}/${workout.id}`,
+        workout,
+        "PUT"
+      );
+      const body = await resp.json();
+      if (resp.ok) {
+        if (workout.image) {
+          workout.imageName = workout.image.name;
+          delete workout.image;
+        }
+        dispatch(successUpdateWorkout(workout));
+        dispatch(setSnackbar("success", "Workout updated", true));
+        dispatch(setModal(false));
+      } else dispatch(setSnackbar("error", body.error, true));
+    } catch (error) {
+      console.log(error);
+      dispatch(setSnackbar("error", error.message, true));
+    }
+  };
+};
 
 const failureAction = () => ({
   type: types.failureAction,

@@ -35,6 +35,17 @@ export const workoutReducer = (state = initialState, action) => {
         myWorkouts: [action.payload, ...state.myWorkouts],
       };
 
+    case types.successUpdateWorkout:
+      const updatedWorkout = action.payload;
+      return {
+        ...state,
+        myWorkouts: [
+          ...state.myWorkouts.map((w) =>
+            w.id !== updatedWorkout.id ? w : updatedWorkout
+          ),
+        ],
+      };
+
     case types.failureAction:
       return {
         ...state,

@@ -49,6 +49,7 @@ export const types = {
   successGetWorkoutExercises: "successGetWorkoutExercises",
   setCurrentWorkout: "setCurrentWorkout",
   startUpdatingWorkout: "startUpdatingWorkout",
+  successUpdateWorkout: "successUpdateWorkout",
 
   //UI
   setSnackbar: "setSnackbar",
