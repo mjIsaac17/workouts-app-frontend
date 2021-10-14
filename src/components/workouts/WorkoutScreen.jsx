@@ -22,7 +22,9 @@ export const WorkoutsScreen = () => {
 
   return (
     <>
-      <h2>Workouts</h2>
+      <div className="text-center-area">
+        <p className="text-title">My workouts</p>
+      </div>
       <WorkoutList />
 
       <Fab

@@ -1,0 +1,36 @@
+.flex-container {
+  display: flex;
+  margin: 0 auto;
+  height: 100vh;
+  width: 90%;
+}
+
+.flex-box {
+  display: flex;
+  width: 100%;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.center-y {
+  justify-content: center;
+}
+
+.center-x {
+  align-items: center;
+}
+
+.spacing-y-1 * {
+  margin: 1rem 0;
+}
+
+.spacing-x-1 * {
+  margin: 1rem;
+}
+
+.bg-secondary {
+  background-color: $secondary;
+}

@@ -1,3 +1,5 @@
+import { Email, Lock } from "@mui/icons-material";
+import { Button, InputAdornment, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -19,46 +21,80 @@ export const LoginScreen = () => {
   };
 
   return (
-    <div className="container">
-      <div className="login__screen">
-        <form onSubmit={handleLogin}>
-          <h1>Workouts App</h1>
-          <div>
-            <input
-              className="login__input"
-              placeholder="Email"
-              type="email"
-              name="email"
-              id="txtEmail"
-              value={body.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <input
-              autoComplete="off"
-              className="login__input"
-              placeholder="Password"
-              type="password"
-              name="password"
-              id="txtPassword"
-              value={body.password}
-              onChange={handleChange}
-            />
-          </div>
-
-          <button className="btn btn-secondary" type="submit">
-            Login
-          </button>
-          <div>
-            <Link to="/register">
-              <button className="btn btn-secondary" type="button">
-                Register
-              </button>
-            </Link>
-          </div>
-        </form>
+    <>
+      <div className="navbar navbar--fixed">
+        <Typography variant="h4" component="h2">
+          WorkoutsApp
+        </Typography>
       </div>
-    </div>
+
+      <div className="flex-container center">
+        <div className="login-box">
+          <div className="login-box__header">
+            <Typography variant="h4">Sign in</Typography>
+            <Typography variant="h6" color="textSecondary">
+              Welcome back!
+            </Typography>
+          </div>
+          <div className="login-box__body">
+            <form style={{ display: "grid" }} onSubmit={handleLogin}>
+              <div className="spacing-y-1">
+                <TextField
+                  id="txtLoginEmail"
+                  fullWidth
+                  label="Email"
+                  name="email"
+                  onChange={handleChange}
+                  placeholder="Email"
+                  type="email"
+                  value={body.email}
+                  variant="outlined"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Email />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  id="txtLoginPassword"
+                  label="Password"
+                  name="password"
+                  onChange={handleChange}
+                  placeholder="Password"
+                  type="password"
+                  value={body.password}
+                  variant="outlined"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Lock />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </div>
+              <div className="login-box__buttonArea">
+                <Button variant="contained" size="large" type="submit">
+                  Log in
+                </Button>
+                <Link to="/register">
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    size="large"
+                    color="secondary"
+                  >
+                    Register
+                  </Button>
+                </Link>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };

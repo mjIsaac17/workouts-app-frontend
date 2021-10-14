@@ -31,7 +31,7 @@ export const workoutReducer = (state = initialState, action) => {
     case types.successAddWorkout:
       return {
         ...state,
-        myWorkouts: [action.payload, ...state.myWorkouts],
+        myWorkouts: [...state.myWorkouts, action.payload],
       };
 
     case types.successUpdateWorkout:

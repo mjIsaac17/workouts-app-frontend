@@ -49,7 +49,10 @@ export const MusclesList = () => {
   if (loading) return <h1>Loading...</h1>;
   else
     return (
-      <div>
+      <>
+        <div className="text-center-area">
+          <p className="text-title">Muscles</p>
+        </div>
         <div className="card__list">
           {muscleList.map((muscle) =>
             !editMode ? (
@@ -102,6 +105,6 @@ export const MusclesList = () => {
             <MuscleDetails />
           </Modal>
         )}
-      </div>
+      </>
     );
 };

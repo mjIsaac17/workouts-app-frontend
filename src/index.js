@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { WorkoutsApp } from "./WorkoutsApp";
 
-import "./styles/main.scss";
+import "./styles/styles.scss";
 ReactDOM.render(<WorkoutsApp />, document.getElementById("root"));
 
 // If you want to start measuring performance in your app, pass a function

@@ -153,3 +153,15 @@ textarea {
 .right {
   float: right;
 }
+
+.text-center-area {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  width: 100%;
+}
+
+.text-title {
+  font-size: 2rem;
+}

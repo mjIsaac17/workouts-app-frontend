@@ -64,10 +64,6 @@ export const WorkoutAdd = ({ action }) => {
     setChips(chips.filter((chip) => chip.key !== chipToDelete.key));
   };
 
-  const handleCloseModal = () => {
-    dispatch(setModal(false));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -111,8 +107,6 @@ export const WorkoutAdd = ({ action }) => {
         })
       );
     }
-
-    handleCloseModal();
   };
 
   return (
@@ -171,7 +165,11 @@ export const WorkoutAdd = ({ action }) => {
       </label>
 
       <Stack direction="row" spacing={2} justifyContent="flex-end">
-        <Button variant="contained" color="info" onClick={handleCloseModal}>
+        <Button
+          variant="contained"
+          color="info"
+          onClick={() => dispatch(setModal(false))}
+        >
           Cancel
         </Button>
         <Button
