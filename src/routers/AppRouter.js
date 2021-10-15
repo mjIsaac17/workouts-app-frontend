@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
@@ -7,11 +7,9 @@ import { finishRenewToken, startRenewToken } from "../actions/user.action";
 
 import { LoginScreen } from "../components/login-register/LoginScreen";
 import { RegisterScreen } from "../components/login-register/RegisterScreen";
-import { Navbar } from "../components/ui/Navbar";
 import { DashboardRoutes } from "./DashboardRoutes";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
-import { Sidebar } from "../components/ui/Sidebar";
 import { Layout } from "../components/ui/Layout";
 
 export const AppRouter = () => {

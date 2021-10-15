@@ -13,7 +13,7 @@ export const Navbar = ({ user, openCloseSidebar }) => {
     dispatch(logout());
   };
 
-  if (user.id)
+  if (!user.id)
     return (
       <div className="navbar navbar--fixed">
         <Typography variant="h4" component="h2">

@@ -10,7 +10,7 @@ export const Layout = ({ user, children }) => {
   return (
     <div className={`${openSidebar ? "background-inactive" : ""}`}>
       <Navbar user={user} openCloseSidebar={openCloseSidebar} />
-      {user.uid && (
+      {user.id && (
         <Sidebar
           openCloseSidebar={openCloseSidebar}
           openSidebar={openSidebar}
