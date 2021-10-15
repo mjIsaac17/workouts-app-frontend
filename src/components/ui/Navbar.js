@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/user.action";
 import { Menu } from "@mui/icons-material";
@@ -15,7 +15,12 @@ export const Navbar = ({ openCloseSidebar }) => {
 
   return (
     <>
-      <nav>
+      <div className="navbar navbar--fixed">
+        <Typography variant="h4" component="h2">
+          WorkoutsApp
+        </Typography>
+      </div>
+      {/* <nav>
         <div className="nav">
           <div className="navIconMenu">
             <IconButton onClick={openCloseSidebar}>
@@ -34,7 +39,7 @@ export const Navbar = ({ openCloseSidebar }) => {
             </ul>
           </div>
         </div>
-      </nav>
+      </nav> */}
     </>
   );
 };

@@ -3,7 +3,6 @@
   border: 1px groove rgb(207, 207, 207);
   border-radius: 5px;
   min-height: 420px;
-  height: 60%;
   max-width: 480px;
   padding: 3rem;
   text-align: center;
@@ -11,7 +10,6 @@
 
 .login-box__header {
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgb(23, 117, 172);
 }
 
 .login-box__body {
@@ -23,6 +21,9 @@
 .login-box__buttonArea * {
   margin-top: 0.5rem;
   width: 100%;
+  a {
+    text-decoration: none;
+  }
 }
 
 @media (max-height: 750px) {

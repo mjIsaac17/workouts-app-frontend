@@ -22,12 +22,6 @@ export const LoginScreen = () => {
 
   return (
     <>
-      <div className="navbar navbar--fixed">
-        <Typography variant="h4" component="h2">
-          WorkoutsApp
-        </Typography>
-      </div>
-
       <div className="flex-container center">
         <div className="login-box">
           <div className="login-box__header">

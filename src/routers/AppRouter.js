@@ -7,6 +7,7 @@ import { finishRenewToken, startRenewToken } from "../actions/user.action";
 
 import { LoginScreen } from "../components/login-register/LoginScreen";
 import { RegisterScreen } from "../components/login-register/RegisterScreen";
+import { Navbar } from "../components/ui/Navbar";
 import { DashboardRoutes } from "./DashboardRoutes";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
@@ -31,6 +32,7 @@ export const AppRouter = () => {
     return (
       <Router>
         <div>
+          <Navbar />
           <Switch>
             <PublicRoute
               exact
