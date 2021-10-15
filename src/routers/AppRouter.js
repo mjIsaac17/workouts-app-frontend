@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
@@ -11,10 +11,12 @@ import { Navbar } from "../components/ui/Navbar";
 import { DashboardRoutes } from "./DashboardRoutes";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
+import { Sidebar } from "../components/ui/Sidebar";
+import { Layout } from "../components/ui/Layout";
 
 export const AppRouter = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const { user, checking, isLogged } = useSelector((state) => state.user);
 
   //Renew the token when the page loads
   useEffect(() => {
@@ -26,33 +28,32 @@ export const AppRouter = () => {
     }
   }, [dispatch]);
 
-  if (user.checking) {
+  if (checking) {
     return <h5>Loading</h5>;
   } else {
     return (
       <Router>
-        <div>
-          <Navbar />
+        <Layout user={user}>
           <Switch>
             <PublicRoute
               exact
               path="/login"
-              isAuthenticated={user.isLogged}
+              isAuthenticated={isLogged}
               component={LoginScreen}
             />
             <PublicRoute
               exact
               path="/register"
-              isAuthenticated={user.isLogged}
+              isAuthenticated={isLogged}
               component={RegisterScreen}
             />
             <PrivateRoute
               path="/"
-              isAuthenticated={user.isLogged}
+              isAuthenticated={isLogged}
               component={DashboardRoutes}
             />
           </Switch>
-        </div>
+        </Layout>
       </Router>
     );
   }

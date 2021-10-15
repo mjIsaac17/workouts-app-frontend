@@ -13,3 +13,28 @@
   position: sticky;
   top: 0;
 }
+
+.navbar__content {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar__user {
+  ul {
+    display: flex;
+    list-style-type: none;
+  }
+}
+
+.navbar--center {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: -1;
+}
+
+.logout {
+  cursor: pointer;
+}

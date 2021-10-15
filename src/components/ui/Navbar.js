@@ -1,37 +1,42 @@
 import React from "react";
 import { IconButton, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout } from "../../actions/user.action";
 import { Menu } from "@mui/icons-material";
 
-export const Navbar = ({ openCloseSidebar }) => {
+export const Navbar = ({ user, openCloseSidebar }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+
   console.log("render nav");
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
-  return (
-    <>
+  if (user.id)
+    return (
       <div className="navbar navbar--fixed">
         <Typography variant="h4" component="h2">
           WorkoutsApp
         </Typography>
       </div>
-      {/* <nav>
-        <div className="nav">
-          <div className="navIconMenu">
+    );
+  else
+    return (
+      <nav className="navbar navbar--fixed">
+        <div className="navbar__content">
+          <div>
             <IconButton onClick={openCloseSidebar}>
-              <Menu className="navIcon" fontSize="large" />
+              <Menu fontSize="large" />
             </IconButton>
           </div>
-          <div className="navTitle">
-            <p>iWorkout</p>
+          <div className="navbar--center">
+            <Typography variant="h4" component="h2">
+              WorkoutsApp
+            </Typography>
           </div>
-          <div className="navUser">
-            <ul>
+          <div className="navbar__user">
+            <ul className="spacing-x-1">
               <li>{user.name}</li>
               <li className="logout" onClick={handleLogout}>
                 Logout
@@ -39,7 +44,6 @@ export const Navbar = ({ openCloseSidebar }) => {
             </ul>
           </div>
         </div>
-      </nav> */}
-    </>
-  );
+      </nav>
+    );
 };
