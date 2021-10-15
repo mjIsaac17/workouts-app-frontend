@@ -77,19 +77,18 @@ export const LoginScreen = () => {
                 />
               </div>
               <div className="login-box__buttonArea">
-                <Button variant="contained" size="large" type="submit">
-                  Log in
-                </Button>
-                <Link to="/register">
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    size="large"
-                    color="secondary"
-                  >
-                    Register
+                <div className="login-box__buttonArea__item">
+                  <Button variant="contained" size="large" type="submit">
+                    Log in
                   </Button>
-                </Link>
+                </div>
+                <div className="login-box__buttonArea__item">
+                  <Link to="/register">
+                    <Button variant="contained" size="large" color="secondary">
+                      Register
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </form>
           </div>
