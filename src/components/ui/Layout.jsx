@@ -4,11 +4,17 @@ import { Sidebar } from "./Sidebar";
 
 export const Layout = ({ user, children }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
-  const openCloseSidebar = () => {
+  const openCloseSidebar = (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
     setOpenSidebar(!openSidebar);
   };
   return (
-    <div className={`${openSidebar ? "background-inactive" : ""}`}>
+    <div>
       <Navbar user={user} openCloseSidebar={openCloseSidebar} />
       {user.id && (
         <Sidebar

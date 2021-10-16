@@ -1,22 +1,47 @@
 import React from "react";
-import { IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import { SidebarData } from "./SidebarData";
-import { SidebarItem } from "./SidebarItem";
-import { Close } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import { Typography } from "@mui/material";
 
-export const Sidebar = ({ openCloseSidebar, openSidebar }) => {
+export const Sidebar = ({ openSidebar, openCloseSidebar }) => {
   console.log("render sidebar");
+
   return (
-    <nav className={openSidebar ? "sidebar active" : "sidebar"}>
-      <IconButton className="sidebar__closeIcon" onClick={openCloseSidebar}>
-        <Close fontSize="large" style={{ color: "white" }} />
-      </IconButton>
-      <ul className="sidebarList">
-        {SidebarData.map((data, key) => (
-          <SidebarItem key={`${data.title}-${key}`} {...data}></SidebarItem>
-        ))}
-      </ul>
-    </nav>
+    <>
+      <Drawer open={openSidebar} onClose={openCloseSidebar}>
+        <Box
+          sx={{ width: 250 }}
+          role="presentation"
+          onClick={openCloseSidebar}
+          onKeyDown={openCloseSidebar}
+        >
+          <List>
+            <ListItem>
+              <ListItemText>
+                <Typography variant="h5">WorkoutsApp</Typography>
+              </ListItemText>
+            </ListItem>
+            <Divider />
+            {SidebarData.map((data, index) => (
+              <Link to={data.link}>
+                <ListItem button key={index}>
+                  <ListItemIcon>{data.icon}</ListItemIcon>
+                  <ListItemText primary={data.title} />
+                </ListItem>
+              </Link>
+            ))}
+          </List>
+          <Divider />
+        </Box>
+      </Drawer>
+    </>
   );
 };

@@ -79,6 +79,8 @@ export const startRenewToken = () => {
         if (body.role_id === adminData.ROLE_ID) body.isAdmin = true;
         else body.isAdmin = false;
 
+        body.id = body.uid;
+        delete body.uid;
         delete body.token;
         dispatch(successLogin(body));
       } else dispatch(finishRenewToken());
