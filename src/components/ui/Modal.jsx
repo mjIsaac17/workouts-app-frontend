@@ -17,8 +17,8 @@ export const Modal = ({ children }) => {
 
   return (
     <div className={showHideClassName}>
-      <section className="modal-main">
-        <div style={{ marginBottom: "1rem" }} className="modal-header">
+      <section className="modal__content">
+        <div className="modal__header">
           <p>{header}</p>
           <button type="button" className="closeModal" onClick={handleClose}>
             <Close />

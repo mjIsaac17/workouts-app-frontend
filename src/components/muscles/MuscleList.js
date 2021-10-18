@@ -14,6 +14,7 @@ import { Add, Close, Edit } from "@mui/icons-material";
 import Stack from "@mui/material/Stack";
 import { setSnackbar } from "../../actions/snackbar.action";
 import { MuscleDetails } from "./MuscleDetails";
+import { Typography } from "@mui/material";
 
 export const MusclesList = () => {
   const dispatch = useDispatch();
@@ -46,14 +47,31 @@ export const MusclesList = () => {
     dispatch(setModal(true, "Edit muscle", componentsModal.muscleItem));
   };
 
+  const fabEditStyle = !editMode
+    ? {
+        color: "white",
+        bgcolor: "#109EB4",
+        "&:hover": {
+          bgcolor: "#1087B4",
+        },
+      }
+    : {
+        color: "white",
+        bgcolor: "#FE4343",
+        "&:hover": {
+          bgcolor: "#DF0000",
+        },
+      };
+
   if (loading) return <h1>Loading...</h1>;
   else
     return (
       <>
-        <div className="text-center-area">
-          <p className="text-title">Muscles</p>
-        </div>
-        <div className="card__list">
+        <Typography variant="h4" textAlign="center" margin={3}>
+          Muscles
+        </Typography>
+
+        <div className="card-grid-container">
           {muscleList.map((muscle) =>
             !editMode ? (
               <MuscleItem key={muscle.id} muscle={muscle} editMode={editMode} />
@@ -64,6 +82,7 @@ export const MusclesList = () => {
             )
           )}
         </div>
+
         {isAdmin && (
           <Stack
             direction="column"
@@ -75,7 +94,8 @@ export const MusclesList = () => {
             }}
           >
             <Fab
-              color={!editMode ? "secondary" : ""}
+              // color={!editMode && "secondary"}
+              sx={{ ...fabEditStyle }}
               aria-label="edit"
               onClick={handleEditMode}
             >

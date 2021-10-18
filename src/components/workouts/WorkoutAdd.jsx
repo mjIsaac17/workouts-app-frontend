@@ -19,6 +19,7 @@ import {
   startUpdatingWorkout,
 } from "../../actions/workout.action";
 import { useForm } from "../../hooks/useForm";
+import { InputFile } from "../ui/InputFile";
 
 export const WorkoutAdd = ({ action }) => {
   console.log("render <WorkoutsAdd />");
@@ -26,10 +27,6 @@ export const WorkoutAdd = ({ action }) => {
   const dispatch = useDispatch();
   const { currentWorkout, currentWorkoutExercises } = useSelector(
     (state) => state.workouts
-  );
-
-  const [newImageName, setNewImageName] = useState(
-    currentWorkout.imageName ? currentWorkout.imageName : "No image selected"
   );
 
   const muscleList = useMemo(
@@ -143,26 +140,13 @@ export const WorkoutAdd = ({ action }) => {
         <DataTableSelect handleAdd={handleAddChip} />
       </div>
 
-      <label htmlFor="workoutImage">
-        <Stack direction="row" alignItems="center">
-          <input
-            id="workoutImage"
-            name="workoutImage"
-            onChange={(e) => setNewImageName(e.target.files[0].name)}
-            type="file"
-            style={{ display: "none" }}
-          />
-          <Button
-            variant="contained"
-            color="info"
-            component="span"
-            sx={{ marginRight: "1rem" }}
-          >
-            Select image
-          </Button>
-          <InputLabel>{newImageName}</InputLabel>
-        </Stack>
-      </label>
+      <div className="margin-y-1">
+        <InputFile
+          id="workoutImage"
+          name="workoutImage"
+          currentImageName={currentWorkout.imageName}
+        />
+      </div>
 
       <Stack direction="row" spacing={2} justifyContent="flex-end">
         <Button

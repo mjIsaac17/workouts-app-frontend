@@ -35,7 +35,7 @@ export const WorkoutCard = ({ workout }) => {
             alt={workout.imageName}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h6" component="p">
               {workout.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">

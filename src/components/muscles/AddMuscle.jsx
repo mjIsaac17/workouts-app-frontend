@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { setModal } from "../../actions/modal.action";
 import { startAddingMuscle } from "../../actions/muscles.action";
 import { setSnackbar } from "../../actions/snackbar.action";
+import { InputFile } from "../ui/InputFile";
 
 export const AddMuscle = () => {
   console.log("render <addMuscle/>");
@@ -42,8 +43,17 @@ export const AddMuscle = () => {
         error={!!error}
         autoFocus
       />
-      <input type="file" id="image" name="image" className="margin-y-2" />
-      <Stack direction="row" spacing={2} justifyContent="flex-end">
+
+      <div className="m-y--1">
+        <InputFile id="image" name="image" />
+      </div>
+
+      <Stack
+        direction="row"
+        spacing={2}
+        justifyContent="flex-end"
+        className="m-t--2"
+      >
         <Button
           variant="contained"
           color="info"
