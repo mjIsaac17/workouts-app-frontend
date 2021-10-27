@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setModal } from "../../actions/modal.action";
 
-export const Modal = ({ children }) => {
+export const Modal = ({ children, modalSize = "sm" }) => {
   console.log("render Modal");
   const handleClose = () => {
     dispatch(setModal(false, ""));
@@ -17,15 +17,17 @@ export const Modal = ({ children }) => {
 
   return (
     <div className={showHideClassName}>
-      <section className="modal__content">
+      <div className={`modal__container modal--${modalSize}`}>
         <div className="modal__header">
           <p>{header}</p>
           <button type="button" className="closeModal" onClick={handleClose}>
             <Close />
           </button>
         </div>
-        {children}
-      </section>
+        <div className="modal__body">{children}</div>
+
+        {/* {children} */}
+      </div>
     </div>
   );
 };

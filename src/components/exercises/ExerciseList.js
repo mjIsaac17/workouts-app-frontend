@@ -1,4 +1,5 @@
 import { Add, Search } from "@mui/icons-material";
+import { Fab, MenuItem, Select, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -26,8 +27,8 @@ export const ExerciseList = () => {
 
   const totalExercises = exerciseList.length;
 
-  const handleSelect = () => {
-    const id = document.getElementById("ddlMuscle").value;
+  const handleSelect = (e) => {
+    const id = e.target.value;
     window.history.replaceState(null, "", `/exercises/${id}`);
     setMuscleId(id);
   };
@@ -52,29 +53,36 @@ export const ExerciseList = () => {
         <h1>Loading...</h1>
       ) : (
         <>
-          <div className="searchArea">
-            <select
-              id="ddlMuscle" //drop down list
-              defaultValue={muscleId}
+          <div className="flex-box space-between sticky">
+            <Select
+              id="ddlMuscle"
+              value={muscleId}
+              label="Muscle"
               onChange={handleSelect}
+              size="small"
             >
-              <option value="0">All</option>
+              <MenuItem value="0">All</MenuItem>
               {muscleList.map((muscle) => (
-                <option key={`ddlMuscle-${muscle.id}`} value={muscle.id}>
+                <MenuItem key={`ddlMuscle-${muscle.id}`} value={muscle.id}>
                   {muscle.name}
-                </option>
+                </MenuItem>
               ))}
-            </select>
+            </Select>
             <div className="inputIcon">
               <input type="text" placeholder="Search" />
               <Search />
             </div>
           </div>
-          <div className="searchArea resultsText">
-            <p>Results:</p>
-            <p>{totalExercises > 0 ? totalExercises : 0} Exercise(s) found</p>
+
+          <div className="flex-box space-between">
+            <Typography variant="h5" component="p">
+              Results:
+            </Typography>
+            <Typography variant="h5" component="p">
+              {totalExercises > 0 ? totalExercises : 0} Exercise(s) found
+            </Typography>
           </div>
-          <div className="card__list">
+          <div className="card-grid-container">
             {exerciseList.map((exercise) => (
               <div
                 key={exercise.name + exercise.id}
@@ -84,9 +92,14 @@ export const ExerciseList = () => {
               </div>
             ))}
           </div>
-          <button
-            type="button"
-            className="fab fab-primary"
+          <Fab
+            sx={{
+              position: "fixed",
+              bottom: (theme) => theme.spacing(2),
+              right: (theme) => theme.spacing(2),
+            }}
+            color="primary"
+            aria-label="add-exercise"
             onClick={() =>
               handleModal(
                 true,
@@ -96,18 +109,18 @@ export const ExerciseList = () => {
             }
           >
             <Add />
-          </button>
+          </Fab>
           {modalState.componentName === componentsModal.exerciseList && (
             <Modal>
               <AddExerciseForm
                 muscleList={muscleList}
-                defaultValue={muscleId}
+                muscleId={muscleId}
                 handleModal={handleModal}
               />
             </Modal>
           )}
           {modalState.componentName === componentsModal.exerciseItem && (
-            <Modal>
+            <Modal modalSize="md">
               <DetailsExercise />
             </Modal>
           )}

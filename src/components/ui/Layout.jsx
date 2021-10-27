@@ -22,7 +22,7 @@ export const Layout = ({ user, children }) => {
           openSidebar={openSidebar}
         />
       )}
-      <div>{children}</div>
+      <div className="container">{children}</div>
     </div>
   );
 };

@@ -32,7 +32,7 @@ export const LoginScreen = () => {
           </div>
           <div className="login-box__body">
             <form style={{ display: "grid" }} onSubmit={handleLogin}>
-              <div className="spacing-y-1">
+              <div className="space-elements-y--1">
                 <TextField
                   id="txtLoginEmail"
                   fullWidth

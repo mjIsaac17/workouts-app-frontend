@@ -19,11 +19,14 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { FormHelperText } from "@mui/material";
 import { renameImage } from "../../helpers/renameImage";
+import { ConfirmDelete } from "../ui/ConfirmDelete";
+import { InputFile } from "../ui/InputFile";
 
 export const MuscleDetails = () => {
   console.log("render <MuscleDetails/>");
   const dispatch = useDispatch();
   const currentMuscle = useSelector((state) => state.muscles.current);
+  const { isAdmin } = useSelector((state) => state.user.user);
   const [muscleName, setMuscleName] = useState(currentMuscle.name);
   const [error, setError] = useState("");
   const [deleteExercises, setDeleteExercises] = useState(null);
@@ -81,112 +84,113 @@ export const MuscleDetails = () => {
 
   if (!deleteMode) {
     return (
-      <form onSubmit={handleSubmit}>
-        <TextField
-          size="small"
-          id="muscleName"
-          name="muscleName"
-          required
-          fullWidth
-          value={muscleName}
-          onChange={(e) => setMuscleName(e.target.value)}
-          label="Muscle name"
-          helperText={error}
-          error={!!error}
-          autoFocus
-        />
-        <div className="margin-y-2">
-          <label>Current image: {currentMuscle.imageName}</label>
+      <form onSubmit={handleSubmit} className="modal-details">
+        <div className="modal-details__image-section">
+          {/* <label>Current image: {currentMuscle.imageName}</label> */}
           <img
-            style={{ marginTop: "0.5rem" }}
             src={`../img/muscles/${currentMuscle.imageName}`}
             alt={currentMuscle.imageName}
           />
         </div>
-        <div className="margin-y-2">
-          <label>New image</label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            style={{ marginTop: "0.5rem" }}
-          />
-        </div>
-        <Stack direction="row" justifyContent="space-between">
-          <Button
-            variant="contained"
-            endIcon={<Delete />}
-            color="error"
-            type="button"
-            onClick={() => handleDeleteMode()}
-          >
-            Delete
-          </Button>
-          <Stack direction="row" spacing={2}>
-            <Button
-              variant="contained"
-              color="info"
-              onClick={() => dispatch(setModal(false))}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              endIcon={<SaveIcon />}
-              color="success"
-              type="submit"
-            >
-              Update
-            </Button>
+        <div className="modal-details__form-section">
+          <div>
+            <TextField
+              size="small"
+              id="muscleName"
+              name="muscleName"
+              required
+              fullWidth
+              value={muscleName}
+              onChange={(e) => setMuscleName(e.target.value)}
+              label="Muscle name"
+              helperText={error}
+              error={!!error}
+              autoFocus
+            />
+            <InputFile
+              id="image"
+              name="image"
+              currentImageName={currentMuscle.imageName}
+            />
+          </div>
+          {/* <div className="margin-y-2">
+            <label>New image</label>
+            <input
+              type="file"
+              id="image"
+              name="image"
+              style={{ marginTop: "0.5rem" }}
+            />
+          </div> */}
+          <Stack direction="row" justifyContent="space-between">
+            {isAdmin && (
+              <Button
+                variant="contained"
+                endIcon={<Delete />}
+                color="error"
+                size="small"
+                onClick={() => handleDeleteMode()}
+              >
+                Delete
+              </Button>
+            )}
+            <Stack direction="row" spacing={2}>
+              <Button
+                variant="contained"
+                color="info"
+                onClick={() => dispatch(setModal(false))}
+                size="small"
+              >
+                Cancel
+              </Button>
+              {isAdmin && (
+                <Button
+                  variant="contained"
+                  endIcon={<SaveIcon />}
+                  color="success"
+                  type="submit"
+                  size="small"
+                >
+                  Update
+                </Button>
+              )}
+            </Stack>
           </Stack>
-        </Stack>
+        </div>
       </form>
     );
   } else {
     return (
       <>
-        <FormControl component="fieldset" error={!!error}>
-          <FormLabel component="legend">
-            Delete all exercises associated with "{currentMuscle.name}"?
-          </FormLabel>
-          <RadioGroup
-            row
-            aria-label="delete muscle exercises"
-            onChange={handleRadioChange}
-          >
-            <FormControlLabel
-              id="fclDeleteExercisesNo"
-              value={false}
-              control={<Radio />}
-              label="No"
-            />
-            <FormControlLabel
-              id="fclDeleteExercisesYes"
-              value={true}
-              control={<Radio />}
-              label="Yes"
-            />
-          </RadioGroup>
-          <FormHelperText>{error}</FormHelperText>
-        </FormControl>
-        <Stack direction="row" spacing={2} justifyContent="flex-end">
-          <Button
-            type="button"
-            variant="contained"
-            color="info"
-            onClick={() => handleDeleteMode()}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            variant="contained"
-            color="error"
-            onClick={handleDelete}
-          >
-            Accept
-          </Button>
-        </Stack>
+        <ConfirmDelete
+          handleCancel={handleDeleteMode}
+          handleDelete={handleDelete}
+        >
+          <FormControl component="fieldset" error={!!error}>
+            <FormLabel component="legend">
+              Delete all exercises associated with "{currentMuscle.name}"?
+            </FormLabel>
+            <RadioGroup
+              row
+              aria-label="delete muscle exercises"
+              onChange={handleRadioChange}
+            >
+              <FormControlLabel
+                id="fclDeleteExercisesNo"
+                value={false}
+                control={<Radio />}
+                label="No"
+              />
+              <FormControlLabel
+                id="fclDeleteExercisesYes"
+                value={true}
+                control={<Radio />}
+                label="Yes"
+              />
+            </RadioGroup>
+            <FormHelperText>{error}</FormHelperText>
+          </FormControl>
+        </ConfirmDelete>
       </>
     );
   }

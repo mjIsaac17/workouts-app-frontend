@@ -121,7 +121,7 @@ export const MusclesList = () => {
           </Modal>
         )}
         {modalState.componentName === componentsModal.muscleItem && (
-          <Modal>
+          <Modal modalSize="md">
             <MuscleDetails />
           </Modal>
         )}

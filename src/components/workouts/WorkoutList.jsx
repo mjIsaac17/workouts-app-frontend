@@ -1,4 +1,4 @@
-import { Alert, Stack, Button } from "@mui/material";
+import { Alert } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../../actions/modal.action";
@@ -10,6 +10,7 @@ import {
   startGettingWorkoutExercises,
 } from "../../actions/workout.action";
 import { componentsModal } from "../../helpers/componentsModal";
+import { ConfirmDelete } from "../ui/ConfirmDelete";
 import { Modal } from "../ui/Modal";
 import { WorkoutAdd } from "./WorkoutAdd";
 import { WorkoutCard } from "./WorkoutCard";
@@ -33,6 +34,18 @@ export const WorkoutList = () => {
     dispatch(setLoading(false));
   };
 
+  const handleDelete = () => {
+    dispatch(
+      startDeletingWorkout({
+        id: currentWorkout.id,
+        imageName: currentWorkout.imageName,
+      })
+    );
+  };
+  const handleCancel = () => {
+    dispatch(setModal(false));
+  };
+
   return (
     <div className="card__list">
       {myWorkouts.map((workout) => (
@@ -41,12 +54,12 @@ export const WorkoutList = () => {
         </div>
       ))}
       {componentName === componentsModal.workoutsAdd && (
-        <Modal>
+        <Modal modalSize="md2">
           <WorkoutAdd action={"add"} />
         </Modal>
       )}
       {componentName === componentsModal.workoutsUpdate && (
-        <Modal>
+        <Modal modalSize="md2">
           {loading ? (
             <p>Loading workout data...</p>
           ) : (
@@ -56,39 +69,15 @@ export const WorkoutList = () => {
       )}
       {componentName === componentsModal.workoutsDelete && (
         <Modal>
-          <Alert severity="warning">
-            Are you sure you want to delete your workout{" "}
-            <b>{currentWorkout.name}</b>?
-          </Alert>
-          <Stack
-            direction="row"
-            spacing={2}
-            justifyContent="flex-end"
-            marginTop="1rem"
+          <ConfirmDelete
+            handleCancel={handleCancel}
+            handleDelete={handleDelete}
           >
-            <Button
-              variant="contained"
-              color="info"
-              onClick={() => dispatch(setModal(false))}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              type="button"
-              onClick={() =>
-                dispatch(
-                  startDeletingWorkout({
-                    id: currentWorkout.id,
-                    imageName: currentWorkout.imageName,
-                  })
-                )
-              }
-            >
-              Accept
-            </Button>
-          </Stack>
+            <Alert severity="warning">
+              Are you sure you want to delete your workout
+              <b> {currentWorkout.name}</b>?
+            </Alert>
+          </ConfirmDelete>
         </Modal>
       )}
     </div>

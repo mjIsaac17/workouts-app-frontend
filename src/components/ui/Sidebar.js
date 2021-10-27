@@ -31,8 +31,8 @@ export const Sidebar = ({ openSidebar, openCloseSidebar }) => {
             </ListItem>
             <Divider />
             {SidebarData.map((data, index) => (
-              <Link to={data.link}>
-                <ListItem button key={index}>
+              <Link to={data.link} key={index}>
+                <ListItem button>
                   <ListItemIcon>{data.icon}</ListItemIcon>
                   <ListItemText primary={data.title} />
                 </ListItem>

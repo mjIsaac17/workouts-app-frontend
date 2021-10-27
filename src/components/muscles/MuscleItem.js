@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const MuscleItem = ({ muscle, editMode = false }) => {
   return (
-    <div className="card">
+    <div className="card card--md">
       {!editMode ? (
         <Link to={`/exercises/${muscle.id}`}>
           <img src={`img/muscles/${muscle.imageName}`} alt={muscle.name} />

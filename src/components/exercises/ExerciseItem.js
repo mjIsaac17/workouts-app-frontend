@@ -3,7 +3,7 @@ import React from "react";
 export const ExerciseItem = ({ exercise }) => {
   return (
     <>
-      <div className="card">
+      <div className="card card--sm">
         <img
           src={`../img/exercises/${exercise.imageName}`}
           alt={exercise.name}
