@@ -37,8 +37,8 @@ export const Navbar = ({ user, openCloseSidebar }) => {
           </div>
           <div className="navbar__user">
             <ul>
-              <li className="spacing-x-1">{user.name}</li>
-              <li className="logout" onClick={handleLogout}>
+              <li>{user.name}</li>
+              <li className="logout m-x--1" onClick={handleLogout}>
                 Logout
               </li>
             </ul>

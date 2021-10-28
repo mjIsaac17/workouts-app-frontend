@@ -19,6 +19,7 @@ export const ExerciseList = () => {
 
   // selectors
   const modalState = useSelector((state) => state.modal);
+  const { isAdmin } = useSelector((state) => state.user.user);
   const { exerciseList, loading } = useSelector((state) => state.exercises);
 
   // states
@@ -93,24 +94,27 @@ export const ExerciseList = () => {
               </div>
             ))}
           </div>
-          <Fab
-            sx={{
-              position: "fixed",
-              bottom: (theme) => theme.spacing(2),
-              right: (theme) => theme.spacing(2),
-            }}
-            color="primary"
-            aria-label="add-exercise"
-            onClick={() =>
-              handleModal(
-                true,
-                "Add new exercise",
-                componentsModal.exerciseList
-              )
-            }
-          >
-            <Add />
-          </Fab>
+          {isAdmin && (
+            <Fab
+              sx={{
+                position: "fixed",
+                bottom: (theme) => theme.spacing(2),
+                right: (theme) => theme.spacing(2),
+              }}
+              color="primary"
+              aria-label="add-exercise"
+              onClick={() =>
+                handleModal(
+                  true,
+                  "Add new exercise",
+                  componentsModal.exerciseList
+                )
+              }
+            >
+              <Add />
+            </Fab>
+          )}
+
           {modalState.componentName === componentsModal.exerciseList && (
             <Modal>
               <AddExerciseForm
@@ -122,7 +126,11 @@ export const ExerciseList = () => {
           )}
           {modalState.componentName === componentsModal.exerciseItem && (
             <Modal modalSize="md">
-              <DetailsExercise muscleId={muscleId} />
+              <DetailsExercise
+                muscleId={muscleId}
+                exerciseList={exerciseList}
+                componentModalName={componentsModal.exerciseItem}
+              />
             </Modal>
           )}
         </>

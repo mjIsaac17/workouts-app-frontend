@@ -7,6 +7,14 @@
   margin: 0 auto;
 }
 
+.card-flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 1800px;
+}
+
 .card {
   border-radius: 5px;
   box-shadow: 0px 2px 5px gray;

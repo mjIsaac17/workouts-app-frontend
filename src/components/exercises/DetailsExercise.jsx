@@ -22,13 +22,17 @@ import { useForm } from "../../hooks/useForm";
 import { ConfirmDelete } from "../ui/ConfirmDelete";
 import { InputFile } from "../ui/InputFile";
 
-export const DetailsExercise = ({ muscleId }) => {
+export const DetailsExercise = ({
+  muscleId = 0,
+  exerciseList = [],
+  componentModalName,
+}) => {
   console.log("render details");
   const dispatch = useDispatch();
 
   // selectors
   const { isAdmin } = useSelector((state) => state.user.user);
-  const { exerciseList, current } = useSelector((state) => state.exercises);
+  const { current } = useSelector((state) => state.exercises);
 
   // states
   const [deleteMode, setDeleteMode] = useState(false);
@@ -46,6 +50,8 @@ export const DetailsExercise = ({ muscleId }) => {
   // constants & variables
   const muscleList = JSON.parse(localStorage.getItem("muscleList"));
   const inputImageName = "newImage";
+  const activeFields =
+    componentModalName === componentsModal.workoutsExercise || !isAdmin;
 
   // functions
   const handleSubmit = (e) => {
@@ -87,7 +93,7 @@ export const DetailsExercise = ({ muscleId }) => {
       }
     }
     dispatch(setCurrentExercise(newExercise));
-    dispatch(setModal(true, newExercise.name, componentsModal.exerciseItem));
+    dispatch(setModal(true, newExercise.name, componentModalName));
     setForm({
       ...newExercise,
       newImage: null,
@@ -120,16 +126,15 @@ export const DetailsExercise = ({ muscleId }) => {
         </div>
         <div className="modal-details__form-section">
           <div>
-            {isAdmin && (
-              <TextField
-                size="small"
-                label="Exercise Name"
-                fullWidth
-                name="name"
-                onChange={handleInputChange}
-                value={formValues.name}
-              />
-            )}
+            <TextField
+              size="small"
+              label="Exercise Name"
+              disabled={activeFields}
+              fullWidth
+              name="name"
+              onChange={handleInputChange}
+              value={formValues.name}
+            />
 
             <TextField
               sx={{ margin: "1rem 0" }}
@@ -138,7 +143,7 @@ export const DetailsExercise = ({ muscleId }) => {
               fullWidth
               label="Description"
               multiline
-              disabled={!isAdmin}
+              disabled={activeFields}
               rows="3"
               onChange={handleInputChange}
               value={formValues.description}
@@ -153,7 +158,7 @@ export const DetailsExercise = ({ muscleId }) => {
                 value={formValues.muscleId}
                 onChange={handleInputChange}
                 name="muscleId"
-                disabled={!isAdmin}
+                disabled={activeFields}
               >
                 {muscleList.map((muscle) => (
                   <MenuItem key={`ddlMuscles-${muscle.id}`} value={muscle.id}>
@@ -162,16 +167,29 @@ export const DetailsExercise = ({ muscleId }) => {
                 ))}
               </Select>
             </FormControl>
-            {isAdmin && (
-              <InputFile
-                name={inputImageName}
-                id={inputImageName}
-                onChangeFunction={setNewImage}
-              />
-            )}
+            {isAdmin &&
+              componentModalName !== componentsModal.workoutsExercise && (
+                <InputFile
+                  name={inputImageName}
+                  id={inputImageName}
+                  onChangeFunction={setNewImage}
+                />
+              )}
           </div>
-          <Stack direction="row" justifyContent="space-between">
-            {isAdmin && (
+          {componentModalName === componentsModal.workoutsExercise ||
+          !isAdmin ? (
+            <Stack direction="row" justifyContent="flex-end">
+              <Button
+                variant="contained"
+                color="info"
+                onClick={() => dispatch(setModal(false, ""))}
+                size="small"
+              >
+                Close
+              </Button>
+            </Stack>
+          ) : (
+            <Stack direction="row" justifyContent="space-between">
               <Button
                 variant="contained"
                 endIcon={<Delete />}
@@ -181,17 +199,17 @@ export const DetailsExercise = ({ muscleId }) => {
               >
                 Delete
               </Button>
-            )}
-            <Stack direction="row" spacing={2}>
-              <Button
-                variant="contained"
-                color="info"
-                onClick={() => dispatch(setModal(false, ""))}
-                size="small"
-              >
-                Close
-              </Button>
-              {isAdmin && (
+
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  color="info"
+                  onClick={() => dispatch(setModal(false, ""))}
+                  size="small"
+                >
+                  Close
+                </Button>
+
                 <Button
                   variant="contained"
                   endIcon={<Save />}
@@ -201,9 +219,9 @@ export const DetailsExercise = ({ muscleId }) => {
                 >
                   Save
                 </Button>
-              )}
+              </Stack>
             </Stack>
-          </Stack>
+          )}
         </div>
       </form>
     );

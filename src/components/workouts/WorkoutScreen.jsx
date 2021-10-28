@@ -1,5 +1,5 @@
 import React from "react";
-import { Fab } from "@mui/material";
+import { Fab, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { WorkoutList } from "./WorkoutList";
@@ -22,9 +22,10 @@ export const WorkoutsScreen = () => {
 
   return (
     <>
-      <div className="text-center-area">
-        <p className="text-title">My workouts</p>
-      </div>
+      <Typography variant="h4" textAlign="center" margin={3}>
+        My workouts
+      </Typography>
+
       <WorkoutList />
 
       <Fab
