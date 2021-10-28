@@ -6,7 +6,7 @@ export const InputFile = ({ id, name, currentImageName, onChangeFunction }) => {
   const [newImageName, setNewImageName] = useState(
     currentImageName ? currentImageName : "No image selected"
   );
-
+  console.log("render <InputFile/>");
   const handleChange = (e) => {
     setNewImageName(e.target.files[0].name);
     if (onChangeFunction) onChangeFunction();

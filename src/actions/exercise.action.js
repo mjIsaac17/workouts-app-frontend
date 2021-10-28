@@ -91,7 +91,7 @@ export const startUpdatingExercise = (exercise, originalMuscleId) => {
       if (resp.ok) {
         delete exercise.newImage;
         //Check if the muscle id of the updated exercise changed to remove it of the state
-        if (exercise.muscleId === originalMuscleId)
+        if (exercise.muscleId === originalMuscleId || originalMuscleId === 0)
           dispatch(successUpdateExercise(exercise));
         else dispatch(successRemoveExercise(exercise.id));
 

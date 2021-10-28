@@ -1,9 +1,7 @@
 import { Add, Search } from "@mui/icons-material";
 import { Fab, MenuItem, Select, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import {
   startGettingExercises,
   setCurrentExercise,
@@ -16,20 +14,23 @@ import { DetailsExercise } from "./DetailsExercise";
 import { ExerciseItem } from "./ExerciseItem";
 
 export const ExerciseList = () => {
-  const dispatch = useDispatch();
-  const { urlMuscleId = "0" } = useParams();
-  const modalState = useSelector((state) => state.modal);
-  const [muscleId, setMuscleId] = useState(urlMuscleId);
   console.log("render <ExerciseList/>");
+  const dispatch = useDispatch();
 
+  // selectors
+  const modalState = useSelector((state) => state.modal);
   const { exerciseList, loading } = useSelector((state) => state.exercises);
-  const muscleList = JSON.parse(localStorage.getItem("muscleList"));
 
+  // states
+  const [muscleId, setMuscleId] = useState(0); // 0 id when all exercises are selected
+
+  // constants & variables
+  const muscleList = JSON.parse(localStorage.getItem("muscleList"));
   const totalExercises = exerciseList.length;
 
+  // functions
   const handleSelect = (e) => {
     const id = e.target.value;
-    window.history.replaceState(null, "", `/exercises/${id}`);
     setMuscleId(id);
   };
 
@@ -42,9 +43,10 @@ export const ExerciseList = () => {
     dispatch(setModal(true, exercise.name, componentsModal.exerciseItem));
   };
 
+  // effects
   useEffect(() => {
     console.log("effect startGettingExercises");
-    if (muscleId) dispatch(startGettingExercises(muscleId));
+    dispatch(startGettingExercises(muscleId));
   }, [dispatch, muscleId]);
 
   return (
@@ -61,7 +63,7 @@ export const ExerciseList = () => {
               onChange={handleSelect}
               size="small"
             >
-              <MenuItem value="0">All</MenuItem>
+              <MenuItem value={0}>All</MenuItem>
               {muscleList.map((muscle) => (
                 <MenuItem key={`ddlMuscle-${muscle.id}`} value={muscle.id}>
                   {muscle.name}
@@ -73,7 +75,6 @@ export const ExerciseList = () => {
               <Search />
             </div>
           </div>
-
           <div className="flex-box space-between">
             <Typography variant="h5" component="p">
               Results:
@@ -121,7 +122,7 @@ export const ExerciseList = () => {
           )}
           {modalState.componentName === componentsModal.exerciseItem && (
             <Modal modalSize="md">
-              <DetailsExercise />
+              <DetailsExercise muscleId={muscleId} />
             </Modal>
           )}
         </>

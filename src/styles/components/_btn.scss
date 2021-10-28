@@ -1,0 +1,37 @@
+.btn__navigation {
+  background-color: transparent;
+  border: none;
+  color: rgba(207, 207, 207, 0.534);
+  font-size: 3rem;
+  position: fixed;
+  top: 50%;
+  transform: scaleY(2);
+
+  &:hover {
+    color: rgb(207, 207, 207);
+    cursor: pointer;
+  }
+}
+
+.btn__navigation--previous {
+  left: -5%;
+}
+
+.btn__navigation--next {
+  right: -5%;
+}
+
+@media screen and (max-width: 1000px) {
+  .btn__navigation {
+    color: rgba(177, 177, 177, 0.513);
+    &:hover {
+      color: rgba(128, 128, 128, 0.534);
+    }
+  }
+  .btn__navigation--previous {
+    left: 0%;
+  }
+  .btn__navigation--next {
+    right: 0%;
+  }
+}

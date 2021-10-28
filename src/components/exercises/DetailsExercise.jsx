@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Delete, Save } from "@mui/icons-material";
 import {
   Alert,
@@ -9,44 +10,52 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import {
   startDeletingExercise,
   startUpdatingExercise,
+  setCurrentExercise,
 } from "../../actions/exercise.action";
 import { setModal } from "../../actions/modal.action";
+import { componentsModal } from "../../helpers/componentsModal";
 import { useForm } from "../../hooks/useForm";
 import { ConfirmDelete } from "../ui/ConfirmDelete";
 import { InputFile } from "../ui/InputFile";
 
-export const DetailsExercise = () => {
+export const DetailsExercise = ({ muscleId }) => {
   console.log("render details");
   const dispatch = useDispatch();
-  const { urlMuscleId } = useParams();
-  const { current } = useSelector((state) => state.exercises);
-  const { isAdmin } = useSelector((state) => state.user.user);
-  const muscleList = JSON.parse(localStorage.getItem("muscleList"));
-  const inputImageName = "newImage";
 
-  const [formValues, handleInputChange, setSpecificValue] = useForm({
-    ...current, //it contains the data of the selected exercise
-    muscleId: urlMuscleId,
+  // selectors
+  const { isAdmin } = useSelector((state) => state.user.user);
+  const { exerciseList, current } = useSelector((state) => state.exercises);
+
+  // states
+  const [deleteMode, setDeleteMode] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(
+    exerciseList.findIndex((e) => e.id === current.id)
+  );
+
+  // custom hooks
+  const [formValues, handleInputChange, setSpecificValue, setForm] = useForm({
+    ...current, //Contains the data of the selected exercise
+    muscleId: muscleId !== 0 ? muscleId : current.muscleId,
     newImage: null, //image file
   });
 
-  const [deleteMode, setDeleteMode] = useState(false);
+  // constants & variables
+  const muscleList = JSON.parse(localStorage.getItem("muscleList"));
+  const inputImageName = "newImage";
 
+  // functions
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(startUpdatingExercise(formValues, urlMuscleId));
+    dispatch(startUpdatingExercise(formValues, muscleId));
   };
 
   const setNewImage = () => {
     setSpecificValue(
-      "newImage",
+      inputImageName,
       document.getElementById(inputImageName).files[0]
     );
   };
@@ -58,14 +67,55 @@ export const DetailsExercise = () => {
     dispatch(startDeletingExercise(formValues.id, formValues.imageName));
   };
 
+  const handleSetNewExercise = (navigate = "next") => {
+    let newExercise = {};
+    if (navigate === "next") {
+      if (exerciseList[currentIndex + 1]) {
+        newExercise = exerciseList[currentIndex + 1];
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        newExercise = exerciseList[0];
+        setCurrentIndex(0);
+      }
+    } else {
+      if (exerciseList[currentIndex - 1]) {
+        newExercise = exerciseList[currentIndex - 1];
+        setCurrentIndex(currentIndex - 1);
+      } else {
+        newExercise = exerciseList[exerciseList.length - 1];
+        setCurrentIndex(exerciseList.length - 1);
+      }
+    }
+    dispatch(setCurrentExercise(newExercise));
+    dispatch(setModal(true, newExercise.name, componentsModal.exerciseItem));
+    setForm({
+      ...newExercise,
+      newImage: null,
+    });
+  };
+
   if (!deleteMode)
     return (
       <form onSubmit={handleSubmit} className="modal-details">
+        <button
+          type="button"
+          className="btn__navigation btn__navigation--previous"
+          onClick={() => handleSetNewExercise("previous")}
+        >
+          {"<"}
+        </button>
+        <button
+          type="button"
+          className="btn__navigation btn__navigation--next"
+          onClick={() => handleSetNewExercise("next")}
+        >
+          {">"}
+        </button>
         <div className="modal-details__image-section">
           <img
             className="image"
-            src={`../img/exercises/${current.imageName}`}
-            alt={current.imageName}
+            src={`../img/exercises/${formValues.imageName}`}
+            alt={formValues.imageName}
           />
         </div>
         <div className="modal-details__form-section">
@@ -77,7 +127,7 @@ export const DetailsExercise = () => {
                 fullWidth
                 name="name"
                 onChange={handleInputChange}
-                defaultValue={current.name}
+                value={formValues.name}
               />
             )}
 
@@ -91,7 +141,7 @@ export const DetailsExercise = () => {
               disabled={!isAdmin}
               rows="3"
               onChange={handleInputChange}
-              defaultValue={current.description}
+              value={formValues.description}
             />
             <FormControl fullWidth>
               <InputLabel id="labelMuscleId">Muscle</InputLabel>
@@ -100,9 +150,7 @@ export const DetailsExercise = () => {
                 labelId="labelMuscleId"
                 label="Muscle"
                 size="small"
-                defaultValue={
-                  !current.muscleId ? urlMuscleId : current.muscleId
-                }
+                value={formValues.muscleId}
                 onChange={handleInputChange}
                 name="muscleId"
                 disabled={!isAdmin}
@@ -118,7 +166,6 @@ export const DetailsExercise = () => {
               <InputFile
                 name={inputImageName}
                 id={inputImageName}
-                currentImageName={current.imageName}
                 onChangeFunction={setNewImage}
               />
             )}

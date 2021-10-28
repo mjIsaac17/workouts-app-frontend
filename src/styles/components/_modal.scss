@@ -1,16 +1,16 @@
 .modal--sm {
-  max-width: 600px;
-  max-height: 500px;
+  max-width: $modal-sm-width;
+  max-height: $modal-sm-height;
 }
 
 .modal--md {
-  max-width: 900px;
-  max-height: 700px;
+  max-width: $modal-md-width;
+  max-height: $modal-md-height;
 }
 
 .modal--md2 {
-  max-width: 700px;
-  max-height: 900px;
+  max-width: $modal-md2-width;
+  max-height: $modal-md2-height;
 }
 
 .modal {
