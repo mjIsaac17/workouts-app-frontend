@@ -1,6 +1,15 @@
-import { Add, Search } from "@mui/icons-material";
-import { Fab, MenuItem, Select, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import ReactExport from "react-data-export";
+import { Add, FileDownload, Search } from "@mui/icons-material";
+import {
+  Fab,
+  IconButton,
+  MenuItem,
+  Select,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   startGettingExercises,
@@ -13,6 +22,9 @@ import { AddExerciseForm } from "./AddExerciseForm";
 import { DetailsExercise } from "./DetailsExercise";
 import { ExerciseItem } from "./ExerciseItem";
 
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+
 export const ExerciseList = () => {
   console.log("render <ExerciseList/>");
   const dispatch = useDispatch();
@@ -20,19 +32,115 @@ export const ExerciseList = () => {
   // selectors
   const modalState = useSelector((state) => state.modal);
   const { isAdmin } = useSelector((state) => state.user.user);
+  const currentMuscle = useSelector((state) => state.muscles.current);
   const { exerciseList, loading } = useSelector((state) => state.exercises);
+  const [currentMuscleName, setCurrentMuscleName] = useState(
+    currentMuscle ? currentMuscle.name : "All"
+  );
 
   // states
-  const [muscleId, setMuscleId] = useState(0); // 0 id when all exercises are selected
+  const [muscleId, setMuscleId] = useState(
+    currentMuscle ? currentMuscle.id : 0
+  ); // 0 id when all exercises are selected
 
   // constants & variables
   const muscleList = JSON.parse(localStorage.getItem("muscleList"));
   const totalExercises = exerciseList.length;
+  console.log(currentMuscle, exerciseList);
+  const exerciseDataSet = [
+    {
+      columns: [
+        {
+          title: "Exercise",
+          width: { wpx: 200 },
+          style: {
+            font: { sz: "18", bold: true },
+            border: {
+              top: { style: "thin" },
+              bottom: { style: "thin" },
+              left: { style: "thin" },
+              right: { style: "thin" },
+            },
+          },
+        },
+        {
+          title: "Muscle",
+          width: { wpx: 200 },
+          style: {
+            font: { sz: "18", bold: true },
+            border: {
+              top: { style: "thin" },
+              bottom: { style: "thin" },
+              left: { style: "thin" },
+              right: { style: "thin" },
+            },
+          },
+        },
+        {
+          title: "Description",
+          width: { wpx: 300 },
+          style: {
+            font: { sz: "18", bold: true },
+            border: {
+              top: { style: "thin" },
+              bottom: { style: "thin" },
+              left: { style: "thin" },
+              right: { style: "thin" },
+            },
+          },
+        },
+      ],
+      data: exerciseList.map((exercise) => [
+        {
+          value: exercise.name,
+          style: {
+            font: { sz: "14" },
+            border: {
+              top: { style: "thin" },
+              bottom: { style: "thin" },
+              left: { style: "thin" },
+              right: { style: "thin" },
+            },
+          },
+        },
+        {
+          value: exercise.muscleName ? exercise.muscleName : currentMuscleName,
+          style: {
+            font: { sz: "14" },
+            border: {
+              top: { style: "thin" },
+              bottom: { style: "thin" },
+              left: { style: "thin" },
+              right: { style: "thin" },
+            },
+          },
+        },
+        {
+          value: exercise.description,
+          style: {
+            font: { sz: "14" },
+            alignment: {
+              wrapText: true,
+            },
+            border: {
+              top: { style: "thin" },
+              bottom: { style: "thin" },
+              left: { style: "thin" },
+              right: { style: "thin" },
+            },
+          },
+        },
+      ]),
+    },
+  ];
 
   // functions
   const handleSelect = (e) => {
     const id = e.target.value;
     setMuscleId(id);
+    setCurrentMuscleName(
+      id === 0 ? "All" : muscleList.find((m) => m.id === id).name
+    );
   };
 
   const handleModal = (isOpen, title, componentName) => {
@@ -50,6 +158,7 @@ export const ExerciseList = () => {
     dispatch(startGettingExercises(muscleId));
   }, [dispatch, muscleId]);
 
+  //TODO: export data to excel.
   return (
     <div>
       {loading ? (
@@ -64,7 +173,9 @@ export const ExerciseList = () => {
               onChange={handleSelect}
               size="small"
             >
-              <MenuItem value={0}>All</MenuItem>
+              <MenuItem value={0} name="All">
+                All
+              </MenuItem>
               {muscleList.map((muscle) => (
                 <MenuItem key={`ddlMuscle-${muscle.id}`} value={muscle.id}>
                   {muscle.name}
@@ -84,6 +195,23 @@ export const ExerciseList = () => {
               {totalExercises > 0 ? totalExercises : 0} Exercise(s) found
             </Typography>
           </div>
+          <Stack>
+            <ExcelFile
+              element={
+                <Tooltip title="Export to Excel">
+                  <IconButton aria-label="export to excel" color="success">
+                    <FileDownload />
+                  </IconButton>
+                </Tooltip>
+              }
+              filename={`${currentMuscleName} exercises`}
+            >
+              <ExcelSheet
+                dataSet={exerciseDataSet}
+                name={`${currentMuscleName} exercises`}
+              />
+            </ExcelFile>
+          </Stack>
           <div className="card-grid-container">
             {exerciseList.map((exercise) => (
               <div

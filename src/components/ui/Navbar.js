@@ -15,7 +15,10 @@ export const Navbar = ({ user, openCloseSidebar }) => {
 
   if (!user.id)
     return (
-      <div className="navbar navbar--fixed">
+      <div
+        className="navbar"
+        style={{ position: "absolute", display: "block" }}
+      >
         <Typography variant="h4" component="h2">
           WorkoutsApp
         </Typography>

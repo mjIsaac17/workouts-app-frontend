@@ -44,7 +44,8 @@ export const MusclesList = () => {
   //set current muscle in the state
   const handleMuscleClick = (currentMuscle) => {
     dispatch(setCurrentMuscle(currentMuscle));
-    dispatch(setModal(true, "Edit muscle", componentsModal.muscleItem));
+    if (editMode)
+      dispatch(setModal(true, "Edit muscle", componentsModal.muscleItem));
   };
 
   const fabEditStyle = !editMode
@@ -72,15 +73,11 @@ export const MusclesList = () => {
         </Typography>
 
         <div className="card-grid-container">
-          {muscleList.map((muscle) =>
-            !editMode ? (
-              <MuscleItem key={muscle.id} muscle={muscle} editMode={editMode} />
-            ) : (
-              <div key={muscle.id} onClick={() => handleMuscleClick(muscle)}>
-                <MuscleItem muscle={muscle} editMode={editMode} />
-              </div>
-            )
-          )}
+          {muscleList.map((muscle) => (
+            <div key={muscle.id} onClick={() => handleMuscleClick(muscle)}>
+              <MuscleItem muscle={muscle} editMode={editMode} />
+            </div>
+          ))}
         </div>
 
         {isAdmin && (
