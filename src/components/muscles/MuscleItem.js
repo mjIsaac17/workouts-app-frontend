@@ -5,7 +5,7 @@ export const MuscleItem = ({ muscle, editMode = false }) => {
   return (
     <div className="card card--md">
       {!editMode ? (
-        <Link to={`/exercises/${muscle.id}`}>
+        <Link to={"/exercises"}>
           <img src={`img/muscles/${muscle.imageName}`} alt={muscle.name} />
           <div className="card__title">
             <p>{muscle.name}</p>

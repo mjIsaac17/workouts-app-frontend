@@ -1,5 +1,5 @@
 import { Add, Search } from "@mui/icons-material";
-import { Fab, MenuItem, Select, Typography } from "@mui/material";
+import { Fab, MenuItem, Select, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -95,24 +95,26 @@ export const ExerciseList = () => {
             ))}
           </div>
           {isAdmin && (
-            <Fab
-              sx={{
-                position: "fixed",
-                bottom: (theme) => theme.spacing(2),
-                right: (theme) => theme.spacing(2),
-              }}
-              color="primary"
-              aria-label="add-exercise"
-              onClick={() =>
-                handleModal(
-                  true,
-                  "Add new exercise",
-                  componentsModal.exerciseList
-                )
-              }
-            >
-              <Add />
-            </Fab>
+            <Tooltip title="Add new exercise">
+              <Fab
+                sx={{
+                  position: "fixed",
+                  bottom: (theme) => theme.spacing(2),
+                  right: (theme) => theme.spacing(2),
+                }}
+                color="primary"
+                aria-label="add-exercise"
+                onClick={() =>
+                  handleModal(
+                    true,
+                    "Add new exercise",
+                    componentsModal.exerciseList
+                  )
+                }
+              >
+                <Add />
+              </Fab>
+            </Tooltip>
           )}
 
           {modalState.componentName === componentsModal.exerciseList && (

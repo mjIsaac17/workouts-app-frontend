@@ -18,9 +18,11 @@ export const WorkoutExercisesList = () => {
   const modalState = useSelector((state) => state.modal);
 
   useEffect(() => {
-    console.log("effect startGettingWorkoutExercises");
-    dispatch(startGettingWorkoutExercises(workoutName));
-  }, [dispatch, workoutName]);
+    if (currentWorkoutExercises.length === 0) {
+      console.log("effect startGettingWorkoutExercises");
+      dispatch(startGettingWorkoutExercises(workoutName));
+    }
+  }, [dispatch, workoutName, currentWorkoutExercises]);
 
   const handleSelectExercise = (exercise) => {
     dispatch(setCurrentExercise(exercise));

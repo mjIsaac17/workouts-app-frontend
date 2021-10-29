@@ -14,7 +14,7 @@ import { Add, Close, Edit } from "@mui/icons-material";
 import Stack from "@mui/material/Stack";
 import { setSnackbar } from "../../actions/snackbar.action";
 import { MuscleDetails } from "./MuscleDetails";
-import { Typography } from "@mui/material";
+import { Tooltip, Typography } from "@mui/material";
 
 export const MusclesList = () => {
   const dispatch = useDispatch();
@@ -93,25 +93,28 @@ export const MusclesList = () => {
               right: (theme) => theme.spacing(2),
             }}
           >
-            <Fab
-              // color={!editMode && "secondary"}
-              sx={{ ...fabEditStyle }}
-              aria-label="edit"
-              onClick={handleEditMode}
-            >
-              {!editMode ? <Edit /> : <Close />}
-            </Fab>
-            <Fab
-              color="primary"
-              aria-label="edit"
-              onClick={() =>
-                dispatch(
-                  setModal(true, "Add new muscle", componentsModal.muscleList)
-                )
-              }
-            >
-              <Add />
-            </Fab>
+            <Tooltip title={!editMode ? "Edit muscle" : "Cancel editing"}>
+              <Fab
+                sx={{ ...fabEditStyle }}
+                aria-label="edit"
+                onClick={handleEditMode}
+              >
+                {!editMode ? <Edit /> : <Close />}
+              </Fab>
+            </Tooltip>
+            <Tooltip title="Add new muscle">
+              <Fab
+                color="primary"
+                aria-label="edit"
+                onClick={() =>
+                  dispatch(
+                    setModal(true, "Add new muscle", componentsModal.muscleList)
+                  )
+                }
+              >
+                <Add />
+              </Fab>
+            </Tooltip>
           </Stack>
         )}
 

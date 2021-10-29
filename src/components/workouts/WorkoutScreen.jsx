@@ -1,5 +1,5 @@
 import React from "react";
-import { Fab, Typography } from "@mui/material";
+import { Fab, Tooltip, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { WorkoutList } from "./WorkoutList";
@@ -28,18 +28,20 @@ export const WorkoutsScreen = () => {
 
       <WorkoutList />
 
-      <Fab
-        onClick={handleAdd}
-        sx={{
-          position: "fixed",
-          bottom: (theme) => theme.spacing(2),
-          right: (theme) => theme.spacing(2),
-        }}
-        color="primary"
-        aria-label="add-workout"
-      >
-        <Add />
-      </Fab>
+      <Tooltip title="Add new workout">
+        <Fab
+          onClick={handleAdd}
+          sx={{
+            position: "fixed",
+            bottom: (theme) => theme.spacing(2),
+            right: (theme) => theme.spacing(2),
+          }}
+          color="primary"
+          aria-label="add-workout"
+        >
+          <Add />
+        </Fab>
+      </Tooltip>
     </>
   );
 };
