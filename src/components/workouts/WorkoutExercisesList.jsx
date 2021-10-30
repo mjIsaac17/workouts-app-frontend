@@ -6,6 +6,7 @@ import { setCurrentExercise } from "../../actions/exercise.action";
 import { setModal } from "../../actions/modal.action";
 import { startGettingWorkoutExercises } from "../../actions/workout.action";
 import { componentsModal } from "../../helpers/componentsModal";
+import { BtnExportToExcel } from "../data-export/BtnExportToExcel";
 import { DetailsExercise } from "../exercises/DetailsExercise";
 import { Modal } from "../ui/Modal";
 import { ExerciseCard } from "./ExerciseCard";
@@ -36,7 +37,14 @@ export const WorkoutExercisesList = () => {
       <Typography variant="h5" component="p" textAlign="right">
         {totalExercises} Exercise(s)
       </Typography>
-
+      <div className="export-data-buttons-area">
+        <BtnExportToExcel
+          dataSource="exercises"
+          data={currentWorkoutExercises}
+          fileName={`${workoutName} workout`}
+          sheetName={workoutName}
+        />
+      </div>
       <div className="card-flex-container">
         {currentWorkoutExercises.map((ex, index) => (
           <div

@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ReactExport from "react-data-export";
-import { Add, FileDownload, Search } from "@mui/icons-material";
-import {
-  Fab,
-  IconButton,
-  MenuItem,
-  Select,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+
+import { Add, Search } from "@mui/icons-material";
+import { Fab, MenuItem, Select, Tooltip, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   startGettingExercises,
@@ -21,9 +13,7 @@ import { Modal } from "../ui/Modal";
 import { AddExerciseForm } from "./AddExerciseForm";
 import { DetailsExercise } from "./DetailsExercise";
 import { ExerciseItem } from "./ExerciseItem";
-
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+import { BtnExportToExcel } from "../data-export/BtnExportToExcel";
 
 export const ExerciseList = () => {
   console.log("render <ExerciseList/>");
@@ -46,93 +36,6 @@ export const ExerciseList = () => {
   // constants & variables
   const muscleList = JSON.parse(localStorage.getItem("muscleList"));
   const totalExercises = exerciseList.length;
-  console.log(currentMuscle, exerciseList);
-  const exerciseDataSet = [
-    {
-      columns: [
-        {
-          title: "Exercise",
-          width: { wpx: 200 },
-          style: {
-            font: { sz: "18", bold: true },
-            border: {
-              top: { style: "thin" },
-              bottom: { style: "thin" },
-              left: { style: "thin" },
-              right: { style: "thin" },
-            },
-          },
-        },
-        {
-          title: "Muscle",
-          width: { wpx: 200 },
-          style: {
-            font: { sz: "18", bold: true },
-            border: {
-              top: { style: "thin" },
-              bottom: { style: "thin" },
-              left: { style: "thin" },
-              right: { style: "thin" },
-            },
-          },
-        },
-        {
-          title: "Description",
-          width: { wpx: 300 },
-          style: {
-            font: { sz: "18", bold: true },
-            border: {
-              top: { style: "thin" },
-              bottom: { style: "thin" },
-              left: { style: "thin" },
-              right: { style: "thin" },
-            },
-          },
-        },
-      ],
-      data: exerciseList.map((exercise) => [
-        {
-          value: exercise.name,
-          style: {
-            font: { sz: "14" },
-            border: {
-              top: { style: "thin" },
-              bottom: { style: "thin" },
-              left: { style: "thin" },
-              right: { style: "thin" },
-            },
-          },
-        },
-        {
-          value: exercise.muscleName ? exercise.muscleName : currentMuscleName,
-          style: {
-            font: { sz: "14" },
-            border: {
-              top: { style: "thin" },
-              bottom: { style: "thin" },
-              left: { style: "thin" },
-              right: { style: "thin" },
-            },
-          },
-        },
-        {
-          value: exercise.description,
-          style: {
-            font: { sz: "14" },
-            alignment: {
-              wrapText: true,
-            },
-            border: {
-              top: { style: "thin" },
-              bottom: { style: "thin" },
-              left: { style: "thin" },
-              right: { style: "thin" },
-            },
-          },
-        },
-      ]),
-    },
-  ];
 
   // functions
   const handleSelect = (e) => {
@@ -195,8 +98,14 @@ export const ExerciseList = () => {
               {totalExercises > 0 ? totalExercises : 0} Exercise(s) found
             </Typography>
           </div>
-          <Stack>
-            <ExcelFile
+          <div className="export-data-buttons-area">
+            <BtnExportToExcel
+              dataSource="exercises"
+              data={exerciseList}
+              fileName={`${currentMuscleName} exercises`}
+              sheetName={`${currentMuscleName} exercises`}
+            />
+            {/* <ExcelFile
               element={
                 <Tooltip title="Export to Excel">
                   <IconButton aria-label="export to excel" color="success">
@@ -210,8 +119,8 @@ export const ExerciseList = () => {
                 dataSet={exerciseDataSet}
                 name={`${currentMuscleName} exercises`}
               />
-            </ExcelFile>
-          </Stack>
+            </ExcelFile> */}
+          </div>
           <div className="card-grid-container">
             {exerciseList.map((exercise) => (
               <div
