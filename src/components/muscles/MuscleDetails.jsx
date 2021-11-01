@@ -1,39 +1,48 @@
 import React, { useState } from "react";
 
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import SaveIcon from "@mui/icons-material/Save";
+import { Delete, Save } from "@mui/icons-material";
+import {
+  Button,
+  FormControlLabel,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Stack,
+  TextField,
+} from "@mui/material";
+
 import { useDispatch, useSelector } from "react-redux";
+
 import { setModal } from "../../actions/modal.action";
 import {
   startDeletingMuscle,
   startUpdatingMuscle,
 } from "../../actions/muscles.action";
-import { Delete } from "@mui/icons-material";
+
 import { componentsModal } from "../../helpers/componentsModal";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import { FormHelperText } from "@mui/material";
 import { renameImage } from "../../helpers/renameImage";
+
 import { ConfirmDelete } from "../ui/ConfirmDelete";
 import { InputFile } from "../ui/InputFile";
 
 export const MuscleDetails = () => {
   console.log("render <MuscleDetails/>");
+
   const dispatch = useDispatch();
+
+  // selectors
   const currentMuscle = useSelector((state) => state.muscles.current);
   const { isAdmin } = useSelector((state) => state.user.user);
-  const [muscleName, setMuscleName] = useState(currentMuscle.name);
+
+  // states
   const [error, setError] = useState("");
   const [deleteExercises, setDeleteExercises] = useState(null);
-
   const [deleteMode, setDeleteMode] = useState(false);
+  const [muscleName, setMuscleName] = useState(currentMuscle.name);
 
-  //Update muscle
+  // functions
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!muscleName.trim()) {
@@ -86,7 +95,6 @@ export const MuscleDetails = () => {
     return (
       <form onSubmit={handleSubmit} className="modal-details">
         <div className="modal-details__image-section">
-          {/* <label>Current image: {currentMuscle.imageName}</label> */}
           <img
             src={`../img/muscles/${currentMuscle.imageName}`}
             alt={currentMuscle.imageName}
@@ -113,15 +121,6 @@ export const MuscleDetails = () => {
               currentImageName={currentMuscle.imageName}
             />
           </div>
-          {/* <div className="margin-y-2">
-            <label>New image</label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              style={{ marginTop: "0.5rem" }}
-            />
-          </div> */}
           <Stack direction="row" justifyContent="space-between">
             {isAdmin && (
               <Button
@@ -146,7 +145,7 @@ export const MuscleDetails = () => {
               {isAdmin && (
                 <Button
                   variant="contained"
-                  endIcon={<SaveIcon />}
+                  endIcon={<Save />}
                   color="success"
                   type="submit"
                   size="small"

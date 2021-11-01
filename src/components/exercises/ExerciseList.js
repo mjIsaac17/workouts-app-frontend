@@ -62,7 +62,6 @@ export const ExerciseList = () => {
     dispatch(startGettingExercises(muscleId));
   }, [dispatch, muscleId]);
 
-  //TODO: export data to excel.
   return (
     <div>
       {loading ? (

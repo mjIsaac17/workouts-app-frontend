@@ -46,8 +46,8 @@ export const WorkoutAdd = ({ action }) => {
 
   // custom hooks
   const [formValues, handleInputChange] = useForm({
-    name: currentWorkout.name,
-    description: currentWorkout.description,
+    name: currentWorkout.name || "",
+    description: currentWorkout.description || "",
   });
 
   // constants & variables

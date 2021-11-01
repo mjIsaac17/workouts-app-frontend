@@ -17,37 +17,34 @@ import { MuscleDetails } from "./MuscleDetails";
 import { Tooltip, Typography } from "@mui/material";
 
 export const MusclesList = () => {
+  console.log("render <musclesList/>");
+
   const dispatch = useDispatch();
 
+  // selectors
   const { muscleList, loading } = useSelector((state) => state.muscles);
   const { isAdmin } = useSelector((state) => state.user.user);
   const modalState = useSelector((state) => state.modal);
+
+  // states
   const [editMode, setEditMode] = useState(false);
 
-  console.log("render <musclesList/>");
+  // effects
+  useEffect(() => {
+    if (muscleList.length === 0) {
+      dispatch(startGettingMuscles());
+      console.log("effect startgettingMuscles");
+    }
+  }, [dispatch, muscleList]);
 
   useEffect(() => {
-    dispatch(startGettingMuscles());
-    console.log("effect startgettingMuscles");
-  }, [dispatch]);
-
-  useEffect(() => {
-    console.log("effect saveMuscleList");
-    if (muscleList.length > 0)
+    if (muscleList.length > 0) {
+      console.log("effect saveMuscleList");
       localStorage.setItem("muscleList", JSON.stringify(muscleList));
+    }
   }, [muscleList]);
 
-  const handleEditMode = () => {
-    setEditMode(!editMode);
-    dispatch(setSnackbar("info", "Select a muscle to edit it", !editMode));
-  };
-  //set current muscle in the state
-  const handleMuscleClick = (currentMuscle) => {
-    dispatch(setCurrentMuscle(currentMuscle));
-    if (editMode)
-      dispatch(setModal(true, "Edit muscle", componentsModal.muscleItem));
-  };
-
+  // constants & variables
   const fabEditStyle = !editMode
     ? {
         color: "white",
@@ -63,6 +60,18 @@ export const MusclesList = () => {
           bgcolor: "#DF0000",
         },
       };
+
+  // functions
+  const handleEditMode = () => {
+    setEditMode(!editMode);
+    dispatch(setSnackbar("info", "Select a muscle to edit it", !editMode));
+  };
+  //set current muscle in the state
+  const handleMuscleClick = (currentMuscle) => {
+    dispatch(setCurrentMuscle(currentMuscle));
+    if (editMode)
+      dispatch(setModal(true, "Edit muscle", componentsModal.muscleItem));
+  };
 
   if (loading) return <h1>Loading...</h1>;
   else

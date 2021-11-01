@@ -17,26 +17,26 @@ import { setSnackbar } from "../../actions/snackbar.action";
 import { useForm } from "../../hooks/useForm";
 import { InputFile } from "../ui/InputFile";
 
-export const AddExerciseForm = ({
-  muscleList,
-  muscleId = "0",
-  handleModal,
-}) => {
+export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
+  console.log("render <AddExerciseForm/> ");
+
   const dispatch = useDispatch();
 
+  // custom hooks
   const [formValues, handleInputChange, setSpecificValue] = useForm({
     name: "",
     description: "",
     muscleId,
     image: null,
   });
-  //   const { exercise, description, muscleId, image } = formValues;
+
+  // functions
   const isFormValid = () => {
     if (!formValues.name) {
       dispatch(setSnackbar("error", "Invalid exercise name", true));
       return false;
     }
-    if (formValues.muscleId === "0") {
+    if (formValues.muscleId === 0) {
       dispatch(setSnackbar("error", "Select a valid muscle", true));
       return false;
     }
@@ -63,7 +63,6 @@ export const AddExerciseForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* <img src="" alt="" /> */}
       <div className="flex-box space-between">
         <TextField
           size="small"
@@ -86,7 +85,7 @@ export const AddExerciseForm = ({
             size="small"
             name="muscleId"
           >
-            {muscleId === "0" && (
+            {muscleId === 0 && (
               <MenuItem key={"ddlMuscleAddExercise-0"} value={muscleId}>
                 Select a muscle
               </MenuItem>
