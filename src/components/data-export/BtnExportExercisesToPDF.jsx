@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import { PictureAsPdf } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
+import PropTypes from "prop-types";
 
 export const BtnExportExercisesToPDF = ({
   exercises,
@@ -83,4 +84,10 @@ export const BtnExportExercisesToPDF = ({
       </IconButton>
     </Tooltip>
   );
+};
+
+BtnExportExercisesToPDF.propTypes = {
+  exercises: PropTypes.array,
+  totalExercises: PropTypes.number,
+  fileName: PropTypes.string,
 };
