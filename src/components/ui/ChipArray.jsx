@@ -7,31 +7,33 @@ const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-export const ChipsArray = ({ chips = [], title = "", handleDelete }) => {
-  console.log("render ChipsArray");
+export const ChipsArray = React.memo(
+  ({ chips = [], title = "", handleDelete }) => {
+    console.log("render ChipsArray");
 
-  return (
-    <>
-      {!!title && <p>{title}</p>}
-      <Paper
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          listStyle: "none",
-          p: 0.5,
-          m: 0,
-        }}
-        component="ul"
-      >
-        {chips.map((data) => {
-          return (
-            <ListItem key={data.key}>
-              <Chip label={data.label} onDelete={() => handleDelete(data)} />
-            </ListItem>
-          );
-        })}
-      </Paper>
-    </>
-  );
-};
+    return (
+      <>
+        {!!title && <p>{title}</p>}
+        <Paper
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            listStyle: "none",
+            p: 0.5,
+            m: 0,
+          }}
+          component="ul"
+        >
+          {chips.map((data) => {
+            return (
+              <ListItem key={data.key}>
+                <Chip label={data.label} onDelete={() => handleDelete(data)} />
+              </ListItem>
+            );
+          })}
+        </Paper>
+      </>
+    );
+  }
+);

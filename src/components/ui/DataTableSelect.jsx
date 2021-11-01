@@ -8,7 +8,7 @@ const columns = [
   { field: "exerciseDescription", headerName: "Description", width: 250 },
 ];
 
-export const DataTableSelect = ({ handleAdd }) => {
+export const DataTableSelect = React.memo(({ handleAdd }) => {
   console.log("render <DataTableSelect />");
   const { exerciseList } = useSelector((state) => state.exercises);
   const [hoverExercise, setHoverExercise] = useState({});
@@ -78,4 +78,4 @@ export const DataTableSelect = ({ handleAdd }) => {
       </div>
     </>
   );
-};
+});

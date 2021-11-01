@@ -1,3 +1,4 @@
+import React, { useCallback, useMemo, useState } from "react";
 import {
   FormControl,
   Input,
@@ -6,33 +7,32 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Save } from "@mui/icons-material";
+
+import { useForm } from "../../hooks/useForm";
 import { VerticalTabs } from "../ui/VerticalTabs";
 import { DataTableSelect } from "../ui/DataTableSelect";
-import { Save } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { setModal } from "../../actions/modal.action";
 import { ChipsArray } from "../ui/ChipArray";
+import { InputFile } from "../ui/InputFile";
+import { setModal } from "../../actions/modal.action";
 import { setSnackbar } from "../../actions/snackbar.action";
 import {
   startAddingWorkout,
   startUpdatingWorkout,
 } from "../../actions/workout.action";
-import { useForm } from "../../hooks/useForm";
-import { InputFile } from "../ui/InputFile";
 
 export const WorkoutAdd = ({ action }) => {
   console.log("render <WorkoutsAdd />");
 
   const dispatch = useDispatch();
+
+  // selectors
   const { currentWorkout, currentWorkoutExercises } = useSelector(
     (state) => state.workouts
   );
 
-  const muscleList = useMemo(
-    () => JSON.parse(localStorage.getItem("muscleList")),
-    []
-  );
+  // states
   const [chips, setChips] = useState(
     currentWorkoutExercises
       ? currentWorkoutExercises.map((e, index) => ({
@@ -44,26 +44,38 @@ export const WorkoutAdd = ({ action }) => {
   );
   const [error, setError] = useState("");
 
+  // custom hooks
   const [formValues, handleInputChange] = useForm({
     name: currentWorkout.name,
     description: currentWorkout.description,
   });
+
+  // constants & variables
   const { name, description } = formValues;
+  const muscleList = useMemo(
+    () => JSON.parse(localStorage.getItem("muscleList")),
+    []
+  );
 
-  const handleAddChip = (e) => {
-    setChips([
-      ...chips,
-      { key: Date.now(), label: e.row.exerciseName, id: e.id },
-    ]);
-  };
+  // functions
+  const handleAddChip = useCallback(
+    (e) => {
+      setChips([
+        ...chips,
+        { key: Date.now(), label: e.row.exerciseName, id: e.id },
+      ]);
+    },
+    [chips]
+  );
 
-  const handleRemoveChip = (chipToDelete) => {
-    setChips(chips.filter((chip) => chip.key !== chipToDelete.key));
-  };
+  const handleRemoveChip = useCallback(
+    (chipToDelete) =>
+      setChips(chips.filter((chip) => chip.key !== chipToDelete.key)),
+    [chips]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     //Validate data
     const workoutName = name.trim();
     const workoutDescription = description.trim();
