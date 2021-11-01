@@ -14,6 +14,7 @@ import { AddExerciseForm } from "./AddExerciseForm";
 import { DetailsExercise } from "./DetailsExercise";
 import { ExerciseItem } from "./ExerciseItem";
 import { BtnExportToExcel } from "../data-export/BtnExportToExcel";
+import { BtnExportExercisesToPDF } from "../data-export/BtnExportExercisesToPDF";
 
 export const ExerciseList = () => {
   console.log("render <ExerciseList/>");
@@ -105,21 +106,11 @@ export const ExerciseList = () => {
               fileName={`${currentMuscleName} exercises`}
               sheetName={`${currentMuscleName} exercises`}
             />
-            {/* <ExcelFile
-              element={
-                <Tooltip title="Export to Excel">
-                  <IconButton aria-label="export to excel" color="success">
-                    <FileDownload />
-                  </IconButton>
-                </Tooltip>
-              }
-              filename={`${currentMuscleName} exercises`}
-            >
-              <ExcelSheet
-                dataSet={exerciseDataSet}
-                name={`${currentMuscleName} exercises`}
-              />
-            </ExcelFile> */}
+            <BtnExportExercisesToPDF
+              exercises={exerciseList}
+              totalExercises={totalExercises}
+              fileName={`${currentMuscleName} exercises`}
+            />
           </div>
           <div className="card-grid-container">
             {exerciseList.map((exercise) => (
