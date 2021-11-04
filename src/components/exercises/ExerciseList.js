@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 
 import { Add, Search } from "@mui/icons-material";
-import { Fab, MenuItem, Select, Tooltip, Typography } from "@mui/material";
+import {
+  Fab,
+  InputAdornment,
+  MenuItem,
+  Select,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   startGettingExercises,
@@ -33,6 +41,7 @@ export const ExerciseList = () => {
   const [muscleId, setMuscleId] = useState(
     currentMuscle ? currentMuscle.id : 0
   ); // 0 id when all exercises are selected
+  const [filterWord, setFilterWord] = useState("");
 
   // constants & variables
   const muscleList = JSON.parse(localStorage.getItem("muscleList"));
@@ -56,6 +65,12 @@ export const ExerciseList = () => {
     dispatch(setModal(true, exercise.name, componentsModal.exerciseItem));
   };
 
+  const handleSearch = (e) => {
+    // Avoid getting error with RegEx because of the '\' escape character
+    const search = e.target.value.replace(/\\/g, "\\\\");
+    setFilterWord(search);
+  };
+
   // effects
   useEffect(() => {
     console.log("effect startGettingExercises");
@@ -68,7 +83,7 @@ export const ExerciseList = () => {
         <h1>Loading...</h1>
       ) : (
         <>
-          <div className="flex-box space-between sticky">
+          <div className="flex-box space-between m--1">
             <Select
               id="ddlMuscle"
               value={muscleId}
@@ -85,10 +100,20 @@ export const ExerciseList = () => {
                 </MenuItem>
               ))}
             </Select>
-            <div className="inputIcon">
-              <input type="text" placeholder="Search" />
-              <Search />
-            </div>
+            <TextField
+              size="small"
+              label="Search"
+              onChange={handleSearch}
+              placeholder="Filter exercises"
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="end">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+            />
           </div>
           <div className="flex-box space-between">
             <Typography variant="h5" component="p">
@@ -112,14 +137,17 @@ export const ExerciseList = () => {
             />
           </div>
           <div className="card-grid-container">
-            {exerciseList.map((exercise) => (
-              <div
-                key={exercise.name + exercise.id}
-                onClick={() => handleClick(exercise)}
-              >
-                <ExerciseItem exercise={exercise} />
-              </div>
-            ))}
+            {exerciseList.map(
+              (exercise) =>
+                exercise.name.search(new RegExp(filterWord, "i")) !== -1 && (
+                  <div
+                    key={exercise.name + exercise.id}
+                    onClick={() => handleClick(exercise)}
+                  >
+                    <ExerciseItem exercise={exercise} />
+                  </div>
+                )
+            )}
           </div>
           {isAdmin && (
             <Tooltip title="Add new exercise">
