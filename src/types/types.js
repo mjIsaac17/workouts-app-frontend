@@ -32,6 +32,7 @@ export const types = {
   successDeleteExercise: "successDeleteExercise",
 
   //User/Login
+  successAddUser: "successAddUser",
   startRegister: "stateRegister",
   startLogin: "startLogin",
   startGetUsers: "startGetUsers",

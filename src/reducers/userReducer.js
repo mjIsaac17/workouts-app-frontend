@@ -23,6 +23,12 @@ export const userReducer = (state = initialState, action) => {
         users: action.payload,
       };
 
+    case types.successAddUser:
+      return {
+        ...state,
+        users: [...state.users, action.payload],
+      };
+
     case types.setChecking:
       return {
         ...state,

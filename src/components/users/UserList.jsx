@@ -4,7 +4,9 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 import { startGettingUsers } from "../../actions/user.action";
 
@@ -27,16 +29,30 @@ const UserList = () => {
         <p> Loading...</p>
       ) : (
         <>
-          <List>
+          <List sx={{ maxWidth: "1300px", width: "95%", margin: "0 auto" }}>
             {users.map((user, idx) => (
-              <>
-                <ListItem key={idx}>
-                  <ListItemText primary={user.name}></ListItemText>
-                  <Button variant="contained">Delete</Button>
-                  <Button variant="contained">Edit</Button>
+              <div key={idx}>
+                <ListItem>
+                  <ListItemText
+                    primary={`${user.name} ${user.lastname}`}
+                  ></ListItemText>
+                  <IconButton
+                    aria-label="delete-user"
+                    variant="contained"
+                    color="secondary"
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="delete-user"
+                    variant="contained"
+                    color="error"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </ListItem>
                 <Divider />
-              </>
+              </div>
             ))}
           </List>
         </>

@@ -7,4 +7,6 @@ export const componentsModal = {
   workoutsUpdate: "WorkoutsUpdate",
   workoutsDelete: "WorkoutsDelete",
   workoutsExercise: "WorkoutsExercise",
+
+  usersAdd: "usersAdd",
 };

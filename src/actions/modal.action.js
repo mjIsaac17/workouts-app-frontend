@@ -3,7 +3,7 @@ import { types } from "../types/types";
 export const setModal = (
   isOpen = false,
   header = "Modal title",
-  componentName
+  componentName = ""
 ) => ({
   type: types.setModal,
   payload: {
