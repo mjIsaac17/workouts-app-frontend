@@ -1,11 +1,12 @@
 import React from "react";
 import { IconButton, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/user.action";
 import { Menu } from "@mui/icons-material";
 
-export const Navbar = ({ user, openCloseSidebar }) => {
+export const Navbar = ({ openCloseSidebar }) => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
   console.log("render nav");
 

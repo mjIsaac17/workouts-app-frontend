@@ -10,10 +10,31 @@ const successLogin = (user) => ({
   payload: user,
 });
 
-// const failureLogin = (error) => ({
-//   type: types.failureLogin,
-//   payload: error,
-// });
+const successGetUsers = (users) => ({
+  type: types.successGetUsers,
+  payload: users,
+});
+
+const setChecking = (checking) => ({
+  type: types.setChecking,
+  payload: checking,
+});
+
+export const startGettingUsers = () => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchToken("user");
+      const body = await resp.json();
+
+      if (!resp.ok) {
+        dispatch(setSnackbar("error", body.error, true));
+      } else dispatch(successGetUsers(body));
+    } catch (error) {
+      dispatch(setSnackbar("error", error.message, false));
+      console.log("error", error);
+    }
+  };
+};
 
 export const startLogin = (userData) => {
   return async (dispatch) => {

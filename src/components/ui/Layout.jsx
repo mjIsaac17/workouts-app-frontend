@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Navbar } from "./Navbar";
 import { Sidebar } from "./Sidebar";
 
-export const Layout = ({ user, children }) => {
+export const Layout = ({ children }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
+  const { user } = useSelector((state) => state.user);
+
   const openCloseSidebar = (event) => {
     if (
       event.type === "keydown" &&
@@ -15,7 +18,7 @@ export const Layout = ({ user, children }) => {
   };
   return (
     <div>
-      <Navbar user={user} openCloseSidebar={openCloseSidebar} />
+      <Navbar openCloseSidebar={openCloseSidebar} />
       {user.id && (
         <Sidebar
           openCloseSidebar={openCloseSidebar}

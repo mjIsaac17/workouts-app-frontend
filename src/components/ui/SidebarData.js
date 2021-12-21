@@ -1,7 +1,12 @@
-import { Accessibility, Directions, FitnessCenter } from "@mui/icons-material";
+import {
+  Accessibility,
+  Directions,
+  FitnessCenter,
+  SupervisedUserCircle,
+} from "@mui/icons-material";
 import React from "react";
 
-export const SidebarData = [
+export const UserSidebarData = [
   {
     title: "Muscles",
     icon: <Accessibility />,
@@ -16,5 +21,13 @@ export const SidebarData = [
     title: "Workouts",
     icon: <Directions />,
     link: "/workouts",
+  },
+];
+
+export const AdminSidebarData = [
+  {
+    title: "Users",
+    icon: <SupervisedUserCircle />,
+    link: "/users",
   },
 ];

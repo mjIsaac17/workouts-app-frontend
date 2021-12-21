@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import { SidebarData } from "./SidebarData";
+import { UserSidebarData, AdminSidebarData } from "./SidebarData";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -10,9 +9,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 
 export const Sidebar = ({ openSidebar, openCloseSidebar }) => {
   console.log("render sidebar");
+
+  const { user } = useSelector((state) => state.user);
 
   return (
     <>
@@ -30,7 +32,7 @@ export const Sidebar = ({ openSidebar, openCloseSidebar }) => {
               </ListItemText>
             </ListItem>
             <Divider />
-            {SidebarData.map((data, index) => (
+            {UserSidebarData.map((data, index) => (
               <Link to={data.link} key={index}>
                 <ListItem button>
                   <ListItemIcon>{data.icon}</ListItemIcon>
@@ -38,8 +40,27 @@ export const Sidebar = ({ openSidebar, openCloseSidebar }) => {
                 </ListItem>
               </Link>
             ))}
+            {user.isAdmin && (
+              <>
+                {" "}
+                <Divider />
+                <ListItem>
+                  <ListItemText>
+                    <Typography variant="h6">Management</Typography>
+                  </ListItemText>
+                </ListItem>
+                <Divider />
+                {AdminSidebarData.map((data, index) => (
+                  <Link to={data.link} key={index}>
+                    <ListItem button>
+                      <ListItemIcon>{data.icon}</ListItemIcon>
+                      <ListItemText primary={data.title} />
+                    </ListItem>
+                  </Link>
+                ))}
+              </>
+            )}
           </List>
-          <Divider />
         </Box>
       </Drawer>
     </>

@@ -14,6 +14,7 @@ const theme = createTheme({
 });
 
 export const WorkoutsApp = () => {
+  console.log("Render <WorkoutsApp />");
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>

@@ -1,5 +1,6 @@
 export const types = {
   failureAction: "failureAction",
+  setChecking: "setChecking",
 
   //Muscles
   clearMuscles: "clearMuscle",
@@ -32,10 +33,10 @@ export const types = {
 
   //User/Login
   startRegister: "stateRegister",
-
   startLogin: "startLogin",
+  startGetUsers: "startGetUsers",
   successLogin: "successLogin",
-  // failureLogin: "failureLogin",
+  successGetUsers: "successGetUsers",
   finishRenewToken: "finishRenewToken",
   clearUser: "clearUser",
   logout: "logout",

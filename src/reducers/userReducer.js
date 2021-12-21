@@ -4,7 +4,7 @@ const initialState = {
   isLogged: false,
   user: {},
   checking: true,
-  // error: null,
+  users: null,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -17,13 +17,18 @@ export const userReducer = (state = initialState, action) => {
         checking: false,
       };
 
-    // case types.failureLogin:
-    //   return {
-    //     ...state,
-    //     isLogged: false,
-    //     user: {},
-    //     error: action.payload,
-    //   };
+    case types.successGetUsers:
+      return {
+        ...state,
+        users: action.payload,
+      };
+
+    case types.setChecking:
+      return {
+        ...state,
+        checking: action.payload,
+      };
+
     case types.finishRenewToken:
       return {
         ...state,

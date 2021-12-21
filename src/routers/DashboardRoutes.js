@@ -1,16 +1,18 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Fab, Tooltip } from "@mui/material";
-import React from "react";
+import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
-// import { AddExercise } from "../components/exercises/ModalAddExercise";
 import { ExerciseList } from "../components/exercises/ExerciseList";
 import { MusclesList } from "../components/muscles/MuscleList";
+import UserScreen from "../components/users/UserScreen";
 
 import { WorkoutExercisesList } from "../components/workouts/WorkoutExercisesList";
 import { WorkoutsScreen } from "../components/workouts/WorkoutScreen";
 
 export const DashboardRoutes = () => {
   const history = useHistory();
+  const { user } = useSelector((state) => state.user);
+
   return (
     <>
       <div>
@@ -23,6 +25,7 @@ export const DashboardRoutes = () => {
             path="/workouts/:workoutName"
             component={WorkoutExercisesList}
           />
+          {user.isAdmin && <Route exact path="/users" component={UserScreen} />}
           <Redirect to="/muscles" />
         </Switch>
         <Tooltip title="Previous page">

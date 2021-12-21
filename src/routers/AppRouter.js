@@ -13,8 +13,10 @@ import { PublicRoute } from "./PublicRoute";
 import { Layout } from "../components/ui/Layout";
 
 export const AppRouter = () => {
+  console.log("Render <AppRouter />");
   const dispatch = useDispatch();
-  const { user, checking, isLogged } = useSelector((state) => state.user);
+  //Problem with this line that generetes an infinite loop of renders
+  const { checking, isLogged } = useSelector((state) => state.user);
 
   //Renew the token when the page loads
   useEffect(() => {
@@ -31,7 +33,7 @@ export const AppRouter = () => {
   } else {
     return (
       <Router>
-        <Layout user={user}>
+        <Layout>
           <Switch>
             <PublicRoute
               exact
