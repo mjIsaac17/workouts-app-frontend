@@ -144,7 +144,6 @@ const AddUserForm = ({ user }) => {
       <Grid item xs={12}>
         <TextField
           defaultValue={user?.email}
-          // defaultValue={user ? user.email : ""}
           error={!!formError.email}
           fullWidth
           helperText={formError.email}

@@ -1,8 +1,9 @@
-import { Typography } from "@mui/material";
+import { Alert, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../../actions/modal.action";
-import { userSetCurrent } from "../../actions/user.action";
+import { userSetCurrent, userStartDeleting } from "../../actions/user.action";
 import { componentsModal } from "../../helpers/componentsModal";
+import { ConfirmDelete } from "../ui/ConfirmDelete";
 import FabAdd from "../ui/FabAdd";
 import { Modal } from "../ui/Modal";
 import AddUserForm from "./AddUserForm";
@@ -24,8 +25,18 @@ const UserScreen = () => {
     dispatch(setModal(true, "Edit user", componentsModal.userEdit));
   };
 
-  const handleDeleteClick = (user) => {
+  const handleOpenDeleteModal = (user) => {
     dispatch(userSetCurrent(user));
+    dispatch(setModal(true, "Delete user", componentsModal.userDelete));
+  };
+
+  const handleCloseModal = () => {
+    dispatch(setModal());
+  };
+
+  const handleDelete = () => {
+    dispatch(userStartDeleting(currentUser.id));
+    handleCloseModal();
   };
 
   return (
@@ -33,7 +44,10 @@ const UserScreen = () => {
       <Typography variant="h4" textAlign="center" marginY={3}>
         Manage users
       </Typography>
-      <UserList handleEdit={handleEditClick} handleDelete={handleDeleteClick} />
+      <UserList
+        handleEdit={handleEditClick}
+        handleDelete={handleOpenDeleteModal}
+      />
       <FabAdd onClickFunction={handleFabClick} />
       {componentName === componentsModal.userAdd && (
         <Modal>
@@ -43,6 +57,22 @@ const UserScreen = () => {
       {componentName === componentsModal.userEdit && (
         <Modal>
           <AddUserForm user={currentUser} />
+        </Modal>
+      )}
+      {componentName === componentsModal.userDelete && (
+        <Modal>
+          <ConfirmDelete
+            handleCancel={handleCloseModal}
+            handleDelete={handleDelete}
+          >
+            <Alert severity="warning">
+              Are you sure you want to delete the user{" "}
+              <b>
+                {currentUser.name} {currentUser.lastname}
+              </b>{" "}
+              and all its associated data (workouts)?
+            </Alert>
+          </ConfirmDelete>
         </Modal>
       )}
     </>

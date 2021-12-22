@@ -95,3 +95,27 @@ export const startUpdatingUser = (userData) => {
     }
   };
 };
+
+const successDeleteUser = (userId) => ({
+  type: types.userSuccessDelete,
+  payload: userId,
+});
+
+export const userStartDeleting = (userId) => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchToken(`user/${userId}`, {}, "DELETE");
+      const body = await resp.json();
+
+      if (!resp.ok) {
+        dispatch(setSnackbar("error", body.error, true));
+      } else {
+        dispatch(successDeleteUser(userId));
+        dispatch(setSnackbar("success", "User deleted", true));
+      }
+    } catch (error) {
+      dispatch(setSnackbar("error", error.message, false));
+      console.log("error", error);
+    }
+  };
+};
