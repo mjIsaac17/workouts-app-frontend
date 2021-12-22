@@ -8,5 +8,7 @@ export const componentsModal = {
   workoutsDelete: "WorkoutsDelete",
   workoutsExercise: "WorkoutsExercise",
 
-  usersAdd: "usersAdd",
+  userAdd: "usersAdd",
+  userEdit: "userEdit",
+  userDelete: "userDelete",
 };

@@ -40,7 +40,9 @@ export const types = {
   logout: "logout",
 
   //Users
+  userSetCurrent: "userSetCurrent",
   successAddUser: "successAddUser",
+  userSuccessGetRoles: "userSuccessGetRoles",
   startGetUsers: "startGetUsers",
   successGetUsers: "successGetUsers",
 

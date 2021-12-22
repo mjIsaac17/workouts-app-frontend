@@ -2,9 +2,19 @@ import { fetchToken } from "../helpers/fetch";
 import { types } from "../types/types";
 import { setSnackbar } from "./snackbar.action";
 
+export const userSetCurrent = (user) => ({
+  type: types.userSetCurrent,
+  payload: user,
+});
+
 const successGetUsers = (users) => ({
   type: types.successGetUsers,
   payload: users,
+});
+
+const successGetRoles = (roles) => ({
+  type: types.userSuccessGetRoles,
+  payload: roles,
 });
 
 export const startGettingUsers = () => {
@@ -16,6 +26,21 @@ export const startGettingUsers = () => {
       if (!resp.ok) {
         dispatch(setSnackbar("error", body.error, true));
       } else dispatch(successGetUsers(body));
+    } catch (error) {
+      dispatch(setSnackbar("error", error.message, false));
+      console.log("error", error);
+    }
+  };
+};
+
+export const userStartGettingRoles = () => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchToken("user/roles");
+      const body = await resp.json();
+
+      if (!resp.ok) dispatch(setSnackbar("error", body.error, true));
+      else dispatch(successGetRoles(body));
     } catch (error) {
       dispatch(setSnackbar("error", error.message, false));
       console.log("error", error);

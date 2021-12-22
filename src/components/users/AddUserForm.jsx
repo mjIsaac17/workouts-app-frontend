@@ -1,9 +1,22 @@
 import { Save } from "@mui/icons-material";
-import { Stack, Button, TextField, Grid } from "@mui/material";
+import {
+  Stack,
+  Button,
+  TextField,
+  Grid,
+  InputLabel,
+  FormControl,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../../actions/modal.action";
-import { startAddingUser } from "../../actions/user.action";
+import {
+  startAddingUser,
+  userStartGettingRoles,
+} from "../../actions/user.action";
 
 const initialFormError = {
   name: null,
@@ -12,9 +25,10 @@ const initialFormError = {
   password: null,
 };
 
-const AddUserForm = () => {
+const AddUserForm = ({ user }) => {
   const dispatch = useDispatch();
-
+  const { roles } = useSelector((state) => state.user);
+  console.log(user);
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -22,6 +36,7 @@ const AddUserForm = () => {
       name: formData.get("name").trim(),
       lastname: formData.get("lastname").trim(),
       email: formData.get("email").trim(),
+      role: formData.get("role"),
       password: formData.get("password").trim(),
       confirmPassword: formData.get("confirmPassword").trim(),
     };
@@ -66,6 +81,14 @@ const AddUserForm = () => {
     return true;
   };
   const [formError, setFormError] = useState(initialFormError);
+
+  useEffect(() => {
+    if (!roles) {
+      console.log("Effect load roles");
+      dispatch(userStartGettingRoles());
+    }
+  }, [dispatch, roles]);
+
   return (
     <Grid
       component="form"
@@ -76,6 +99,7 @@ const AddUserForm = () => {
     >
       <Grid item xs={12} sm={6}>
         <TextField
+          defaultValue={user ? user.name : ""}
           error={!!formError.userName}
           fullWidth
           helperText={formError.userName ? formError.userName : ""}
@@ -87,6 +111,7 @@ const AddUserForm = () => {
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField
+          defaultValue={user ? user.lastname : ""}
           error={!!formError.lastname}
           fullWidth
           helperText={formError.lastname ? formError.lastname : ""}
@@ -98,6 +123,7 @@ const AddUserForm = () => {
       </Grid>
       <Grid item xs={12}>
         <TextField
+          defaultValue={user ? user.email : ""}
           error={!!formError.email}
           fullWidth
           helperText={formError.email ? formError.email : ""}
@@ -107,6 +133,27 @@ const AddUserForm = () => {
           size="small"
           type="email"
         />
+      </Grid>
+      <Grid item xs={12}>
+        <FormControl fullWidth>
+          <InputLabel>Role *</InputLabel>
+          {roles && (
+            <Select
+              required
+              size="small"
+              defaultValue={user ? user.role_id : 0}
+              name="role"
+              label="Role *"
+            >
+              <MenuItem value={0}>Select role</MenuItem>
+              {roles.map((role) => (
+                <MenuItem key={role.id} value={role.id}>
+                  {role.role}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        </FormControl>
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField

@@ -10,7 +10,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { startGettingUsers } from "../../actions/user.action";
 
-const UserList = () => {
+const UserList = ({ handleEdit, handleDelete }) => {
   console.log("Render <UserList />");
 
   const dispatch = useDispatch();
@@ -37,6 +37,7 @@ const UserList = () => {
                     primary={`${user.name} ${user.lastname}`}
                   ></ListItemText>
                   <IconButton
+                    onClick={() => handleEdit(user)}
                     aria-label="delete-user"
                     variant="contained"
                     color="secondary"
@@ -47,6 +48,7 @@ const UserList = () => {
                     aria-label="delete-user"
                     variant="contained"
                     color="error"
+                    onClick={() => handleDelete(user)}
                   >
                     <DeleteIcon />
                   </IconButton>
