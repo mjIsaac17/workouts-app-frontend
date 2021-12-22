@@ -11,7 +11,7 @@ import { WorkoutsScreen } from "../components/workouts/WorkoutScreen";
 
 export const DashboardRoutes = () => {
   const history = useHistory();
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <>

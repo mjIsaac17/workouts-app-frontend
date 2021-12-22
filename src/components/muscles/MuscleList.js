@@ -23,7 +23,7 @@ export const MusclesList = () => {
 
   // selectors
   const { muscleList, loading } = useSelector((state) => state.muscles);
-  const { isAdmin } = useSelector((state) => state.user.user);
+  const { isAdmin } = useSelector((state) => state.auth.user);
   const modalState = useSelector((state) => state.modal);
 
   // states

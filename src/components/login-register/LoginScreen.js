@@ -3,7 +3,7 @@ import { Button, InputAdornment, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { startLogin } from "../../actions/user.action";
+import { startLogin } from "../../actions/auth.action";
 
 export const LoginScreen = () => {
   const dispatch = useDispatch();

@@ -34,7 +34,7 @@ export const MuscleDetails = () => {
 
   // selectors
   const currentMuscle = useSelector((state) => state.muscles.current);
-  const { isAdmin } = useSelector((state) => state.user.user);
+  const { isAdmin } = useSelector((state) => state.auth.user);
 
   // states
   const [error, setError] = useState("");

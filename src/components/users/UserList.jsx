@@ -21,7 +21,7 @@ const UserList = () => {
       console.log("Effect getUsers");
       dispatch(startGettingUsers());
     }
-  }, [dispatch]);
+  }, [dispatch, users]);
 
   return (
     <>

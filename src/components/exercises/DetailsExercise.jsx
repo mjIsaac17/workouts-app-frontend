@@ -31,7 +31,7 @@ export const DetailsExercise = ({
   const dispatch = useDispatch();
 
   // selectors
-  const { isAdmin } = useSelector((state) => state.user.user);
+  const { isAdmin } = useSelector((state) => state.auth.user);
   const { current } = useSelector((state) => state.exercises);
 
   // states

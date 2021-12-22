@@ -30,7 +30,7 @@ export const ExerciseList = () => {
 
   // selectors
   const modalState = useSelector((state) => state.modal);
-  const { isAdmin } = useSelector((state) => state.user.user);
+  const { isAdmin } = useSelector((state) => state.auth.user);
   const currentMuscle = useSelector((state) => state.muscles.current);
   const { exerciseList, loading } = useSelector((state) => state.exercises);
   const [currentMuscleName, setCurrentMuscleName] = useState(

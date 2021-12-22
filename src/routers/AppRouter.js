@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
-import { finishRenewToken, startRenewToken } from "../actions/user.action";
+import { finishRenewToken, startRenewToken } from "../actions/auth.action";
 
 import { LoginScreen } from "../components/login-register/LoginScreen";
 import { RegisterScreen } from "../components/login-register/RegisterScreen";
@@ -15,8 +15,7 @@ import { Layout } from "../components/ui/Layout";
 export const AppRouter = () => {
   console.log("Render <AppRouter />");
   const dispatch = useDispatch();
-  //Problem with this line that generetes an infinite loop of renders
-  const { checking, isLogged } = useSelector((state) => state.user);
+  const { checking, isLogged } = useSelector((state) => state.auth);
 
   //Renew the token when the page loads
   useEffect(() => {

@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
-import { startRegister } from "../../actions/user.action";
+import { startRegister } from "../../actions/auth.action";
 
 export const RegisterScreen = () => {
   const errorsInitialState = {

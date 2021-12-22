@@ -5,7 +5,7 @@ import { Sidebar } from "./Sidebar";
 
 export const Layout = ({ children }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
 
   const openCloseSidebar = (event) => {
     if (

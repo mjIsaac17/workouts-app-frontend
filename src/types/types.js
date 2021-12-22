@@ -31,16 +31,18 @@ export const types = {
   failureUpdateExercise: "failureUpdateExercise",
   successDeleteExercise: "successDeleteExercise",
 
-  //User/Login
-  successAddUser: "successAddUser",
-  startRegister: "stateRegister",
+  //Auth
   startLogin: "startLogin",
-  startGetUsers: "startGetUsers",
+  startRegister: "stateRegister",
   successLogin: "successLogin",
-  successGetUsers: "successGetUsers",
   finishRenewToken: "finishRenewToken",
   clearUser: "clearUser",
   logout: "logout",
+
+  //Users
+  successAddUser: "successAddUser",
+  startGetUsers: "startGetUsers",
+  successGetUsers: "successGetUsers",
 
   //Workouts
   startGettingMyWorkouts: "startGettingMyWorkouts",
