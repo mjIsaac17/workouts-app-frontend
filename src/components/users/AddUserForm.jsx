@@ -6,6 +6,7 @@ import {
   Grid,
   InputLabel,
   FormControl,
+  FormHelperText,
   Select,
   MenuItem,
 } from "@mui/material";
@@ -15,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../../actions/modal.action";
 import {
   startAddingUser,
+  startUpdatingUser,
   userStartGettingRoles,
 } from "../../actions/user.action";
 
@@ -22,13 +24,16 @@ const initialFormError = {
   name: null,
   lastname: null,
   email: null,
+  role_id: null,
   password: null,
+  confirmPassword: null,
 };
 
 const AddUserForm = ({ user }) => {
   const dispatch = useDispatch();
   const { roles } = useSelector((state) => state.user);
-  console.log(user);
+  const [formError, setFormError] = useState(initialFormError);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -36,51 +41,66 @@ const AddUserForm = ({ user }) => {
       name: formData.get("name").trim(),
       lastname: formData.get("lastname").trim(),
       email: formData.get("email").trim(),
-      role: formData.get("role"),
-      password: formData.get("password").trim(),
-      confirmPassword: formData.get("confirmPassword").trim(),
+      role_id: formData.get("role_id"),
     };
+    if (!user) {
+      userData.password = formData.get("password");
+      userData.confirmPassword = formData.get("confirmPassword");
+    }
 
     if (isFormValid(userData)) {
-      delete userData.confirmPassword;
-      dispatch(startAddingUser(userData));
+      if (!user) {
+        delete userData.confirmPassword;
+        dispatch(startAddingUser(userData));
+      } else {
+        dispatch(startUpdatingUser({ ...userData, id: user.id }));
+      }
       dispatch(setModal());
     }
   };
 
   const isFormValid = (userData) => {
     let errorFlag = false;
+    const errors = { ...initialFormError };
 
     if (userData.name === "") {
-      setFormError({ ...formError, name: "Invalid user name" });
+      errors.name = "Invalid user name";
       errorFlag = true;
     }
 
     if (userData.lastname === "") {
-      setFormError({ ...formError, lastname: "Invalid last name" });
+      errors.lastname = "Invalid last name";
       errorFlag = true;
     }
 
     if (userData.email === "") {
-      setFormError({ ...formError, email: "Invalid email" });
+      errors.email = "Invalid email";
       errorFlag = true;
     }
 
-    if (userData.password === "") {
-      setFormError({ ...formError, password: "Invalid password" });
-      errorFlag = true;
-    } else if (userData.password !== userData.confirmPassword) {
-      setFormError({ ...formError, confirmPassword: "Passwords must match" });
+    if (userData.role_id === "0") {
+      errors.role_id = "Select a valid role";
       errorFlag = true;
     }
+
+    // Add password if it is a new user
+    if (!user) {
+      if (userData.password === "") {
+        errors.password = "Invalid password";
+        errorFlag = true;
+      } else if (userData.password !== userData.confirmPassword) {
+        errors.confirmPassword = "Passwords must match";
+        errorFlag = true;
+      }
+    }
+
+    setFormError(errors);
 
     if (errorFlag) return false; //invalid form
 
     //Form is valid
-    setFormError(initialFormError);
     return true;
   };
-  const [formError, setFormError] = useState(initialFormError);
 
   useEffect(() => {
     if (!roles) {
@@ -99,10 +119,10 @@ const AddUserForm = ({ user }) => {
     >
       <Grid item xs={12} sm={6}>
         <TextField
-          defaultValue={user ? user.name : ""}
+          defaultValue={user?.name}
           error={!!formError.userName}
           fullWidth
-          helperText={formError.userName ? formError.userName : ""}
+          helperText={formError.userName}
           label="User name"
           name="name"
           required
@@ -111,10 +131,10 @@ const AddUserForm = ({ user }) => {
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField
-          defaultValue={user ? user.lastname : ""}
+          defaultValue={user?.lastname}
           error={!!formError.lastname}
           fullWidth
-          helperText={formError.lastname ? formError.lastname : ""}
+          helperText={formError.lastname}
           label="Last name"
           name="lastname"
           required
@@ -123,10 +143,11 @@ const AddUserForm = ({ user }) => {
       </Grid>
       <Grid item xs={12}>
         <TextField
-          defaultValue={user ? user.email : ""}
+          defaultValue={user?.email}
+          // defaultValue={user ? user.email : ""}
           error={!!formError.email}
           fullWidth
-          helperText={formError.email ? formError.email : ""}
+          helperText={formError.email}
           label="Email"
           name="email"
           required
@@ -135,14 +156,14 @@ const AddUserForm = ({ user }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <FormControl fullWidth>
+        <FormControl fullWidth error={!!formError.role_id}>
           <InputLabel>Role *</InputLabel>
           {roles && (
             <Select
               required
               size="small"
               defaultValue={user ? user.role_id : 0}
-              name="role"
+              name="role_id"
               label="Role *"
             >
               <MenuItem value={0}>Select role</MenuItem>
@@ -153,34 +174,37 @@ const AddUserForm = ({ user }) => {
               ))}
             </Select>
           )}
+          <FormHelperText>{formError.role_id}</FormHelperText>
         </FormControl>
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          error={!!formError.password}
-          fullWidth
-          helperText={formError.password ? formError.password : ""}
-          label="Password"
-          name="password"
-          required
-          size="small"
-          type="password"
-        />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          error={!!formError.confirmPassword}
-          fullWidth
-          helperText={
-            formError.confirmPassword ? formError.confirmPassword : ""
-          }
-          label="Confirm password"
-          name="confirmPassword"
-          required
-          size="small"
-          type="password"
-        />
-      </Grid>
+      {!user && (
+        <>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              error={!!formError.password}
+              fullWidth
+              helperText={formError.password}
+              label="Password"
+              name="password"
+              required
+              size="small"
+              type="password"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              error={!!formError.confirmPassword}
+              fullWidth
+              helperText={formError.confirmPassword}
+              label="Confirm password"
+              name="confirmPassword"
+              required
+              size="small"
+              type="password"
+            />
+          </Grid>
+        </>
+      )}
       <Grid item xs={12} sx={{ marginTop: "2rem" }}>
         <Stack direction="row" spacing={2} justifyContent="flex-end">
           <Button

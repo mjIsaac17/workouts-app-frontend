@@ -45,6 +45,8 @@ export const types = {
   userSuccessGetRoles: "userSuccessGetRoles",
   startGetUsers: "startGetUsers",
   successGetUsers: "successGetUsers",
+  userSuccessUpdate: "userSuccessUpdate",
+  userSuccessDelete: "userSuccessDelete",
 
   //Workouts
   startGettingMyWorkouts: "startGettingMyWorkouts",

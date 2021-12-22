@@ -26,6 +26,22 @@ export const userReducer = (state = initialState, action) => {
         users: [...state.users, action.payload],
       };
 
+    case types.userSuccessUpdate:
+      const updatedUser = action.payload;
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user.id !== updatedUser.id ? user : updatedUser
+        ),
+      };
+
+    case types.userSuccessDelete:
+      const deletedId = action.payload;
+      return {
+        ...state,
+        users: state.users.filter((user) => user.id !== deletedId),
+      };
+
     case types.userSuccessGetRoles:
       return {
         ...state,

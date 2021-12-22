@@ -63,7 +63,31 @@ export const startAddingUser = (userData) => {
         dispatch(setSnackbar("error", body.error, true));
       } else {
         dispatch(successAddUser({ ...userData, id: body.userId }));
-        dispatch(setSnackbar("success", body.result, true)); //close snanckbar if open
+        dispatch(setSnackbar("success", "User added", true)); //close snanckbar if open
+      }
+    } catch (error) {
+      dispatch(setSnackbar("error", error.message, false));
+      console.log("error", error);
+    }
+  };
+};
+
+const successUpdateUser = (user) => ({
+  type: types.userSuccessUpdate,
+  payload: user,
+});
+
+export const startUpdatingUser = (userData) => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchToken(`user/${userData.id}`, userData, "PUT");
+      const body = await resp.json();
+
+      if (!resp.ok) {
+        dispatch(setSnackbar("error", body.error, true));
+      } else {
+        dispatch(successUpdateUser(userData));
+        dispatch(setSnackbar("success", "User updated", true));
       }
     } catch (error) {
       dispatch(setSnackbar("error", error.message, false));
