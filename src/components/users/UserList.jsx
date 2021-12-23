@@ -10,7 +10,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { startGettingUsers } from "../../actions/user.action";
 
-const UserList = ({ handleEdit, handleDelete }) => {
+const UserList = ({ handleEdit, handleDelete, filterWord = "" }) => {
   console.log("Render <UserList />");
 
   const dispatch = useDispatch();
@@ -30,32 +30,36 @@ const UserList = ({ handleEdit, handleDelete }) => {
       ) : (
         <>
           <List sx={{ maxWidth: "1300px", width: "95%", margin: "0 auto" }}>
-            {users.map((user, idx) => (
-              <div key={idx}>
-                <ListItem>
-                  <ListItemText
-                    primary={`${user.name} ${user.lastname}`}
-                  ></ListItemText>
-                  <IconButton
-                    onClick={() => handleEdit(user)}
-                    aria-label="delete-user"
-                    variant="contained"
-                    color="secondary"
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label="delete-user"
-                    variant="contained"
-                    color="error"
-                    onClick={() => handleDelete(user)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItem>
-                <Divider />
-              </div>
-            ))}
+            {users.map(
+              (user, idx) =>
+                user.name.search(new RegExp(filterWord, "i")) !== -1 && (
+                  <div key={idx}>
+                    <ListItem>
+                      <ListItemText
+                        primary={`${user.name} ${user.lastname}`}
+                        secondary={user.email}
+                      ></ListItemText>
+                      <IconButton
+                        onClick={() => handleEdit(user)}
+                        aria-label="delete-user"
+                        variant="contained"
+                        color="info"
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        aria-label="delete-user"
+                        variant="contained"
+                        color="error"
+                        onClick={() => handleDelete(user)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </ListItem>
+                    <Divider />
+                  </div>
+                )
+            )}
           </List>
         </>
       )}

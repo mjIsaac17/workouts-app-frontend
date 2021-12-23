@@ -1,4 +1,6 @@
-import { Alert, Typography } from "@mui/material";
+import { Search } from "@mui/icons-material";
+import { Alert, Typography, TextField, InputAdornment } from "@mui/material";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../../actions/modal.action";
 import { userSetCurrent, userStartDeleting } from "../../actions/user.action";
@@ -15,6 +17,8 @@ const UserScreen = () => {
 
   const { componentName } = useSelector((state) => state.modal);
   const { currentUser } = useSelector((state) => state.user);
+
+  const [filterWord, setFilterWord] = useState("");
 
   const handleFabClick = () => {
     dispatch(setModal(true, "Add user", componentsModal.userAdd));
@@ -39,16 +43,39 @@ const UserScreen = () => {
     handleCloseModal();
   };
 
+  const handleSearch = (e) => {
+    // Avoid getting error with RegEx because of the '\' escape character
+    const search = e.target.value.replace(/\\/g, "\\\\");
+    setFilterWord(search);
+  };
+
   return (
     <>
       <Typography variant="h4" textAlign="center" marginY={3}>
         Manage users
       </Typography>
+      <div className="flex-box" style={{ justifyContent: "center" }}>
+        <TextField
+          size="small"
+          label="Search"
+          onChange={handleSearch}
+          placeholder="Filter"
+          variant="outlined"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="end">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </div>
       <UserList
+        filterWord={filterWord}
         handleEdit={handleEditClick}
         handleDelete={handleOpenDeleteModal}
       />
-      <FabAdd onClickFunction={handleFabClick} />
+      <FabAdd onClickFunction={handleFabClick} tooltipText="Add new user" />
       {componentName === componentsModal.userAdd && (
         <Modal>
           <AddUserForm />

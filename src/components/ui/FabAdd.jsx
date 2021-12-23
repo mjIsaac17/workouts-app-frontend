@@ -1,20 +1,23 @@
 import Fab from "@mui/material/Fab";
 import Add from "@mui/icons-material/Add";
+import Tooltip from "@mui/material/Tooltip";
 
-const FabAdd = ({ onClickFunction }) => {
+const FabAdd = ({ onClickFunction, tooltipText = "Add" }) => {
   return (
-    <Fab
-      onClick={onClickFunction}
-      sx={{
-        position: "fixed",
-        bottom: (theme) => theme.spacing(2),
-        right: (theme) => theme.spacing(2),
-      }}
-      color="primary"
-      aria-label="add"
-    >
-      <Add />
-    </Fab>
+    <Tooltip title={tooltipText}>
+      <Fab
+        onClick={onClickFunction}
+        sx={{
+          position: "fixed",
+          bottom: (theme) => theme.spacing(2),
+          right: (theme) => theme.spacing(2),
+        }}
+        color="primary"
+        aria-label="add"
+      >
+        <Add />
+      </Fab>
+    </Tooltip>
   );
 };
 
