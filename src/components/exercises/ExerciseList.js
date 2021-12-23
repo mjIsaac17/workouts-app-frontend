@@ -23,6 +23,7 @@ import { DetailsExercise } from "./DetailsExercise";
 import { ExerciseItem } from "./ExerciseItem";
 import { BtnExportToExcel } from "../data-export/BtnExportToExcel";
 import { BtnExportExercisesToPDF } from "../data-export/BtnExportExercisesToPDF";
+import { DetailsExerciseAdmin } from "./DetailsExerciseAdmin";
 
 export const ExerciseList = () => {
   console.log("render <ExerciseList/>");
@@ -47,6 +48,7 @@ export const ExerciseList = () => {
   const muscleList = JSON.parse(localStorage.getItem("muscleList"));
   const totalExercises = exerciseList.length;
 
+  console.log("isAmd", isAdmin);
   // functions
   const handleSelect = (e) => {
     const id = e.target.value;
@@ -183,11 +185,14 @@ export const ExerciseList = () => {
           )}
           {modalState.componentName === componentsModal.exerciseItem && (
             <Modal modalSize="md">
-              <DetailsExercise
-                muscleId={muscleId}
-                exerciseList={exerciseList}
-                componentModalName={componentsModal.exerciseItem}
-              />
+              {isAdmin ? (
+                <DetailsExerciseAdmin
+                  muscleId={muscleId}
+                  componentModalName={componentsModal.exerciseItem}
+                />
+              ) : (
+                <DetailsExercise />
+              )}
             </Modal>
           )}
         </>

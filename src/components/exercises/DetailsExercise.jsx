@@ -1,78 +1,24 @@
-import React, { useState } from "react";
-import { Delete, Save } from "@mui/icons-material";
-import {
-  Alert,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { useState } from "react";
+import { Button, Stack, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  startDeletingExercise,
-  startUpdatingExercise,
-  setCurrentExercise,
-} from "../../actions/exercise.action";
+import { setCurrentExercise } from "../../actions/exercise.action";
 import { setModal } from "../../actions/modal.action";
-import { componentsModal } from "../../helpers/componentsModal";
-import { useForm } from "../../hooks/useForm";
-import { ConfirmDelete } from "../ui/ConfirmDelete";
-import { InputFile } from "../ui/InputFile";
 
-export const DetailsExercise = ({
-  muscleId = 0,
-  exerciseList = [],
-  componentModalName,
-}) => {
+export const DetailsExercise = () => {
   console.log("render details");
   const dispatch = useDispatch();
 
   // selectors
-  const { isAdmin } = useSelector((state) => state.auth.user);
-  const { current } = useSelector((state) => state.exercises);
-
-  // states
-  const [deleteMode, setDeleteMode] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(
-    exerciseList.findIndex((e) => e.id === current.id)
+  const { current: currentExercise, exerciseList } = useSelector(
+    (state) => state.exercises
   );
 
-  // custom hooks
-  const [formValues, handleInputChange, setSpecificValue, setForm] = useForm({
-    ...current, //Contains the data of the selected exercise
-    muscleId: muscleId !== 0 ? muscleId : current.muscleId,
-    newImage: null, //image file
-  });
-
-  // constants & variables
-  const muscleList = JSON.parse(localStorage.getItem("muscleList"));
-  const inputImageName = "newImage";
-  const activeFields =
-    componentModalName === componentsModal.workoutsExercise || !isAdmin;
+  // states
+  const [currentIndex, setCurrentIndex] = useState(
+    exerciseList.findIndex((e) => e.id === currentExercise.id)
+  );
 
   // functions
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(startUpdatingExercise(formValues, muscleId));
-  };
-
-  const setNewImage = () => {
-    setSpecificValue(
-      inputImageName,
-      document.getElementById(inputImageName).files[0]
-    );
-  };
-
-  const handleCancelDelete = () => {
-    setDeleteMode(false);
-  };
-  const handleDelete = () => {
-    dispatch(startDeletingExercise(formValues.id, formValues.imageName));
-  };
-
   const handleSetNewExercise = (navigate = "next") => {
     let newExercise = {};
     if (navigate === "next") {
@@ -93,149 +39,52 @@ export const DetailsExercise = ({
       }
     }
     dispatch(setCurrentExercise(newExercise));
-    dispatch(setModal(true, newExercise.name, componentModalName));
-    setForm({
-      ...newExercise,
-      newImage: null,
-    });
   };
-
-  if (!deleteMode)
-    return (
-      <form onSubmit={handleSubmit} className="modal-details">
-        <button
-          type="button"
-          className="btn__navigation btn__navigation--previous"
-          onClick={() => handleSetNewExercise("previous")}
-        >
-          {"<"}
-        </button>
-        <button
-          type="button"
-          className="btn__navigation btn__navigation--next"
-          onClick={() => handleSetNewExercise("next")}
-        >
-          {">"}
-        </button>
-        <div className="modal-details__image-section">
-          <img
-            className="image"
-            src={`../img/exercises/${formValues.imageName}`}
-            alt={formValues.imageName}
-          />
-        </div>
-        <div className="modal-details__form-section">
-          <div>
-            <TextField
-              size="small"
-              label="Exercise Name"
-              disabled={activeFields}
-              fullWidth
-              name="name"
-              onChange={handleInputChange}
-              value={formValues.name}
-            />
-
-            <TextField
-              sx={{ margin: "1rem 0" }}
-              size="small"
-              name="description"
-              fullWidth
-              label="Description"
-              multiline
-              disabled={activeFields}
-              rows="3"
-              onChange={handleInputChange}
-              value={formValues.description}
-            />
-            <FormControl fullWidth>
-              <InputLabel id="labelMuscleId">Muscle</InputLabel>
-              <Select
-                id="ddlMuscleAddExercise" //drop down list
-                labelId="labelMuscleId"
-                label="Muscle"
-                size="small"
-                value={formValues.muscleId}
-                onChange={handleInputChange}
-                name="muscleId"
-                disabled={activeFields}
-              >
-                {muscleList.map((muscle) => (
-                  <MenuItem key={`ddlMuscles-${muscle.id}`} value={muscle.id}>
-                    {muscle.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            {isAdmin &&
-              componentModalName !== componentsModal.workoutsExercise && (
-                <InputFile
-                  name={inputImageName}
-                  id={inputImageName}
-                  onChangeFunction={setNewImage}
-                />
-              )}
-          </div>
-          {componentModalName === componentsModal.workoutsExercise ||
-          !isAdmin ? (
-            <Stack direction="row" justifyContent="flex-end">
-              <Button
-                variant="contained"
-                color="info"
-                onClick={() => dispatch(setModal(false, ""))}
-                size="small"
-              >
-                Close
-              </Button>
-            </Stack>
-          ) : (
-            <Stack direction="row" justifyContent="space-between">
-              <Button
-                variant="contained"
-                endIcon={<Delete />}
-                color="error"
-                size="small"
-                onClick={() => setDeleteMode(true)}
-              >
-                Delete
-              </Button>
-
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  color="info"
-                  onClick={() => dispatch(setModal(false, ""))}
-                  size="small"
-                >
-                  Close
-                </Button>
-
-                <Button
-                  variant="contained"
-                  endIcon={<Save />}
-                  color="success"
-                  type="submit"
-                  size="small"
-                >
-                  Save
-                </Button>
-              </Stack>
-            </Stack>
+  return (
+    <div className="modal-details">
+      <button
+        type="button"
+        className="btn__navigation btn__navigation--previous"
+        onClick={() => handleSetNewExercise("previous")}
+      >
+        {"<"}
+      </button>
+      <button
+        type="button"
+        className="btn__navigation btn__navigation--next"
+        onClick={() => handleSetNewExercise("next")}
+      >
+        {">"}
+      </button>
+      <div className="modal-details__image-section">
+        <img
+          className="image"
+          src={`../img/exercises/${currentExercise.imageName}`}
+          alt={currentExercise.imageName}
+        />
+      </div>
+      <div className="modal-details__form-section">
+        <div style={{ height: "100%" }}>
+          {currentExercise.description !== "" && (
+            <div className="details details__description">
+              <Typography>{currentExercise.description}</Typography>
+            </div>
           )}
+          <div className="details">
+            <Typography>Category: {currentExercise.muscleName}</Typography>
+          </div>
         </div>
-      </form>
-    );
-  else
-    return (
-      <>
-        <ConfirmDelete
-          handleCancel={handleCancelDelete}
-          handleDelete={handleDelete}
-        >
-          <Alert severity="warning">
-            Are you sure you want to delete the exercise <b>{current.name}</b>?
-          </Alert>
-        </ConfirmDelete>
-      </>
-    );
+        <Stack direction="row" justifyContent="flex-end">
+          <Button
+            variant="contained"
+            color="info"
+            onClick={() => dispatch(setModal(false, ""))}
+            size="small"
+          >
+            Close
+          </Button>
+        </Stack>
+      </div>
+    </div>
+  );
 };
