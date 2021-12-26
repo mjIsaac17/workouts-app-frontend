@@ -17,7 +17,6 @@ import {
   setCurrentExercise,
 } from "../../actions/exercise.action";
 import { setModal } from "../../actions/modal.action";
-import { componentsModal } from "../../helpers/componentsModal";
 import { useForm } from "../../hooks/useForm";
 import { ConfirmDelete } from "../ui/ConfirmDelete";
 import { InputFile } from "../ui/InputFile";

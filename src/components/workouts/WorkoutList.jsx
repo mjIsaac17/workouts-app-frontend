@@ -16,7 +16,7 @@ import { WorkoutAdd } from "./WorkoutAdd";
 import { WorkoutCard } from "./WorkoutCard";
 
 export const WorkoutList = () => {
-  console.log("render <WorkoutList/>");
+  // console.log("render <WorkoutList/>");
   const dispatch = useDispatch();
   const { myWorkouts, loading, currentWorkout } = useSelector(
     (state) => state.workouts

@@ -5,7 +5,7 @@ import { setCurrentExercise } from "../../actions/exercise.action";
 import { setModal } from "../../actions/modal.action";
 
 export const DetailsExercise = () => {
-  console.log("render details");
+  // console.log("render details");
   const dispatch = useDispatch();
 
   // selectors

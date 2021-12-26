@@ -17,7 +17,7 @@ import { MuscleDetails } from "./MuscleDetails";
 import { Tooltip, Typography } from "@mui/material";
 
 export const MusclesList = () => {
-  console.log("render <musclesList/>");
+  // console.log("render <musclesList/>");
 
   const dispatch = useDispatch();
 
@@ -33,13 +33,13 @@ export const MusclesList = () => {
   useEffect(() => {
     if (muscleList.length === 0) {
       dispatch(startGettingMuscles());
-      console.log("effect startgettingMuscles");
+      // console.log("effect startgettingMuscles");
     }
   }, [dispatch, muscleList]);
 
   useEffect(() => {
     if (muscleList.length > 0) {
-      console.log("effect saveMuscleList");
+      // console.log("effect saveMuscleList");
       localStorage.setItem("muscleList", JSON.stringify(muscleList));
     }
   }, [muscleList]);

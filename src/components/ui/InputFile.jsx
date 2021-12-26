@@ -7,7 +7,7 @@ export const InputFile = React.memo(
     const [newImageName, setNewImageName] = useState(
       currentImageName ? currentImageName : "No image selected"
     );
-    console.log("render <InputFile/>");
+    // console.log("render <InputFile/>");
     const handleChange = (e) => {
       setNewImageName(e.target.files[0].name);
       if (onChangeFunction) onChangeFunction();

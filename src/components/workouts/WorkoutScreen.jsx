@@ -11,7 +11,7 @@ import {
 import { componentsModal } from "../../helpers/componentsModal";
 
 export const WorkoutsScreen = () => {
-  console.log("render <WorkoutScreen/>");
+  // console.log("render <WorkoutScreen/>");
   const dispatch = useDispatch();
 
   const handleAdd = () => {

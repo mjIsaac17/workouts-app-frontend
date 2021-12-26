@@ -12,7 +12,7 @@ import AddUserForm from "./AddUserForm";
 import UserList from "./UserList";
 
 const UserScreen = () => {
-  console.log("Render <UserScreen />");
+  // console.log("Render <UserScreen />");
   const dispatch = useDispatch();
 
   const { componentName } = useSelector((state) => state.modal);

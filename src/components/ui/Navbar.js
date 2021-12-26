@@ -8,7 +8,7 @@ export const Navbar = ({ openCloseSidebar }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  console.log("render nav");
+  // console.log("render nav");
 
   const handleLogout = () => {
     dispatch(logout());

@@ -26,7 +26,7 @@ import { BtnExportExercisesToPDF } from "../data-export/BtnExportExercisesToPDF"
 import { DetailsExerciseAdmin } from "./DetailsExerciseAdmin";
 
 export const ExerciseList = () => {
-  console.log("render <ExerciseList/>");
+  // console.log("render <ExerciseList/>");
   const dispatch = useDispatch();
 
   // selectors
@@ -48,7 +48,6 @@ export const ExerciseList = () => {
   const muscleList = JSON.parse(localStorage.getItem("muscleList"));
   const totalExercises = exerciseList.length;
 
-  console.log("isAmd", isAdmin);
   // functions
   const handleSelect = (e) => {
     const id = e.target.value;
@@ -75,7 +74,7 @@ export const ExerciseList = () => {
 
   // effects
   useEffect(() => {
-    console.log("effect startGettingExercises");
+    // console.log("effect startGettingExercises");
     dispatch(startGettingExercises(muscleId));
   }, [dispatch, muscleId]);
 

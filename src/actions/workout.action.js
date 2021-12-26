@@ -97,7 +97,6 @@ const successUpdateWorkout = (workout) => ({
 });
 
 export const startUpdatingWorkout = (workout) => {
-  console.log(workout);
   return async (dispatch) => {
     try {
       const resp = await fetchTokenFormData(

@@ -11,7 +11,7 @@ import { setSnackbar } from "../../actions/snackbar.action";
 import { InputFile } from "../ui/InputFile";
 
 export const AddMuscle = () => {
-  console.log("render <addMuscle/>");
+  // console.log("render <addMuscle/>");
   const dispatch = useDispatch();
   const [error, setError] = useState("");
 

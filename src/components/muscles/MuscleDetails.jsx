@@ -28,7 +28,7 @@ import { ConfirmDelete } from "../ui/ConfirmDelete";
 import { InputFile } from "../ui/InputFile";
 
 export const MuscleDetails = () => {
-  console.log("render <MuscleDetails/>");
+  // console.log("render <MuscleDetails/>");
 
   const dispatch = useDispatch();
 

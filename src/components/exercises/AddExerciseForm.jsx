@@ -18,7 +18,7 @@ import { useForm } from "../../hooks/useForm";
 import { InputFile } from "../ui/InputFile";
 
 export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
-  console.log("render <AddExerciseForm/> ");
+  // console.log("render <AddExerciseForm/> ");
 
   const dispatch = useDispatch();
 

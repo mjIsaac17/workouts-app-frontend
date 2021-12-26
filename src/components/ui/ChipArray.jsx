@@ -9,7 +9,7 @@ const ListItem = styled("li")(({ theme }) => ({
 
 export const ChipsArray = React.memo(
   ({ chips = [], title = "", handleDelete }) => {
-    console.log("render ChipsArray");
+    // console.log("render ChipsArray");
 
     return (
       <>

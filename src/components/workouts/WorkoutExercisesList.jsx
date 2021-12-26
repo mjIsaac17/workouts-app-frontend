@@ -21,7 +21,7 @@ export const WorkoutExercisesList = () => {
 
   useEffect(() => {
     if (currentWorkoutExercises.length === 0) {
-      console.log("effect startGettingWorkoutExercises");
+      // console.log("effect startGettingWorkoutExercises");
       dispatch(startGettingWorkoutExercises(workoutName));
     }
   }, [dispatch, workoutName, currentWorkoutExercises]);
@@ -34,7 +34,7 @@ export const WorkoutExercisesList = () => {
   return (
     <>
       <Typography variant="h4" textAlign="center" margin={3}>
-        <b>{workoutName}</b> workout exercises
+        <b>{workoutName}</b> workout
       </Typography>
       <Typography variant="h5" component="p" textAlign="right">
         {totalExercises} Exercise(s)

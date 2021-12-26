@@ -12,7 +12,7 @@ import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 export const Sidebar = ({ openSidebar, openCloseSidebar }) => {
-  console.log("render sidebar");
+  // console.log("render sidebar");
 
   const { user } = useSelector((state) => state.auth);
 

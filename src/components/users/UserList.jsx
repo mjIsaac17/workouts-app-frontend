@@ -11,14 +11,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import { startGettingUsers } from "../../actions/user.action";
 
 const UserList = ({ handleEdit, handleDelete, filterWord = "" }) => {
-  console.log("Render <UserList />");
+  // console.log("Render <UserList />");
 
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (!users) {
-      console.log("Effect getUsers");
+      // console.log("Effect getUsers");
       dispatch(startGettingUsers());
     }
   }, [dispatch, users]);

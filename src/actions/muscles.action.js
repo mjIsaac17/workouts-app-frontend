@@ -41,7 +41,6 @@ const successAddMuscle = (muscle) => ({
 });
 
 export const startAddingMuscle = (muscle) => {
-  console.log(muscle);
   return async (dispatch) => {
     try {
       muscle.imageName = renameImage(muscle.image.name);

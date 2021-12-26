@@ -104,7 +104,7 @@ const AddUserForm = ({ user }) => {
 
   useEffect(() => {
     if (!roles) {
-      console.log("Effect load roles");
+      // console.log("Effect load roles");
       dispatch(userStartGettingRoles());
     }
   }, [dispatch, roles]);

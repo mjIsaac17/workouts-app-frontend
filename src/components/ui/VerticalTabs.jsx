@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { startGettingExercises } from "../../actions/exercise.action";
 
 export const VerticalTabs = memo(({ muscleList }) => {
-  console.log("render <VerticalTabs>");
+  // console.log("render <VerticalTabs>");
   const dispatch = useDispatch();
   const [value, setValue] = useState(1);
 
@@ -16,7 +16,6 @@ export const VerticalTabs = memo(({ muscleList }) => {
   };
 
   useEffect(() => {
-    console.log("effect startGettingExercises", value);
     if (value === 0) dispatch(startGettingExercises(0));
     else dispatch(startGettingExercises(muscleList[value - 1].id));
   }, [dispatch, value, muscleList]);

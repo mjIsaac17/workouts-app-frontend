@@ -9,7 +9,7 @@ const columns = [
 ];
 
 export const DataTableSelect = React.memo(({ handleAdd }) => {
-  console.log("render <DataTableSelect />");
+  // console.log("render <DataTableSelect />");
   const { exerciseList } = useSelector((state) => state.exercises);
   const [hoverExercise, setHoverExercise] = useState({});
   const divRef = useRef();

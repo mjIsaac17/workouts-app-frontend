@@ -13,7 +13,7 @@ import { PublicRoute } from "./PublicRoute";
 import { Layout } from "../components/ui/Layout";
 
 export const AppRouter = () => {
-  console.log("Render <AppRouter />");
+  // console.log("Render <AppRouter />");
   const dispatch = useDispatch();
   const { checking, isLogged } = useSelector((state) => state.auth);
 

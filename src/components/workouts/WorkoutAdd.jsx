@@ -23,7 +23,7 @@ import {
 } from "../../actions/workout.action";
 
 export const WorkoutAdd = ({ action }) => {
-  console.log("render <WorkoutsAdd />");
+  // console.log("render <WorkoutsAdd />");
 
   const dispatch = useDispatch();
 
