@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import LoadingButton from "@mui/lab/LoadingButton";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -14,6 +14,7 @@ export const AddMuscle = () => {
   // console.log("render <addMuscle/>");
   const dispatch = useDispatch();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ export const AddMuscle = () => {
       dispatch(setSnackbar("error", "The image is required", true));
       return;
     }
+    setLoading(true);
     dispatch(startAddingMuscle({ name, image }));
   };
   return (
@@ -61,14 +63,16 @@ export const AddMuscle = () => {
         >
           Cancel
         </Button>
-        <Button
+        <LoadingButton
+          loading={loading}
+          loadingPosition="end"
           variant="contained"
           endIcon={<SaveIcon />}
           color="success"
           type="submit"
         >
           Save
-        </Button>
+        </LoadingButton>
       </Stack>
     </form>
   );

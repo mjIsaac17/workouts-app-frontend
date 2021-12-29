@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { Delete, Save } from "@mui/icons-material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Button,
   FormControlLabel,
@@ -22,22 +23,20 @@ import {
 } from "../../actions/muscles.action";
 
 import { componentsModal } from "../../helpers/componentsModal";
-import { renameImage } from "../../helpers/renameImage";
 
 import { ConfirmDelete } from "../ui/ConfirmDelete";
 import { InputFile } from "../ui/InputFile";
 
 export const MuscleDetails = () => {
   // console.log("render <MuscleDetails/>");
-
   const dispatch = useDispatch();
 
   // selectors
   const currentMuscle = useSelector((state) => state.muscles.current);
-  const { isAdmin } = useSelector((state) => state.auth.user);
 
   // states
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [deleteExercises, setDeleteExercises] = useState(null);
   const [deleteMode, setDeleteMode] = useState(false);
   const [muscleName, setMuscleName] = useState(currentMuscle.name);
@@ -50,13 +49,10 @@ export const MuscleDetails = () => {
       return;
     }
 
+    setLoading(true);
     const image = document.getElementById("image").files[0];
     currentMuscle.name = muscleName.trim();
-    currentMuscle.originalImageName = currentMuscle.imageName;
     currentMuscle.newImage = image;
-    if (image) {
-      currentMuscle.imageName = renameImage(image.name);
-    }
     dispatch(startUpdatingMuscle(currentMuscle));
   };
 
@@ -85,7 +81,7 @@ export const MuscleDetails = () => {
     dispatch(
       startDeletingMuscle(
         currentMuscle.id,
-        currentMuscle.imageName,
+        currentMuscle.imageUrl,
         deleteExercises
       )
     );
@@ -95,10 +91,7 @@ export const MuscleDetails = () => {
     return (
       <form onSubmit={handleSubmit} className="modal-details">
         <div className="modal-details__image-section">
-          <img
-            src={`../img/muscles/${currentMuscle.imageName}`}
-            alt={currentMuscle.imageName}
-          />
+          <img src={currentMuscle.imageUrl} alt={currentMuscle.imageName} />
         </div>
         <div className="modal-details__form-section">
           <div>
@@ -122,17 +115,16 @@ export const MuscleDetails = () => {
             />
           </div>
           <Stack direction="row" justifyContent="space-between">
-            {isAdmin && (
-              <Button
-                variant="contained"
-                endIcon={<Delete />}
-                color="error"
-                size="small"
-                onClick={() => handleDeleteMode()}
-              >
-                Delete
-              </Button>
-            )}
+            <Button
+              variant="contained"
+              endIcon={<Delete />}
+              color="error"
+              size="small"
+              onClick={() => handleDeleteMode()}
+            >
+              Delete
+            </Button>
+
             <Stack direction="row" spacing={2}>
               <Button
                 variant="contained"
@@ -142,17 +134,18 @@ export const MuscleDetails = () => {
               >
                 Cancel
               </Button>
-              {isAdmin && (
-                <Button
-                  variant="contained"
-                  endIcon={<Save />}
-                  color="success"
-                  type="submit"
-                  size="small"
-                >
-                  Update
-                </Button>
-              )}
+
+              <LoadingButton
+                loading={loading}
+                loadingPosition="end"
+                variant="contained"
+                endIcon={<Save />}
+                color="success"
+                type="submit"
+                size="small"
+              >
+                Update
+              </LoadingButton>
             </Stack>
           </Stack>
         </div>

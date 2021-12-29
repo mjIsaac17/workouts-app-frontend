@@ -6,14 +6,14 @@ export const MuscleItem = ({ muscle, editMode = false }) => {
     <div className="card card--md">
       {!editMode ? (
         <Link to={"/exercises"}>
-          <img src={`img/muscles/${muscle.imageName}`} alt={muscle.name} />
+          <img src={muscle.imageUrl} alt={muscle.imageName} />
           <div className="card__title">
             <p>{muscle.name}</p>
           </div>
         </Link>
       ) : (
         <>
-          <img src={`img/muscles/${muscle.imageName}`} alt={muscle.name} />
+          <img src={muscle.imageUrl} alt={muscle.imageName} />
           <div className="card__title">
             <p>{muscle.name}</p>
           </div>
