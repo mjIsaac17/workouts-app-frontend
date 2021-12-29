@@ -76,7 +76,8 @@ export const startAddingWorkout = (workout) => {
       const body = await resp.json();
       if (resp.ok) {
         if (workout.image) {
-          workout.imageName = workout.image.name;
+          workout.imageName = body.imageName;
+          workout.imageUrl = body.imageUrl;
           delete workout.image;
         }
         workout.id = body.workoutId;
@@ -106,9 +107,10 @@ export const startUpdatingWorkout = (workout) => {
       );
       const body = await resp.json();
       if (resp.ok) {
-        if (workout.image) {
-          workout.imageName = workout.image.name;
-          delete workout.image;
+        if (workout.newImage) {
+          workout.imageName = body.imageName;
+          workout.imageUrl = body.imageUrl;
+          delete workout.newImage;
         }
         dispatch(successUpdateWorkout(workout));
         dispatch(setSnackbar("success", "Workout updated", true));
@@ -126,12 +128,12 @@ const successRemoveWorkout = (id) => ({
   payload: id,
 });
 
-export const startDeletingWorkout = ({ id, imageName }) => {
+export const startDeletingWorkout = (id, imageUrl) => {
   return async (dispatch) => {
     try {
       const resp = await fetchToken(
         `${workoutEndpoint}/${id}`,
-        { id, imageName },
+        { id, imageUrl },
         "DELETE"
       );
       const body = await resp.json();

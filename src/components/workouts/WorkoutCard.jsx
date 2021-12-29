@@ -29,10 +29,10 @@ export const WorkoutCard = ({ workout }) => {
           <CardMedia
             component="img"
             height="300"
-            image={`/img/workouts/${
-              workout.imageName ? workout.imageName : "default.jpg"
-            }`}
-            alt={workout.imageName}
+            image={
+              workout.imageUrl ? workout.imageUrl : "/img/workouts/default.jpg"
+            }
+            alt={workout.imageName ? workout.imageName : workout.name}
           />
           <CardContent>
             <Typography gutterBottom variant="h6" component="p">

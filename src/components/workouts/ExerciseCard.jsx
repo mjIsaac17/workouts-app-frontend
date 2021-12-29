@@ -12,10 +12,10 @@ export const ExerciseCard = ({ exercise }) => {
         <CardMedia
           component="img"
           height="300"
-          image={`/img/exercises/${
-            exercise.imageName ? exercise.imageName : "default.jpg"
-          }`}
-          alt={exercise.imageName}
+          image={
+            exercise.imageUrl ? exercise.imageUrl : "/img/exercises/default.jpg"
+          }
+          alt={exercise.imageName ? exercise.imageName : exercise.name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

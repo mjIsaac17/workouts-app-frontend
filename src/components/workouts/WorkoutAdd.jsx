@@ -7,6 +7,8 @@ import {
   Stack,
   Button,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Save } from "@mui/icons-material";
 
@@ -43,6 +45,7 @@ export const WorkoutAdd = ({ action }) => {
       : []
   );
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // custom hooks
   const [formValues, handleInputChange] = useForm({
@@ -91,6 +94,7 @@ export const WorkoutAdd = ({ action }) => {
       return;
     }
     let exerciseIds = chips.map((chip) => chip.id).join(",");
+    setLoading(true);
     if (action === "add")
       dispatch(
         startAddingWorkout({
@@ -110,9 +114,10 @@ export const WorkoutAdd = ({ action }) => {
           id: currentWorkout.id,
           name: workoutName,
           description: workoutDescription,
-          exerciseIds,
-          image,
           imageName: currentWorkout.imageName,
+          imageUrl: currentWorkout.imageUrl,
+          exerciseIds,
+          newImage: image,
         })
       );
     }
@@ -168,14 +173,16 @@ export const WorkoutAdd = ({ action }) => {
         >
           Cancel
         </Button>
-        <Button
+        <LoadingButton
+          loading={loading}
+          loadingPosition="end"
           variant="contained"
           endIcon={<Save />}
           color="success"
           type="submit"
         >
           Save
-        </Button>
+        </LoadingButton>
       </Stack>
     </Stack>
   );

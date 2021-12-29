@@ -35,12 +35,7 @@ export const WorkoutList = () => {
   };
 
   const handleDelete = () => {
-    dispatch(
-      startDeletingWorkout({
-        id: currentWorkout.id,
-        imageName: currentWorkout.imageName,
-      })
-    );
+    dispatch(startDeletingWorkout(currentWorkout.id, currentWorkout.imageUrl));
   };
   const handleCancel = () => {
     dispatch(setModal(false));
