@@ -10,6 +10,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
   startDeletingExercise,
@@ -20,9 +21,10 @@ import { setModal } from "../../actions/modal.action";
 import { useForm } from "../../hooks/useForm";
 import { ConfirmDelete } from "../ui/ConfirmDelete";
 import { InputFile } from "../ui/InputFile";
+import { setSnackbar } from "../../actions/snackbar.action";
 
-export const DetailsExerciseAdmin = ({ muscleId = 0, componentModalName }) => {
-  console.log("render details", muscleId);
+export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
+  // console.log("render details", muscleId);
   const dispatch = useDispatch();
 
   // selectors
@@ -30,6 +32,7 @@ export const DetailsExerciseAdmin = ({ muscleId = 0, componentModalName }) => {
 
   // states
   const [deleteMode, setDeleteMode] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(
     exerciseList.findIndex((e) => e.id === current.id)
   );
@@ -46,9 +49,21 @@ export const DetailsExerciseAdmin = ({ muscleId = 0, componentModalName }) => {
   const inputImageName = "newImage";
 
   // functions
+  const isFormValid = () => {
+    if (!formValues.name) {
+      dispatch(setSnackbar("error", "Invalid exercise name", true));
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(startUpdatingExercise(formValues, muscleId));
+    if (isFormValid()) {
+      setLoading(true);
+      dispatch(startUpdatingExercise(formValues, muscleId));
+    }
   };
 
   const setNewImage = () => {
@@ -62,7 +77,7 @@ export const DetailsExerciseAdmin = ({ muscleId = 0, componentModalName }) => {
     setDeleteMode(false);
   };
   const handleDelete = () => {
-    dispatch(startDeletingExercise(formValues.id, formValues.imageName));
+    dispatch(startDeletingExercise(formValues.id, formValues.imageUrl));
   };
 
   const handleSetNewExercise = (navigate = "next") => {
@@ -85,7 +100,6 @@ export const DetailsExerciseAdmin = ({ muscleId = 0, componentModalName }) => {
       }
     }
     dispatch(setCurrentExercise(newExercise));
-    dispatch(setModal(true, newExercise.name, componentModalName));
     setForm({
       ...formValues,
       ...newExercise,
@@ -112,7 +126,7 @@ export const DetailsExerciseAdmin = ({ muscleId = 0, componentModalName }) => {
         <div className="modal-details__image-section">
           <img
             className="image"
-            src={`../img/exercises/${formValues.imageName}`}
+            src={formValues.imageUrl}
             alt={formValues.imageName}
           />
         </div>
@@ -185,15 +199,17 @@ export const DetailsExerciseAdmin = ({ muscleId = 0, componentModalName }) => {
                 Close
               </Button>
 
-              <Button
-                variant="contained"
-                endIcon={<Save />}
+              <LoadingButton
                 color="success"
+                endIcon={<Save />}
+                loading={loading}
+                loadingPosition="end"
+                variant="contained"
                 type="submit"
                 size="small"
               >
                 Save
-              </Button>
+              </LoadingButton>
             </Stack>
           </Stack>
         </div>

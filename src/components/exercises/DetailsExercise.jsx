@@ -59,7 +59,7 @@ export const DetailsExercise = () => {
       <div className="modal-details__image-section">
         <img
           className="image"
-          src={`../img/exercises/${currentExercise.imageName}`}
+          src={currentExercise.imageUrl}
           alt={currentExercise.imageName}
         />
       </div>

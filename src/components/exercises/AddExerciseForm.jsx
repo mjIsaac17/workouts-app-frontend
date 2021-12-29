@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -8,6 +8,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 
 import { useDispatch } from "react-redux";
@@ -21,6 +22,8 @@ export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
   // console.log("render <AddExerciseForm/> ");
 
   const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false);
 
   // custom hooks
   const [formValues, handleInputChange, setSpecificValue] = useForm({
@@ -58,7 +61,10 @@ export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     //console.log(formValues);
-    if (isFormValid()) dispatch(startAddingExercise(formValues));
+    if (isFormValid()) {
+      setLoading(true);
+      dispatch(startAddingExercise(formValues));
+    }
   };
 
   return (
@@ -127,14 +133,16 @@ export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
         >
           Cancel
         </Button>
-        <Button
-          variant="contained"
-          endIcon={<SaveIcon />}
+        <LoadingButton
           color="success"
+          endIcon={<SaveIcon />}
+          loading={loading}
+          loadingPosition="end"
           type="submit"
+          variant="contained"
         >
           Save
-        </Button>
+        </LoadingButton>
       </Stack>
     </form>
   );
