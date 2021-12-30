@@ -1,14 +1,16 @@
 import { FileDownload } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
-import React from "react";
+import { useDispatch } from "react-redux";
 import ReactExport from "react-data-export";
 import { exerciseProps } from "../../helpers/excelProps";
 import PropTypes from "prop-types";
+import { setSnackbar } from "../../actions/snackbar.action";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 export const BtnExportToExcel = ({ dataSource, data, fileName, sheetName }) => {
+  const dispatch = useDispatch();
   let excelFormat = {};
   switch (dataSource) {
     case "exercises":
@@ -35,20 +37,32 @@ export const BtnExportToExcel = ({ dataSource, data, fileName, sheetName }) => {
     },
   ];
 
+  const handleClick = () => {
+    dispatch(setSnackbar("info", "There is no data to export", true));
+  };
+
   return (
     <>
-      <ExcelFile
-        element={
-          <Tooltip title="Export to Excel">
-            <IconButton aria-label="export to excel" color="success">
-              <FileDownload />
-            </IconButton>
-          </Tooltip>
-        }
-        filename={fileName}
-      >
-        <ExcelSheet dataSet={dataSet} name={sheetName} />
-      </ExcelFile>
+      {data.length > 0 ? (
+        <ExcelFile
+          element={
+            <Tooltip title="Export to Excel">
+              <IconButton aria-label="export to excel" color="success">
+                <FileDownload />
+              </IconButton>
+            </Tooltip>
+          }
+          filename={fileName}
+        >
+          <ExcelSheet dataSet={dataSet} name={sheetName} />
+        </ExcelFile>
+      ) : (
+        <Tooltip title="Export to Excel" onClick={handleClick}>
+          <IconButton aria-label="export to excel" color="success">
+            <FileDownload />
+          </IconButton>
+        </Tooltip>
+      )}
     </>
   );
 };

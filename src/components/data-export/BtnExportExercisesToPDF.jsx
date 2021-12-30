@@ -3,12 +3,15 @@ import { jsPDF } from "jspdf";
 import { PictureAsPdf } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { setSnackbar } from "../../actions/snackbar.action";
 
 export const BtnExportExercisesToPDF = ({
   exercises,
   totalExercises,
   fileName,
 }) => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const loadImage = (exercise) =>
     new Promise((resolve) => {
@@ -63,7 +66,7 @@ export const BtnExportExercisesToPDF = ({
           setLoading(false);
         })
         .catch(() => setLoading(false));
-    }
+    } else dispatch(setSnackbar("info", "There is no data to export", true));
   };
   return (
     <Tooltip title="Export to PDF">
