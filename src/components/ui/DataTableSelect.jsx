@@ -19,12 +19,13 @@ export const DataTableSelect = React.memo(({ handleAdd }) => {
     exerciseName: ex.name,
     exerciseDescription: ex.description,
     imageName: ex.imageName,
+    imageUrl: ex.imageUrl,
   }));
 
   const [anchorEl, setAnchorEl] = useState(null);
   const handlePopoverOpen = (e) => {
     setAnchorEl(divRef.current);
-    setHoverExercise({ name: e.row.exerciseName, imageName: e.row.imageName });
+    setHoverExercise({ name: e.row.exerciseName, imageUrl: e.row.imageUrl });
   };
 
   const handlePopoverClose = () => {
@@ -71,8 +72,8 @@ export const DataTableSelect = React.memo(({ handleAdd }) => {
           <Typography sx={{ p: 1 }}>{hoverExercise.name}</Typography>
           <img
             style={{ maxWidth: "150px" }}
-            src={`img/exercises/${hoverExercise.imageName}`}
-            alt={hoverExercise.name}
+            src={hoverExercise.imageUrl}
+            alt={hoverExercise.imageName}
           />
         </Popover>
       </div>

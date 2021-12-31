@@ -17,17 +17,18 @@ export const BtnExportExercisesToPDF = ({
     new Promise((resolve) => {
       const img = new Image();
       img.onload = () => resolve(img);
-      img.src = `../img/exercises/${exercise.imageName}`;
+      img.src = exercise.imageUrl;
     });
 
   const handleExportToPDF = () => {
     if (totalExercises > 0) {
       //Max size for images
       setLoading(true);
-      const maxHeight = 210,
-        maxWidth = 190;
+      const maxHeight = 190,
+        maxWidth = 170;
       const doc = new jsPDF("p", "mm", "a4");
-      //Prepare images
+
+      // Prepare images
       Promise.all(exercises.map(loadImage))
         .then((images) => {
           images.forEach((image, i) => {
@@ -42,7 +43,6 @@ export const BtnExportExercisesToPDF = ({
               width = image.width;
 
             const ratio = height / width;
-
             if (height > maxHeight || width > maxWidth) {
               if (height > width) {
                 height = maxHeight;
@@ -52,10 +52,11 @@ export const BtnExportExercisesToPDF = ({
                 height = width * ratio;
               }
             }
+
             doc.addImage(
-              image.src,
+              image,
               exercise.imageName.split(".").at(-1),
-              10,
+              20,
               55,
               width,
               height
@@ -65,7 +66,16 @@ export const BtnExportExercisesToPDF = ({
           doc.save(`${fileName}.pdf`);
           setLoading(false);
         })
-        .catch(() => setLoading(false));
+        .catch((error) => {
+          dispatch(
+            setSnackbar(
+              "error",
+              "It was not possible to export the data to PDF",
+              true
+            )
+          );
+          setLoading(false);
+        });
     } else dispatch(setSnackbar("info", "There is no data to export", true));
   };
   return (
@@ -74,6 +84,7 @@ export const BtnExportExercisesToPDF = ({
         aria-label="export to pdf"
         color="error"
         onClick={handleExportToPDF}
+        disabled={loading}
       >
         <PictureAsPdf />
         {loading && (
