@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/workouts-app-frontend/static/css/main.9a8d6427.chunk.css",
-    "main.js": "/workouts-app-frontend/static/js/main.077a791c.chunk.js",
-    "main.js.map": "/workouts-app-frontend/static/js/main.077a791c.chunk.js.map",
+    "main.js": "/workouts-app-frontend/static/js/main.297e0d6b.chunk.js",
+    "main.js.map": "/workouts-app-frontend/static/js/main.297e0d6b.chunk.js.map",
     "runtime-main.js": "/workouts-app-frontend/static/js/runtime-main.77f431b4.js",
     "runtime-main.js.map": "/workouts-app-frontend/static/js/runtime-main.77f431b4.js.map",
     "static/js/2.ea6f6854.chunk.js": "/workouts-app-frontend/static/js/2.ea6f6854.chunk.js",
@@ -26,6 +26,6 @@
     "static/js/runtime-main.77f431b4.js",
     "static/js/2.ea6f6854.chunk.js",
     "static/css/main.9a8d6427.chunk.css",
-    "static/js/main.077a791c.chunk.js"
+    "static/js/main.297e0d6b.chunk.js"
   ]
 }
