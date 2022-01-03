@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/mjIsaac17/workouts-app-frontend/static/css/main.9a8d6427.chunk.css",
+    "main.js": "/mjIsaac17/workouts-app-frontend/static/js/main.077a791c.chunk.js",
+    "main.js.map": "/mjIsaac17/workouts-app-frontend/static/js/main.077a791c.chunk.js.map",
+    "runtime-main.js": "/mjIsaac17/workouts-app-frontend/static/js/runtime-main.4198bc7e.js",
+    "runtime-main.js.map": "/mjIsaac17/workouts-app-frontend/static/js/runtime-main.4198bc7e.js.map",
+    "static/js/2.bc701647.chunk.js": "/mjIsaac17/workouts-app-frontend/static/js/2.bc701647.chunk.js",
+    "static/js/2.bc701647.chunk.js.map": "/mjIsaac17/workouts-app-frontend/static/js/2.bc701647.chunk.js.map",
+    "static/js/3.b9bdadf2.chunk.js": "/mjIsaac17/workouts-app-frontend/static/js/3.b9bdadf2.chunk.js",
+    "static/js/3.b9bdadf2.chunk.js.map": "/mjIsaac17/workouts-app-frontend/static/js/3.b9bdadf2.chunk.js.map",
+    "static/js/4.e6fed19e.chunk.js": "/mjIsaac17/workouts-app-frontend/static/js/4.e6fed19e.chunk.js",
+    "static/js/4.e6fed19e.chunk.js.map": "/mjIsaac17/workouts-app-frontend/static/js/4.e6fed19e.chunk.js.map",
+    "static/js/5.afa0f2f2.chunk.js": "/mjIsaac17/workouts-app-frontend/static/js/5.afa0f2f2.chunk.js",
+    "static/js/5.afa0f2f2.chunk.js.map": "/mjIsaac17/workouts-app-frontend/static/js/5.afa0f2f2.chunk.js.map",
+    "static/js/6.0d87098a.chunk.js": "/mjIsaac17/workouts-app-frontend/static/js/6.0d87098a.chunk.js",
+    "static/js/6.0d87098a.chunk.js.map": "/mjIsaac17/workouts-app-frontend/static/js/6.0d87098a.chunk.js.map",
+    "index.html": "/mjIsaac17/workouts-app-frontend/index.html",
+    "static/css/main.9a8d6427.chunk.css.map": "/mjIsaac17/workouts-app-frontend/static/css/main.9a8d6427.chunk.css.map",
+    "static/js/2.bc701647.chunk.js.LICENSE.txt": "/mjIsaac17/workouts-app-frontend/static/js/2.bc701647.chunk.js.LICENSE.txt",
+    "static/js/3.b9bdadf2.chunk.js.LICENSE.txt": "/mjIsaac17/workouts-app-frontend/static/js/3.b9bdadf2.chunk.js.LICENSE.txt",
+    "static/js/4.e6fed19e.chunk.js.LICENSE.txt": "/mjIsaac17/workouts-app-frontend/static/js/4.e6fed19e.chunk.js.LICENSE.txt",
+    "static/js/5.afa0f2f2.chunk.js.LICENSE.txt": "/mjIsaac17/workouts-app-frontend/static/js/5.afa0f2f2.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4198bc7e.js",
+    "static/js/2.bc701647.chunk.js",
+    "static/css/main.9a8d6427.chunk.css",
+    "static/js/main.077a791c.chunk.js"
+  ]
+}
