@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/workouts-app-frontend/static/css/main.9a8d6427.chunk.css",
-    "main.js": "/workouts-app-frontend/static/js/main.80fbe18a.chunk.js",
-    "main.js.map": "/workouts-app-frontend/static/js/main.80fbe18a.chunk.js.map",
+    "main.css": "/workouts-app-frontend/static/css/main.44ca8321.chunk.css",
+    "main.js": "/workouts-app-frontend/static/js/main.f3674768.chunk.js",
+    "main.js.map": "/workouts-app-frontend/static/js/main.f3674768.chunk.js.map",
     "runtime-main.js": "/workouts-app-frontend/static/js/runtime-main.77f431b4.js",
     "runtime-main.js.map": "/workouts-app-frontend/static/js/runtime-main.77f431b4.js.map",
     "static/js/2.ea6f6854.chunk.js": "/workouts-app-frontend/static/js/2.ea6f6854.chunk.js",
@@ -16,7 +16,7 @@
     "static/js/6.0d87098a.chunk.js": "/workouts-app-frontend/static/js/6.0d87098a.chunk.js",
     "static/js/6.0d87098a.chunk.js.map": "/workouts-app-frontend/static/js/6.0d87098a.chunk.js.map",
     "index.html": "/workouts-app-frontend/index.html",
-    "static/css/main.9a8d6427.chunk.css.map": "/workouts-app-frontend/static/css/main.9a8d6427.chunk.css.map",
+    "static/css/main.44ca8321.chunk.css.map": "/workouts-app-frontend/static/css/main.44ca8321.chunk.css.map",
     "static/js/2.ea6f6854.chunk.js.LICENSE.txt": "/workouts-app-frontend/static/js/2.ea6f6854.chunk.js.LICENSE.txt",
     "static/js/3.b9bdadf2.chunk.js.LICENSE.txt": "/workouts-app-frontend/static/js/3.b9bdadf2.chunk.js.LICENSE.txt",
     "static/js/4.e6fed19e.chunk.js.LICENSE.txt": "/workouts-app-frontend/static/js/4.e6fed19e.chunk.js.LICENSE.txt",
@@ -25,7 +25,7 @@
   "entrypoints": [
     "static/js/runtime-main.77f431b4.js",
     "static/js/2.ea6f6854.chunk.js",
-    "static/css/main.9a8d6427.chunk.css",
-    "static/js/main.80fbe18a.chunk.js"
+    "static/css/main.44ca8321.chunk.css",
+    "static/js/main.f3674768.chunk.js"
   ]
 }
