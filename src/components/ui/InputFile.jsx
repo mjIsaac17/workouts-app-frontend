@@ -15,7 +15,7 @@ export const InputFile = React.memo(
     return (
       <div className="m-y--1">
         <label htmlFor={name}>
-          <Stack direction="row" alignItems="center">
+          <Stack direction={{ xs: "column", sm: "row" }} alignItems="center">
             <input
               id={id}
               name={name}
@@ -30,7 +30,7 @@ export const InputFile = React.memo(
               size="small"
               sx={{ marginRight: "1rem" }}
             >
-              Select image
+              New Image
             </Button>
             <InputLabel>{newImageName}</InputLabel>
           </Stack>

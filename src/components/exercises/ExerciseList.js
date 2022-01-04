@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Add, Search } from "@mui/icons-material";
 import {
   Fab,
+  FormControl,
   InputAdornment,
+  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -43,10 +45,7 @@ export const ExerciseList = () => {
     currentMuscle ? currentMuscle.id : 0
   ); // 0 id when all exercises are selected
   const [filterWord, setFilterWord] = useState("");
-
-  // constants & variables
-  const muscleList = JSON.parse(localStorage.getItem("muscleList"));
-  const totalExercises = exerciseList.length;
+  const [totalExercises, setTotalExercises] = useState(exerciseList.length);
 
   // functions
   const handleSelect = (e) => {
@@ -70,7 +69,21 @@ export const ExerciseList = () => {
     // Avoid getting error with RegEx because of the '\' escape character
     const search = e.target.value.replace(/\\/g, "\\\\");
     setFilterWord(search);
+    if (search !== "") setTotalExercises(countElements(search));
+    else setTotalExercises(exerciseList.length);
   };
+
+  const countElements = (filterWord = "") => {
+    let total = 0;
+    exerciseList.map(
+      (exercise) =>
+        exercise.name.search(new RegExp(filterWord, "i")) !== -1 && total++
+    );
+    return total;
+  };
+
+  // constants & variables
+  const muscleList = JSON.parse(localStorage.getItem("muscleList"));
 
   // effects
   useEffect(() => {
@@ -84,23 +97,28 @@ export const ExerciseList = () => {
         <h1>Loading...</h1>
       ) : (
         <>
-          <div className="flex-box space-between m--1">
-            <Select
-              id="ddlMuscle"
-              value={muscleId}
-              label="Muscle"
-              onChange={handleSelect}
-              size="small"
-            >
-              <MenuItem value={0} name="All">
-                All
-              </MenuItem>
-              {muscleList.map((muscle) => (
-                <MenuItem key={`ddlMuscle-${muscle.id}`} value={muscle.id}>
-                  {muscle.name}
+          <div className="flex-box space-between m-y--1 space-elements-y--1">
+            <FormControl>
+              <InputLabel id="lblSelectMuscle">Muscle</InputLabel>
+              <Select
+                id="ddlMuscle"
+                value={muscleId}
+                label="Muscle"
+                labelId="lblSelectMuscle"
+                onChange={handleSelect}
+                size="small"
+              >
+                <MenuItem value={0} name="All">
+                  All
                 </MenuItem>
-              ))}
-            </Select>
+                {muscleList.map((muscle) => (
+                  <MenuItem key={`ddlMuscle-${muscle.id}`} value={muscle.id}>
+                    {muscle.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
             <TextField
               size="small"
               label="Search"

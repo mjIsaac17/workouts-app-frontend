@@ -27,13 +27,13 @@ export const Navbar = ({ openCloseSidebar }) => {
   else
     return (
       <nav className="navbar navbar--fixed">
+        <div className="navbar__icon">
+          <IconButton onClick={openCloseSidebar}>
+            <Menu fontSize="large" />
+          </IconButton>
+        </div>
         <div className="navbar__content">
-          <div>
-            <IconButton onClick={openCloseSidebar}>
-              <Menu fontSize="large" />
-            </IconButton>
-          </div>
-          <div className="navbar--center">
+          <div className="navbar__logo">
             <Typography variant="h4" component="h2">
               WorkoutsApp
             </Typography>
@@ -47,6 +47,21 @@ export const Navbar = ({ openCloseSidebar }) => {
             </ul>
           </div>
         </div>
+        {/* <div className="navbar__content">
+          <div className="navbar__icon">
+            <IconButton onClick={openCloseSidebar}>
+              <Menu fontSize="large" />
+            </IconButton>
+          </div>
+          <div className="navbar__user">
+            <ul>
+              <li>{user.name}</li>
+              <li className="logout m-x--1" onClick={handleLogout}>
+                Logout
+              </li>
+            </ul>
+          </div>
+        </div> */}
       </nav>
     );
 };

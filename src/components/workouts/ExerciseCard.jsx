@@ -13,7 +13,9 @@ export const ExerciseCard = ({ exercise }) => {
           component="img"
           height="300"
           image={
-            exercise.imageUrl ? exercise.imageUrl : "/img/exercises/default.jpg"
+            exercise.imageUrl
+              ? exercise.imageUrl
+              : `${process.env.PUBLIC_URL}/img/defaultWorkout.jpg`
           }
           alt={exercise.imageName ? exercise.imageName : exercise.name}
         />

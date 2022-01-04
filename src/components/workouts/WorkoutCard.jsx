@@ -30,7 +30,9 @@ export const WorkoutCard = ({ workout }) => {
             component="img"
             height="300"
             image={
-              workout.imageUrl ? workout.imageUrl : "/img/workouts/default.jpg"
+              workout.imageUrl
+                ? workout.imageUrl
+                : `${process.env.PUBLIC_URL}/img/defaultWorkout.jpg`
             }
             alt={workout.imageName ? workout.imageName : workout.name}
           />

@@ -1,16 +1,16 @@
 .modal--sm {
-  max-width: $modal-sm-width;
-  max-height: $modal-sm-height;
+  max-width: 600px;
+  max-height: 500px;
 }
 
 .modal--md {
-  max-width: $modal-md-width;
-  max-height: $modal-md-height;
+  max-width: 900px;
+  max-height: 700px;
 }
 
 .modal--md2 {
-  max-width: $modal-md2-width;
-  max-height: $modal-md2-height;
+  max-width: 700px;
+  max-height: 900px;
 }
 
 .modal {
@@ -103,4 +103,21 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 650px) {
+  .modal--md {
+    max-height: 90%;
+  }
+  .modal-details {
+    flex-direction: column;
+  }
+  .modal-details__image-section {
+    margin: 0 auto;
+  }
+  .modal-details__form-section {
+    margin: 1rem 0;
+    width: 100%;
+    padding-bottom: 1rem;
+  }
 }

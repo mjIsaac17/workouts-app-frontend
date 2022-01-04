@@ -91,7 +91,14 @@ export const MuscleDetails = () => {
     return (
       <form onSubmit={handleSubmit} className="modal-details">
         <div className="modal-details__image-section">
-          <img src={currentMuscle.imageUrl} alt={currentMuscle.imageName} />
+          <img
+            src={
+              currentMuscle.imageUrl
+                ? currentMuscle.imageUrl
+                : `${process.env.PUBLIC_URL}/img/default.jpg`
+            }
+            alt={currentMuscle.imageName}
+          />
         </div>
         <div className="modal-details__form-section">
           <div>
@@ -114,7 +121,11 @@ export const MuscleDetails = () => {
               currentImageName={currentMuscle.imageName}
             />
           </div>
-          <Stack direction="row" justifyContent="space-between">
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            justifyContent="space-between"
+            spacing={2}
+          >
             <Button
               variant="contained"
               endIcon={<Delete />}
@@ -125,7 +136,7 @@ export const MuscleDetails = () => {
               Delete
             </Button>
 
-            <Stack direction="row" spacing={2}>
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
               <Button
                 variant="contained"
                 color="info"

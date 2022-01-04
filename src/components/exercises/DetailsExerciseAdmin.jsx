@@ -126,7 +126,11 @@ export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
         <div className="modal-details__image-section">
           <img
             className="image"
-            src={formValues.imageUrl}
+            src={
+              formValues.imageUrl
+                ? formValues.imageUrl
+                : `${process.env.PUBLIC_URL}/img/default.jpg`
+            }
             alt={formValues.imageName}
           />
         </div>
