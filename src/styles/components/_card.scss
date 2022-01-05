@@ -1,8 +1,8 @@
 .card-grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(#{"min(100%, 18rem)"}, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(#{"min(40%, 15rem)"}, 1fr));
   //grid-template-rows: repeat(4, 4fr);
-  grid-gap: 1rem;
+  gap: 1rem;
   max-width: 1800px;
   margin: 0 auto;
 }
@@ -22,7 +22,6 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-
   transition: 0.1s;
   width: 100%;
 
@@ -44,7 +43,7 @@
 
   img {
     height: 25vh;
-    max-height: 250px;
+    // max-height: 250px;
   }
 }
 
@@ -60,4 +59,76 @@
 .card__title {
   font-size: 1.5rem;
   text-align: center;
+}
+
+.workout-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 320px;
+  width: 100%;
+  margin: 1rem;
+}
+
+.workout-card__image {
+  height: 300px;
+}
+
+.workout-card__text {
+  text-align: center;
+}
+
+.workout-card__buttons {
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 550px) {
+  .card-grid-container {
+    gap: 0.5rem;
+  }
+
+  .card--md {
+    max-height: 205px;
+    max-width: 150px;
+    img {
+      height: 20vh;
+      max-height: 165px;
+    }
+  }
+
+  .card__title {
+    font-size: 1rem;
+  }
+
+  .workout-card {
+    width: 150px;
+    margin: 0.5rem;
+  }
+
+  .workout-card__image {
+    height: 140px;
+  }
+
+  .workout-card__text {
+    text-align: center;
+
+    .workout-card__text-title {
+      font-size: 1.1rem;
+    }
+    .workout-card__text-description {
+      font-size: 0.75rem;
+    }
+  }
+
+  // .workout-card__text-title {
+  //   font-size: 0.5rem;
+  // }
+  // .workout-card__text-description {
+  //   font-size: 1rem;
+  // }
+
+  .workout-card__buttons {
+    flex-direction: column;
+    justify-content: flex-end;
+  }
 }

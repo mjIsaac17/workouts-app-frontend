@@ -69,18 +69,16 @@ export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex-box space-between">
+      <div className="flex-box space-between space-elements-y--1 ">
         <TextField
+          className="w49"
           size="small"
           name="name"
           required
           label="Exercise name"
           onChange={handleInputChange}
-          sx={{ width: "49%" }}
-          // helperText={error}
-          // error={!!error}
         />
-        <FormControl sx={{ width: "49%" }}>
+        <FormControl className="w49">
           <InputLabel id="labelExerciseId">Muscle</InputLabel>
           <Select
             id="ddlMuscleAddExercise" //drop down list
@@ -110,7 +108,7 @@ export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
       </div>
 
       <TextField
-        sx={{ margin: "1rem 0" }}
+        sx={{ margin: "0.5rem 0" }}
         size="small"
         name="description"
         fullWidth

@@ -91,6 +91,10 @@ export const ExerciseList = () => {
     dispatch(startGettingExercises(muscleId));
   }, [dispatch, muscleId]);
 
+  useEffect(() => {
+    setTotalExercises(exerciseList.length);
+  }, [exerciseList, setTotalExercises]);
+
   return (
     <div>
       {loading ? (

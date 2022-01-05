@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { setModal } from "../../actions/modal.action";
 import { componentsModal } from "../../helpers/componentsModal";
 
-export const WorkoutCard = ({ workout }) => {
+export const WorkoutCard = ({ workout, onCardClick }) => {
   const dispatch = useDispatch();
   const handleEdit = () => {
     dispatch(setModal(true, "Update workout", componentsModal.workoutsUpdate));
@@ -20,15 +20,15 @@ export const WorkoutCard = ({ workout }) => {
     dispatch(setModal(true, "Delete workout", componentsModal.workoutsDelete));
   };
   return (
-    <Card sx={{ width: 320, margin: "1rem" }}>
+    <Card className="workout-card" onClick={() => onCardClick(workout)}>
       <CardActionArea>
         <Link
           style={{ textDecoration: "none" }}
           to={`workouts/${workout.name}`}
         >
           <CardMedia
+            className="workout-card__image"
             component="img"
-            height="300"
             image={
               workout.imageUrl
                 ? workout.imageUrl
@@ -46,7 +46,7 @@ export const WorkoutCard = ({ workout }) => {
           </CardContent>
         </Link>
       </CardActionArea>
-      <CardActions sx={{ justifyContent: "flex-end" }}>
+      <CardActions className="workout-card__buttons">
         <Button
           size="small"
           color="secondary"

@@ -106,6 +106,10 @@ export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
     });
   };
 
+  const handleImageClick = () => {
+    if (formValues.imageUrl) window.open(formValues.imageUrl, "_blank");
+  };
+
   if (!deleteMode)
     return (
       <form onSubmit={handleSubmit} className="modal-details">
@@ -125,9 +129,10 @@ export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
         </button>
         <div className="modal-details__image-section">
           <img
+            onClick={handleImageClick}
             className="image"
             src={
-              formValues.imageUrl
+              formValues?.imageUrl
                 ? formValues.imageUrl
                 : `${process.env.PUBLIC_URL}/img/default.jpg`
             }

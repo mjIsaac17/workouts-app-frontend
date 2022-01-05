@@ -5,13 +5,13 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
-export const ExerciseCard = ({ exercise }) => {
+export const ExerciseCard = ({ exercise, onCardClick }) => {
   return (
-    <Card sx={{ width: 320, margin: "1rem" }}>
+    <Card className="workout-card" onClick={() => onCardClick(exercise)}>
       <CardActionArea>
         <CardMedia
+          className=" workout-card__image"
           component="img"
-          height="300"
           image={
             exercise.imageUrl
               ? exercise.imageUrl
@@ -19,11 +19,21 @@ export const ExerciseCard = ({ exercise }) => {
           }
           alt={exercise.imageName ? exercise.imageName : exercise.name}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+
+        <CardContent className="workout-card__text">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="p"
+            className="workout-card__text-title"
+          >
             {exercise.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            className="workout-card__text-description"
+          >
             {exercise.description}
           </Typography>
         </CardContent>
