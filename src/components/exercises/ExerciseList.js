@@ -210,9 +210,10 @@ export const ExerciseList = () => {
                 <DetailsExerciseAdmin
                   muscleId={muscleId}
                   componentModalName={componentsModal.exerciseItem}
+                  exerciseList={exerciseList}
                 />
               ) : (
-                <DetailsExercise />
+                <DetailsExercise exerciseList={exerciseList} />
               )}
             </Modal>
           )}

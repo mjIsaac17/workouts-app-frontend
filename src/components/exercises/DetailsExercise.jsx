@@ -4,14 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentExercise } from "../../actions/exercise.action";
 import { setModal } from "../../actions/modal.action";
 
-export const DetailsExercise = () => {
+export const DetailsExercise = ({ exerciseList }) => {
   // console.log("render details");
   const dispatch = useDispatch();
 
   // selectors
-  const { current: currentExercise, exerciseList } = useSelector(
-    (state) => state.exercises
-  );
+  const { current: currentExercise } = useSelector((state) => state.exercises);
 
   // states
   const [currentIndex, setCurrentIndex] = useState(

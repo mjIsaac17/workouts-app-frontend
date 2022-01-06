@@ -83,9 +83,12 @@ export const MusclesList = () => {
 
         <div className="card-grid-container">
           {muscleList.map((muscle) => (
-            <div key={muscle.id} onClick={() => handleMuscleClick(muscle)}>
-              <MuscleItem muscle={muscle} editMode={editMode} />
-            </div>
+            <MuscleItem
+              key={muscle.id}
+              muscle={muscle}
+              editMode={editMode}
+              onMuscleCardClick={handleMuscleClick}
+            />
           ))}
         </div>
 

@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const MuscleItem = ({ muscle, editMode = false }) => {
+export const MuscleItem = ({ muscle, editMode = false, onMuscleCardClick }) => {
   return (
-    <div className="card card--md">
+    <div className="card card--md" onClick={() => onMuscleCardClick(muscle)}>
       {!editMode ? (
         <Link to={"/exercises"}>
           <img

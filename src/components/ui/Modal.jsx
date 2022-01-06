@@ -1,5 +1,5 @@
 import { Close } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setModal } from "../../actions/modal.action";
@@ -14,6 +14,14 @@ export const Modal = ({ children, modalSize = "sm" }) => {
   const showHideClassName = isOpen
     ? "modal display-block"
     : "modal display-none";
+
+  useEffect(() => {
+    //Remove scroll from body when modal is active
+    document.body.classList.add("remove-scrollbar");
+    return () => {
+      document.body.classList.remove("remove-scrollbar");
+    };
+  }, []);
 
   return (
     <div className={showHideClassName}>

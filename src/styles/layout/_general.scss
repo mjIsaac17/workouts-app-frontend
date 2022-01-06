@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+.remove-scrollbar {
+  overflow: hidden;
+}
+
 /* Styling scrollbar */
 ::-webkit-scrollbar {
   width: 0; // y scroll

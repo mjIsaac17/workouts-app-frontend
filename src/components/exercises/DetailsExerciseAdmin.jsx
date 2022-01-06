@@ -23,12 +23,12 @@ import { ConfirmDelete } from "../ui/ConfirmDelete";
 import { InputFile } from "../ui/InputFile";
 import { setSnackbar } from "../../actions/snackbar.action";
 
-export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
+export const DetailsExerciseAdmin = ({ muscleId = 0, exerciseList }) => {
   // console.log("render details", muscleId);
   const dispatch = useDispatch();
 
   // selectors
-  const { current, exerciseList } = useSelector((state) => state.exercises);
+  const { current } = useSelector((state) => state.exercises);
 
   // states
   const [deleteMode, setDeleteMode] = useState(false);

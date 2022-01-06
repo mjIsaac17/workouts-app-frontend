@@ -33,7 +33,7 @@ export const WorkoutExercisesList = () => {
 
   return (
     <>
-      <Typography variant="h4" textAlign="center" margin={3}>
+      <Typography variant="h4" component="p" textAlign="center" margin={3}>
         <b>{workoutName}</b> workout
       </Typography>
       <Typography variant="h5" component="p" textAlign="right">
