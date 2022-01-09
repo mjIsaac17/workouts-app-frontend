@@ -105,7 +105,7 @@ export const WorkoutAdd = ({ action }) => {
         })
       );
     else if (action === "update") {
-      //Check if the workout exercises were updated
+      //Check if the workout exercises were updated to avoid deleting and saving them in the db
       const previousIds = currentWorkoutExercises.map((e) => e.id).join(",");
       if (previousIds === exerciseIds) exerciseIds = null;
 
