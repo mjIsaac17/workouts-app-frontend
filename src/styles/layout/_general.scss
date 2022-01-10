@@ -64,6 +64,13 @@ body {
   align-items: center;
 }
 
+.link {
+  color: rgb(29, 118, 200);
+  &:hover {
+    color: rgb(27, 89, 146);
+  }
+}
+
 .space-between {
   justify-content: space-between;
 }
