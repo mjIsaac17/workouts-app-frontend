@@ -92,6 +92,9 @@ const AboutScreen = () => {
           </a>
         </ListItem>
       </List>
+      <br />
+      <br />
+      <br />
     </div>
   );
 };

@@ -4,20 +4,17 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
+import Image from "../ui/Image";
 
 export const ExerciseCard = ({ exercise, onCardClick }) => {
   return (
     <Card className="workout-card" onClick={() => onCardClick(exercise)}>
       <CardActionArea>
-        <CardMedia
+        <Image
+          imageUrl={exercise.imageUrl}
+          defaultImageUrl={`${process.env.PUBLIC_URL}/img/default.jpg`}
+          altText={exercise.name}
           className=" workout-card__image"
-          component="img"
-          image={
-            exercise.imageUrl
-              ? exercise.imageUrl
-              : `${process.env.PUBLIC_URL}/img/defaultWorkout.jpg`
-          }
-          alt={exercise.imageName ? exercise.imageName : exercise.name}
         />
 
         <CardContent className="workout-card__text">
