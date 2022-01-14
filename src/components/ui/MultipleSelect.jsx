@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
@@ -11,9 +11,7 @@ const MultipleSelect = ({
   defaultValues,
   name,
 }) => {
-  const [selectedMuscles, setSelectedMuscles] = useState(
-    defaultValues ? defaultValues.split(",") : []
-  );
+  const [selectedMuscles, setSelectedMuscles] = useState([]);
 
   const handleChange = (event) => {
     const {
@@ -24,6 +22,10 @@ const MultipleSelect = ({
       typeof value === "string" ? value.split(",") : value
     );
   };
+
+  useEffect(() => {
+    if (defaultValues) setSelectedMuscles(defaultValues.split(","));
+  }, [defaultValues, setSelectedMuscles]);
 
   return (
     <>

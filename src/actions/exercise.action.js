@@ -77,7 +77,7 @@ const successRemoveExercise = (exerciseIdToRemove) => ({
   payload: exerciseIdToRemove,
 });
 
-export const startUpdatingExercise = (exercise, originalMuscleId) => {
+export const startUpdatingExercise = (exercise, selectedMuscleName) => {
   return async (dispatch) => {
     try {
       //Update current image name with the new name selected
@@ -89,8 +89,13 @@ export const startUpdatingExercise = (exercise, originalMuscleId) => {
       const body = await resp.json();
       if (resp.ok) {
         delete exercise.newImage;
-        //Check if the muscle id of the updated exercise changed to remove it of the state
-        if (exercise.muscleId === originalMuscleId || originalMuscleId === 0) {
+        delete exercise.updateMuscles;
+
+        // Check if the updated exercise still contains the selected muscle to know if it should be removed from the state
+        if (
+          selectedMuscleName === "All" ||
+          exercise.muscleNames.includes(selectedMuscleName)
+        ) {
           exercise.imageName = body.imageName;
           exercise.imageUrl = body.imageUrl;
           dispatch(successUpdateExercise(exercise));

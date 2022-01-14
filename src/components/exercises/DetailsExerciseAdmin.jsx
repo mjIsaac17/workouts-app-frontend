@@ -22,11 +22,15 @@ import { useForm } from "../../hooks/useForm";
 import { ConfirmDelete } from "../ui/ConfirmDelete";
 import { InputFile } from "../ui/InputFile";
 import { setSnackbar } from "../../actions/snackbar.action";
+import MultipleSelect from "../ui/MultipleSelect";
 
-export const DetailsExerciseAdmin = ({ muscleId = 0, exerciseList }) => {
+export const DetailsExerciseAdmin = ({
+  //muscleId = 0,
+  exerciseList,
+  selectedMuscleName,
+}) => {
   // console.log("render details", muscleId);
   const dispatch = useDispatch();
-
   // selectors
   const { current } = useSelector((state) => state.exercises);
 
@@ -40,7 +44,7 @@ export const DetailsExerciseAdmin = ({ muscleId = 0, exerciseList }) => {
   // custom hooks
   const [formValues, handleInputChange, setSpecificValue, setForm] = useForm({
     ...current, //Contains the data of the selected exercise
-    muscleId: muscleId !== 0 ? muscleId : current.muscleId,
+    //muscleId: muscleId !== 0 ? muscleId : current.muscleId,
     newImage: null, //image file
   });
 
@@ -49,9 +53,14 @@ export const DetailsExerciseAdmin = ({ muscleId = 0, exerciseList }) => {
   const inputImageName = "newImage";
 
   // functions
-  const isFormValid = () => {
+  const isFormValid = (muscleNames) => {
     if (!formValues.name) {
       dispatch(setSnackbar("error", "Invalid exercise name", true));
+      return false;
+    }
+
+    if (muscleNames === "") {
+      dispatch(setSnackbar("error", "Select a valid muscle", true));
       return false;
     }
 
@@ -60,9 +69,18 @@ export const DetailsExerciseAdmin = ({ muscleId = 0, exerciseList }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isFormValid()) {
+    const muscleNames = document.getElementsByName("muscleNames")[0].value;
+
+    if (isFormValid(muscleNames)) {
+      let updateMuscles = muscleNames !== formValues.muscleNames;
+
       setLoading(true);
-      dispatch(startUpdatingExercise(formValues, muscleId));
+      dispatch(
+        startUpdatingExercise(
+          { ...formValues, muscleNames, updateMuscles },
+          selectedMuscleName
+        )
+      );
     }
   };
 
@@ -162,22 +180,12 @@ export const DetailsExerciseAdmin = ({ muscleId = 0, exerciseList }) => {
               value={formValues.description}
             />
             <FormControl fullWidth>
-              <InputLabel id="labelMuscleId">Muscle</InputLabel>
-              <Select
-                id="ddlMuscleAddExercise" //drop down list
-                labelId="labelMuscleId"
-                label="Muscle"
-                size="small"
-                value={formValues.muscleId}
-                onChange={handleInputChange}
-                name="muscleId"
-              >
-                {muscleList.map((muscle) => (
-                  <MenuItem key={`ddlMuscles-${muscle.id}`} value={muscle.id}>
-                    {muscle.name}
-                  </MenuItem>
-                ))}
-              </Select>
+              <MultipleSelect
+                items={muscleList}
+                placeholder="Select muscles"
+                defaultValues={formValues.muscleNames}
+                name="muscleNames"
+              />
             </FormControl>
 
             <InputFile

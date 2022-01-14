@@ -208,8 +208,7 @@ export const ExerciseList = () => {
             <Modal modalSize="md">
               {isAdmin ? (
                 <DetailsExerciseAdmin
-                  muscleId={muscleId}
-                  componentModalName={componentsModal.exerciseItem}
+                  selectedMuscleName={currentMuscleName}
                   exerciseList={exerciseList}
                 />
               ) : (
