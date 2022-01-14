@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  Button,
-} from "@mui/material";
+import { FormControl, Stack, TextField, Button } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 
@@ -17,6 +9,7 @@ import { setSnackbar } from "../../actions/snackbar.action";
 
 import { useForm } from "../../hooks/useForm";
 import { InputFile } from "../ui/InputFile";
+import MultipleSelect from "../ui/MultipleSelect";
 
 export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
   // console.log("render <AddExerciseForm/> ");
@@ -29,17 +22,17 @@ export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
   const [formValues, handleInputChange, setSpecificValue] = useForm({
     name: "",
     description: "",
-    muscleId,
     image: null,
   });
 
   // functions
-  const isFormValid = () => {
+  const isFormValid = (muscleNames) => {
     if (!formValues.name) {
       dispatch(setSnackbar("error", "Invalid exercise name", true));
       return false;
     }
-    if (formValues.muscleId === 0) {
+
+    if (muscleNames === "") {
       dispatch(setSnackbar("error", "Select a valid muscle", true));
       return false;
     }
@@ -60,10 +53,10 @@ export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //console.log(formValues);
-    if (isFormValid()) {
+    const muscleNames = document.getElementsByName("muscleNames")[0].value;
+    if (isFormValid(muscleNames)) {
       setLoading(true);
-      dispatch(startAddingExercise(formValues));
+      dispatch(startAddingExercise({ ...formValues, muscleNames }));
     }
   };
 
@@ -79,31 +72,11 @@ export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
           onChange={handleInputChange}
         />
         <FormControl className="w49">
-          <InputLabel id="labelExerciseId">Muscle</InputLabel>
-          <Select
-            id="ddlMuscleAddExercise" //drop down list
-            value={formValues.muscleId}
-            labelId="labelExerciseId"
-            label="Muscle"
-            onChange={(e) => setSpecificValue("muscleId", e.target.value)}
-            size="small"
-            name="muscleId"
-          >
-            {muscleId === 0 && (
-              <MenuItem key={"ddlMuscleAddExercise-0"} value={muscleId}>
-                Select a muscle
-              </MenuItem>
-            )}
-
-            {muscleList.map((muscle) => (
-              <MenuItem
-                key={`ddlMuscleAddExercise-${muscle.id}`}
-                value={muscle.id}
-              >
-                {muscle.name}
-              </MenuItem>
-            ))}
-          </Select>
+          <MultipleSelect
+            items={muscleList}
+            placeholder="Select muscles"
+            name="muscleNames"
+          />
         </FormControl>
       </div>
 
