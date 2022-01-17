@@ -1,15 +1,6 @@
 import { useState } from "react";
 import { Delete, Save } from "@mui/icons-material";
-import {
-  Alert,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Alert, Button, FormControl, Stack, TextField } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -24,11 +15,7 @@ import { InputFile } from "../ui/InputFile";
 import { setSnackbar } from "../../actions/snackbar.action";
 import MultipleSelect from "../ui/MultipleSelect";
 
-export const DetailsExerciseAdmin = ({
-  //muscleId = 0,
-  exerciseList,
-  selectedMuscleName,
-}) => {
+export const DetailsExerciseAdmin = ({ exerciseList, selectedMuscleName }) => {
   // console.log("render details", muscleId);
   const dispatch = useDispatch();
   // selectors
@@ -44,7 +31,6 @@ export const DetailsExerciseAdmin = ({
   // custom hooks
   const [formValues, handleInputChange, setSpecificValue, setForm] = useForm({
     ...current, //Contains the data of the selected exercise
-    //muscleId: muscleId !== 0 ? muscleId : current.muscleId,
     newImage: null, //image file
   });
 

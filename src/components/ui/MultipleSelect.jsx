@@ -24,7 +24,8 @@ const MultipleSelect = ({
   };
 
   useEffect(() => {
-    if (defaultValues) setSelectedMuscles(defaultValues.split(","));
+    if (defaultValues && defaultValues !== "All")
+      setSelectedMuscles(defaultValues.split(","));
   }, [defaultValues, setSelectedMuscles]);
 
   return (

@@ -8,13 +8,8 @@ const successGetExercises = (exercises) => ({
   payload: exercises,
 });
 
-const failureGetExercises = (error) => ({
-  type: types.failureGetExercises,
-  payload: error,
-});
-
 const failureAction = (error) => ({
-  types: types.failureAction,
+  type: types.failureAction,
   payload: error,
 });
 
@@ -23,9 +18,15 @@ export const startGettingExercises = (id) => {
     try {
       const resp = await fetchToken(`exercise/${id}`);
       const body = await resp.json();
-      dispatch(successGetExercises(body));
+      if (resp.ok) {
+        dispatch(successGetExercises(body));
+      } else {
+        dispatch(setSnackbar("error", body.error, true));
+        dispatch(failureAction(body.error));
+      }
     } catch (error) {
-      dispatch(failureGetExercises(error.message));
+      dispatch(failureAction(error.message));
+      dispatch(setSnackbar("error", error.message, true));
       console.log(error);
     }
   };
@@ -88,16 +89,17 @@ export const startUpdatingExercise = (exercise, selectedMuscleName) => {
       );
       const body = await resp.json();
       if (resp.ok) {
-        delete exercise.newImage;
-        delete exercise.updateMuscles;
-
         // Check if the updated exercise still contains the selected muscle to know if it should be removed from the state
         if (
           selectedMuscleName === "All" ||
           exercise.muscleNames.includes(selectedMuscleName)
         ) {
-          exercise.imageName = body.imageName;
-          exercise.imageUrl = body.imageUrl;
+          if (exercise.newImage) {
+            exercise.imageName = body.imageName;
+            exercise.imageUrl = body.imageUrl;
+          }
+          delete exercise.newImage;
+          delete exercise.updateMuscles;
           dispatch(successUpdateExercise(exercise));
         } else dispatch(successRemoveExercise(exercise.id));
 

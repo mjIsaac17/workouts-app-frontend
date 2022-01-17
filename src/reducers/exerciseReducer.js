@@ -15,13 +15,6 @@ export const exerciseReducer = (state = initialState, action) => {
         exerciseList: action.payload,
       };
 
-    case types.failureGetExercises:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
-
     case types.failureAction:
       return {
         ...state,

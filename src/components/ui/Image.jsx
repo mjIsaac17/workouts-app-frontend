@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Image = ({ imageUrl, defaultImageUrl, altText = "", className = "" }) => {
-  const [src, setSrc] = useState(imageUrl || defaultImageUrl);
+  const [src, setSrc] = useState("");
+
+  useEffect(() => {
+    setSrc(imageUrl || defaultImageUrl);
+  }, [setSrc, imageUrl, defaultImageUrl]);
+
   return (
     <img
       className={className}

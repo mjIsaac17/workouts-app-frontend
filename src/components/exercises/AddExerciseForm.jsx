@@ -11,9 +11,12 @@ import { useForm } from "../../hooks/useForm";
 import { InputFile } from "../ui/InputFile";
 import MultipleSelect from "../ui/MultipleSelect";
 
-export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
+export const AddExerciseForm = ({
+  muscleList,
+  selectedMuscleName = "",
+  handleModal,
+}) => {
   // console.log("render <AddExerciseForm/> ");
-
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -76,6 +79,7 @@ export const AddExerciseForm = ({ muscleList, muscleId = 0, handleModal }) => {
             items={muscleList}
             placeholder="Select muscles"
             name="muscleNames"
+            defaultValues={selectedMuscleName}
           />
         </FormControl>
       </div>

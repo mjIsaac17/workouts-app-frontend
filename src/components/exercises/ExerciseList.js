@@ -39,7 +39,6 @@ export const ExerciseList = () => {
   const [currentMuscleName, setCurrentMuscleName] = useState(
     currentMuscle ? currentMuscle.name : "All"
   );
-
   // states
   const [muscleId, setMuscleId] = useState(
     currentMuscle ? currentMuscle.id : 0
@@ -199,7 +198,7 @@ export const ExerciseList = () => {
             <Modal>
               <AddExerciseForm
                 muscleList={muscleList}
-                muscleId={muscleId}
+                selectedMuscleName={currentMuscleName}
                 handleModal={handleModal}
               />
             </Modal>
