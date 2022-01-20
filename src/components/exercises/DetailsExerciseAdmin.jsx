@@ -15,9 +15,10 @@ import { InputFile } from "../ui/InputFile";
 import { setSnackbar } from "../../actions/snackbar.action";
 import MultipleSelect from "../ui/MultipleSelect";
 
-export const DetailsExerciseAdmin = ({ exerciseList, selectedMuscleName }) => {
+export const DetailsExerciseAdmin = ({ exerciseList }) => {
   // console.log("render details", muscleId);
   const dispatch = useDispatch();
+
   // selectors
   const { current } = useSelector((state) => state.exercises);
 
@@ -53,6 +54,14 @@ export const DetailsExerciseAdmin = ({ exerciseList, selectedMuscleName }) => {
     return true;
   };
 
+  const setNewImage = () => {
+    setSpecificValue(
+      inputImageName,
+      document.getElementById(inputImageName).files[0]
+    );
+  };
+
+  // handler functions
   const handleSubmit = (e) => {
     e.preventDefault();
     const muscleNames = document.getElementsByName("muscleNames")[0].value;
@@ -62,19 +71,9 @@ export const DetailsExerciseAdmin = ({ exerciseList, selectedMuscleName }) => {
 
       setLoading(true);
       dispatch(
-        startUpdatingExercise(
-          { ...formValues, muscleNames, updateMuscles },
-          selectedMuscleName
-        )
+        startUpdatingExercise({ ...formValues, muscleNames, updateMuscles })
       );
     }
-  };
-
-  const setNewImage = () => {
-    setSpecificValue(
-      inputImageName,
-      document.getElementById(inputImageName).files[0]
-    );
   };
 
   const handleCancelDelete = () => {

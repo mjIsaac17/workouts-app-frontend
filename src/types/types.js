@@ -20,6 +20,8 @@ export const types = {
   //Exercises
   startGettingExercises: "startGettingExercises",
   successGetExercises: "successGetExercises",
+  successGetExercisesToAddExistingExercise:
+    "successGetExercisesToAddExistingExercise",
   failureGetExercises: "failureGetExercises",
   clearExercises: "clearExercises",
   successAddExercise: "successAddExercise",

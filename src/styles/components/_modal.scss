@@ -110,6 +110,21 @@
   width: 49%;
 }
 
+.modal-new-exercise__text-section {
+  font-size: 1.5rem;
+}
+
+.modal-new-exercise__image-section {
+  background-color: rgb(219, 219, 219);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.modal-image-30 {
+  max-width: 30%;
+  max-height: 30%;
+}
+
 @media screen and (max-width: 650px) {
   .modal--md {
     max-height: 90%;
