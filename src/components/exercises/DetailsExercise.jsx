@@ -80,7 +80,7 @@ export const DetailsExercise = ({ exerciseList }) => {
               </div>
             )}
             <div className="details">
-              <Typography>Category: {currentExercise.muscleName}</Typography>
+              <Typography>Category: {currentExercise.muscleNames}</Typography>
             </div>
           </div>
           <Stack direction="row" justifyContent="flex-end">
