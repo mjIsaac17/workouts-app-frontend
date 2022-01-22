@@ -3,7 +3,7 @@ import { types } from "../types/types";
 const initialState = {
   muscleList: [],
   loading: true,
-  current: null,
+  current: { id: 0, name: "All" },
 };
 
 export const muscleReducer = (state = initialState, action) => {
@@ -25,7 +25,7 @@ export const muscleReducer = (state = initialState, action) => {
     case types.setCurrentMuscle:
       return {
         ...state,
-        current: action.payload,
+        current: action.payload ? action.payload : initialState.current,
       };
 
     case types.successAddMuscle:

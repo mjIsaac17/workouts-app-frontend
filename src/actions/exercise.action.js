@@ -8,24 +8,31 @@ const successGetExercises = (exercises) => ({
   payload: exercises,
 });
 
-const failureGetExercises = (error) => ({
-  type: types.failureGetExercises,
-  payload: error,
+const successGetExercisesToAddExistingExercise = (exercises) => ({
+  type: types.successGetExercisesToAddExistingExercise,
+  payload: exercises,
 });
 
 const failureAction = (error) => ({
-  types: types.failureAction,
+  type: types.failureAction,
   payload: error,
 });
 
-export const startGettingExercises = (id) => {
+export const startGettingExercises = (id, isNewExercise = true) => {
   return async (dispatch) => {
     try {
       const resp = await fetchToken(`exercise/${id}`);
       const body = await resp.json();
-      dispatch(successGetExercises(body));
+      if (resp.ok) {
+        if (isNewExercise) dispatch(successGetExercises(body));
+        else dispatch(successGetExercisesToAddExistingExercise(body));
+      } else {
+        dispatch(setSnackbar("error", body.error, true));
+        dispatch(failureAction(body.error));
+      }
     } catch (error) {
-      dispatch(failureGetExercises(error.message));
+      dispatch(failureAction(error.message));
+      dispatch(setSnackbar("error", error.message, true));
       console.log(error);
     }
   };
@@ -62,6 +69,32 @@ export const startAddingExercise = (newExercise) => {
   };
 };
 
+export const startAddingExistingExercise = (exercise, muscleId) => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchToken(
+        `exercise/${exercise.id}`,
+        { muscleId },
+        "POST"
+      );
+      const body = await resp.json();
+      if (resp.ok) {
+        dispatch(successAddExercise(exercise));
+        dispatch(setSnackbar("success", "Exercise added", true));
+      } else {
+        //Invalid data
+        dispatch(setSnackbar("error", body.error, true));
+      }
+      dispatch(setModal(false));
+    } catch (error) {
+      //Server error
+      dispatch(failureAction(error.message));
+      dispatch(setSnackbar("error", error.message, true));
+      console.log(error);
+    }
+  };
+};
+
 export const setCurrentExercise = (exercise) => ({
   type: types.setCurrentExercise,
   payload: exercise,
@@ -77,9 +110,10 @@ const successRemoveExercise = (exerciseIdToRemove) => ({
   payload: exerciseIdToRemove,
 });
 
-export const startUpdatingExercise = (exercise, originalMuscleId) => {
-  return async (dispatch) => {
+export const startUpdatingExercise = (exercise) => {
+  return async (dispatch, getState) => {
     try {
+      const { current: selectedMuscle } = getState().muscles;
       //Update current image name with the new name selected
       const resp = await fetchTokenFormData(
         `exercise/${exercise.id}`,
@@ -88,11 +122,17 @@ export const startUpdatingExercise = (exercise, originalMuscleId) => {
       );
       const body = await resp.json();
       if (resp.ok) {
-        delete exercise.newImage;
-        //Check if the muscle id of the updated exercise changed to remove it of the state
-        if (exercise.muscleId === originalMuscleId || originalMuscleId === 0) {
-          exercise.imageName = body.imageName;
-          exercise.imageUrl = body.imageUrl;
+        // Check if the updated exercise still contains the selected muscle to know if it should be removed from the state
+        if (
+          selectedMuscle.name === "All" ||
+          exercise.muscleNames.includes(selectedMuscle.name)
+        ) {
+          if (exercise.newImage) {
+            exercise.imageName = body.imageName;
+            exercise.imageUrl = body.imageUrl;
+          }
+          delete exercise.newImage;
+          delete exercise.updateMuscles;
           dispatch(successUpdateExercise(exercise));
         } else dispatch(successRemoveExercise(exercise.id));
 

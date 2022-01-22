@@ -2,6 +2,7 @@ import { types } from "../types/types";
 
 const initialState = {
   exerciseList: [],
+  exerciseListToAddNew: [],
   loading: true,
   current: null,
 };
@@ -15,11 +16,11 @@ export const exerciseReducer = (state = initialState, action) => {
         exerciseList: action.payload,
       };
 
-    case types.failureGetExercises:
+    case types.successGetExercisesToAddExistingExercise:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        exerciseListToAddNew: action.payload,
       };
 
     case types.failureAction:

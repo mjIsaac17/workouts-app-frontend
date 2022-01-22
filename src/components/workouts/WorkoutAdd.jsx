@@ -23,6 +23,8 @@ import {
   startAddingWorkout,
   startUpdatingWorkout,
 } from "../../actions/workout.action";
+import { useEffect } from "react";
+import { startGettingExercises } from "../../actions/exercise.action";
 
 export const WorkoutAdd = ({ action }) => {
   // console.log("render <WorkoutsAdd />");
@@ -33,6 +35,7 @@ export const WorkoutAdd = ({ action }) => {
   const { currentWorkout, currentWorkoutExercises } = useSelector(
     (state) => state.workouts
   );
+  const { exerciseList } = useSelector((state) => state.exercises);
 
   // states
   const [chips, setChips] = useState(
@@ -61,12 +64,13 @@ export const WorkoutAdd = ({ action }) => {
   );
 
   // functions
+  const handleMuscleChange = (muscleId) => {
+    dispatch(startGettingExercises(muscleId));
+  };
+
   const handleAddChip = useCallback(
     (e) => {
-      setChips([
-        ...chips,
-        { key: Date.now(), label: e.row.exerciseName, id: e.id },
-      ]);
+      setChips([...chips, { key: Date.now(), label: e.row.name, id: e.id }]);
     },
     [chips]
   );
@@ -105,7 +109,7 @@ export const WorkoutAdd = ({ action }) => {
         })
       );
     else if (action === "update") {
-      //Check if the workout exercises were updated
+      //Check if the workout exercises were updated to avoid deleting and saving them in the db
       const previousIds = currentWorkoutExercises.map((e) => e.id).join(",");
       if (previousIds === exerciseIds) exerciseIds = null;
 
@@ -122,6 +126,10 @@ export const WorkoutAdd = ({ action }) => {
       );
     }
   };
+
+  useEffect(() => {
+    dispatch(startGettingExercises(0));
+  }, [dispatch]);
 
   return (
     <Stack component="form" spacing={2} onSubmit={handleSubmit}>
@@ -152,9 +160,15 @@ export const WorkoutAdd = ({ action }) => {
         />
       </FormControl>
       <div>
-        <VerticalTabs muscleList={muscleList} />
+        <VerticalTabs
+          muscleList={muscleList}
+          handleChange={handleMuscleChange}
+        />
         <ChipsArray chips={chips} handleDelete={handleRemoveChip} />
-        <DataTableSelect handleAdd={handleAddChip} />
+        <DataTableSelect
+          handleAdd={handleAddChip}
+          exerciseList={exerciseList}
+        />
       </div>
 
       <div className="margin-y-1">

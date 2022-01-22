@@ -5,7 +5,6 @@
 
 .remove-scrollbar {
   overflow: hidden;
-  padding-right: 0.5rem;
 }
 
 /* Styling scrollbar */
@@ -63,6 +62,13 @@ body {
 
 .center-x {
   align-items: center;
+}
+
+.link {
+  color: rgb(29, 118, 200);
+  &:hover {
+    color: rgb(27, 89, 146);
+  }
 }
 
 .space-between {

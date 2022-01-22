@@ -44,9 +44,11 @@ export const WorkoutList = () => {
   return (
     <div className="card-flex-container">
       {myWorkouts.map((workout) => (
-        <div key={workout.id} onClick={() => handleSelectWorkout(workout)}>
-          <WorkoutCard key={workout.id} workout={workout} />
-        </div>
+        <WorkoutCard
+          key={workout.id}
+          workout={workout}
+          onCardClick={handleSelectWorkout}
+        />
       ))}
       {componentName === componentsModal.workoutsAdd && (
         <Modal modalSize="md2">

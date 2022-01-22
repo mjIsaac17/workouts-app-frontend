@@ -1,23 +1,21 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState, memo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { useSelector } from "react-redux";
 import { Popover, Typography } from "@mui/material";
 
 const columns = [
-  { field: "exerciseName", headerName: "Exercise name", width: 150 },
-  { field: "exerciseDescription", headerName: "Description", width: 250 },
+  { field: "name", headerName: "Exercise name", width: 150 },
+  { field: "description", headerName: "Description", width: 250 },
 ];
 
-export const DataTableSelect = React.memo(({ handleAdd }) => {
+export const DataTableSelect = memo(({ handleAdd, exerciseList }) => {
   // console.log("render <DataTableSelect />");
-  const { exerciseList } = useSelector((state) => state.exercises);
   const [hoverExercise, setHoverExercise] = useState({});
   const divRef = useRef();
 
   const rows = exerciseList.map((ex) => ({
     id: ex.id,
-    exerciseName: ex.name,
-    exerciseDescription: ex.description,
+    name: ex.name,
+    description: ex.description,
     imageName: ex.imageName,
     imageUrl: ex.imageUrl,
   }));
@@ -25,7 +23,7 @@ export const DataTableSelect = React.memo(({ handleAdd }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const handlePopoverOpen = (e) => {
     setAnchorEl(divRef.current);
-    setHoverExercise({ name: e.row.exerciseName, imageUrl: e.row.imageUrl });
+    setHoverExercise({ name: e.row.name, imageUrl: e.row.imageUrl });
   };
 
   const handlePopoverClose = () => {

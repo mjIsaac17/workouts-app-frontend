@@ -1,37 +1,47 @@
-import React, { memo, useEffect, useState } from "react";
-
+import { memo, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import { useSelector } from "react-redux";
 
-import { useDispatch } from "react-redux";
-import { startGettingExercises } from "../../actions/exercise.action";
+export const VerticalTabs = memo(
+  ({ muscleList, handleChange, removeCurrentMuscle = false }) => {
+    // console.log("render <VerticalTabs>");
+    const [value, setValue] = useState(0);
+    const { current } = useSelector((state) => state.muscles);
 
-export const VerticalTabs = memo(({ muscleList }) => {
-  // console.log("render <VerticalTabs>");
-  const dispatch = useDispatch();
-  const [value, setValue] = useState(1);
+    const handleClick = (event, newValue) => {
+      setValue(newValue);
+      handleChange(newValue);
+    };
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  useEffect(() => {
-    if (value === 0) dispatch(startGettingExercises(0));
-    else dispatch(startGettingExercises(muscleList[value - 1].id));
-  }, [dispatch, value, muscleList]);
-
-  return (
-    <Tabs
-      variant="scrollable"
-      value={value}
-      onChange={handleChange}
-      aria-label="Vertical tabs example"
-      sx={{ borderRight: 1, borderColor: "divider" }}
-    >
-      <Tab key="tab-all" label="All" />
-      {muscleList.map((muscle, index) => (
-        <Tab key={`tab-${muscle.name}`} label={muscle.name} />
-      ))}
-    </Tabs>
-  );
-});
+    return (
+      <Tabs
+        variant="scrollable"
+        value={value}
+        onChange={handleClick}
+        aria-label="Vertical tabs example"
+        sx={{ borderRight: 1, borderColor: "divider" }}
+      >
+        <Tab key="tab-all" label="All" value={0} />
+        {!removeCurrentMuscle
+          ? muscleList.map((muscle) => (
+              <Tab
+                key={`tab-${muscle.name}`}
+                value={muscle.id}
+                label={muscle.name}
+              />
+            ))
+          : muscleList.map(
+              (muscle) =>
+                muscle.id !== current.id && (
+                  <Tab
+                    key={`tab-${muscle.name}`}
+                    value={muscle.id}
+                    label={muscle.name}
+                  />
+                )
+            )}
+      </Tabs>
+    );
+  }
+);

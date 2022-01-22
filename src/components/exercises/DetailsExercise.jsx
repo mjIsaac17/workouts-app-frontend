@@ -4,14 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentExercise } from "../../actions/exercise.action";
 import { setModal } from "../../actions/modal.action";
 
-export const DetailsExercise = () => {
+export const DetailsExercise = ({ exerciseList }) => {
   // console.log("render details");
   const dispatch = useDispatch();
 
   // selectors
-  const { current: currentExercise, exerciseList } = useSelector(
-    (state) => state.exercises
-  );
+  const { current: currentExercise } = useSelector((state) => state.exercises);
 
   // states
   const [currentIndex, setCurrentIndex] = useState(
@@ -40,55 +38,63 @@ export const DetailsExercise = () => {
     }
     dispatch(setCurrentExercise(newExercise));
   };
-  return (
-    <div className="modal-details">
-      <button
-        type="button"
-        className="btn__navigation btn__navigation--previous"
-        onClick={() => handleSetNewExercise("previous")}
-      >
-        {"<"}
-      </button>
-      <button
-        type="button"
-        className="btn__navigation btn__navigation--next"
-        onClick={() => handleSetNewExercise("next")}
-      >
-        {">"}
-      </button>
-      <div className="modal-details__image-section">
-        <img
-          className="image"
-          src={
-            currentExercise.imageUrl
-              ? currentExercise.imageUrl
-              : `${process.env.PUBLIC_URL}/img/default.jpg`
-          }
-          alt={currentExercise.imageName}
-        />
-      </div>
-      <div className="modal-details__form-section">
-        <div style={{ height: "100%" }}>
-          {currentExercise.description !== "" && (
-            <div className="details details__description">
-              <Typography>{currentExercise.description}</Typography>
-            </div>
-          )}
-          <div className="details">
-            <Typography>Category: {currentExercise.muscleName}</Typography>
-          </div>
+
+  const handleImageClick = () => {
+    if (currentExercise.imageUrl)
+      window.open(currentExercise.imageUrl, "_blank");
+  };
+  if (currentExercise)
+    return (
+      <div className="modal-details">
+        <button
+          type="button"
+          className="btn__navigation btn__navigation--previous"
+          onClick={() => handleSetNewExercise("previous")}
+        >
+          {"<"}
+        </button>
+        <button
+          type="button"
+          className="btn__navigation btn__navigation--next"
+          onClick={() => handleSetNewExercise("next")}
+        >
+          {">"}
+        </button>
+        <div className="modal-details__image-section">
+          <img
+            onClick={handleImageClick}
+            className="image"
+            src={
+              currentExercise.imageUrl
+                ? currentExercise.imageUrl
+                : `${process.env.PUBLIC_URL}/img/default.jpg`
+            }
+            alt={currentExercise.imageName}
+          />
         </div>
-        <Stack direction="row" justifyContent="flex-end">
-          <Button
-            variant="contained"
-            color="info"
-            onClick={() => dispatch(setModal(false, ""))}
-            size="small"
-          >
-            Close
-          </Button>
-        </Stack>
+        <div className="modal-details__form-section">
+          <div style={{ height: "100%" }}>
+            {currentExercise.description !== "" && (
+              <div className="details details__description">
+                <Typography>{currentExercise.description}</Typography>
+              </div>
+            )}
+            <div className="details">
+              <Typography>Category: {currentExercise.muscleNames}</Typography>
+            </div>
+          </div>
+          <Stack direction="row" justifyContent="flex-end">
+            <Button
+              variant="contained"
+              color="info"
+              onClick={() => dispatch(setModal(false, ""))}
+              size="small"
+            >
+              Close
+            </Button>
+          </Stack>
+        </div>
       </div>
-    </div>
-  );
+    );
+  else return <p>Loading ... </p>;
 };

@@ -2,6 +2,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { Fab, Tooltip } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import AboutScreen from "../components/about/AboutScreen";
 import { ExerciseList } from "../components/exercises/ExerciseList";
 import { MusclesList } from "../components/muscles/MuscleList";
 import UserScreen from "../components/users/UserScreen";
@@ -20,6 +21,7 @@ export const DashboardRoutes = () => {
           <Route exact path="/exercises" component={ExerciseList} />
           <Route exact path="/muscles" component={MusclesList} />
           <Route exact path="/workouts" component={WorkoutsScreen} />
+          <Route exact path="/about" component={AboutScreen} />
           <Route
             exact
             path="/workouts/:workoutName"

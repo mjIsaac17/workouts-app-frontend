@@ -33,7 +33,7 @@ export const WorkoutExercisesList = () => {
 
   return (
     <>
-      <Typography variant="h4" textAlign="center" margin={3}>
+      <Typography variant="h4" component="p" textAlign="center" margin={3}>
         <b>{workoutName}</b> workout
       </Typography>
       <Typography variant="h5" component="p" textAlign="right">
@@ -52,14 +52,13 @@ export const WorkoutExercisesList = () => {
           fileName={workoutName}
         />
       </div>
-      <div className="card-flex-container">
-        {currentWorkoutExercises.map((ex, index) => (
-          <div
-            key={`${index}-${ex.name}`}
-            onClick={() => handleSelectExercise(ex)}
-          >
-            <ExerciseCard exercise={ex} />
-          </div>
+      <div className="card-grid-container">
+        {currentWorkoutExercises.map((exercise, index) => (
+          <ExerciseCard
+            exercise={exercise}
+            key={`${index}-${exercise.name}`}
+            onCardClick={handleSelectExercise}
+          />
         ))}
       </div>
       {modalState.componentName === componentsModal.workoutsExercise && (

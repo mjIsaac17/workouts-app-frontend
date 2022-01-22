@@ -1,72 +1,77 @@
-# Workouts App
+# Workouts App (frontend)
 
-## Getting Started with Create React App
+Workouts app provides information related with exercises and routines that you can create based on your preferences and priorities.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Tech Stack
 
-## Available Scripts
+- HTML, CSS/SASS, Javascript
+- React, Hooks, Redux, React router
+- Material UI
 
-In the project directory, you can run:
+## Demo
 
-### `npm start`
+Visit: [WorkoutsApp](https://workouts-app1.herokuapp.com)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Screenshots
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Login screen. You can create a new account as user role or login as admin with the following credential to try all the administration features.
 
-### `npm test`
+- Email: admin@gmail.com
+- Password: 123456
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![login](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,h_400/v1642786443/Github%20images/WorkoutsApp/login_vpvjyx.png)
 
-### `npm run build`
+### Admin options
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Muscle section. After you are logged in, you will be redirected to the home screen.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Muscle home screen
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![muscleHomeScreen](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,h_405/v1642788804/Github%20images/WorkoutsApp/muscleScreen_hgo1wq.png)
 
-### `npm run eject`
+Add new muscle
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![muscleAdd](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642788804/Github%20images/WorkoutsApp/addMuscle_cebs2s.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Edit muscle
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![muscleEdit](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642788804/Github%20images/WorkoutsApp/editMuscle_opbroc.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Delete muscle
 
-## Learn More
+![muscleDelete](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642788804/Github%20images/WorkoutsApp/deleteMuscle_mdubun.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Exercises section. You can select a muscle to check the exercises associated with it.
+  The data can be exported to Excel or PDF!
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![legExercises](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642793115/Github%20images/WorkoutsApp/legExercises_vfdz05.png)
 
-### Code Splitting
+Update exercise. Select an exercise to update it, you can change the name, description, muscle groups or the image. Also, it is possible to navigate between exercises by clicking the side arrows.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![updateExercise](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642793115/Github%20images/WorkoutsApp/updateExercise_rcejc7.png)
 
-### Analyzing the Bundle Size
+Delete exercise.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![deleteExercise](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642793115/Github%20images/WorkoutsApp/deleteExercise_rwbwss.png)
 
-### Making a Progressive Web App
+- Workout section. Select the sidebar and workouts to enter to the workouts screen.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+![sidebar](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642793115/Github%20images/WorkoutsApp/sidebar_n3sxti.png)
 
-### Advanced Configuration
+![workoutScreen](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642793115/Github%20images/WorkoutsApp/workoutScreen_u7oehq.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Add workout. You can add a new workout and select the exercises you want, they are classified by muscle group. If you place the cursor on an exercises you will preview how it is.
 
-### Deployment
+![workoutAdd](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642793115/Github%20images/WorkoutsApp/workoutAdd_qzpegb.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Update workout.
 
-### `npm run build` fails to minify
+![workoutUpdate](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642793115/Github%20images/WorkoutsApp/updateWorkout_saqclg.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Delete workout.
+
+![workoutDelete](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642793115/Github%20images/WorkoutsApp/deleteWorkout_sl3wly.png)
+
+Workout exercises. Select a workout to view the exercises associated with it.
+
+![workoutExercises](https://res.cloudinary.com/dajuhzxdz/image/upload/c_scale,w_565/v1642793115/Github%20images/WorkoutsApp/workoutExercises_kcdkya.png)

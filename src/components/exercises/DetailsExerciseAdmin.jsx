@@ -1,15 +1,6 @@
 import { useState } from "react";
 import { Delete, Save } from "@mui/icons-material";
-import {
-  Alert,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Alert, Button, FormControl, Stack, TextField } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,13 +13,14 @@ import { useForm } from "../../hooks/useForm";
 import { ConfirmDelete } from "../ui/ConfirmDelete";
 import { InputFile } from "../ui/InputFile";
 import { setSnackbar } from "../../actions/snackbar.action";
+import MultipleSelect from "../ui/MultipleSelect";
 
-export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
+export const DetailsExerciseAdmin = ({ exerciseList }) => {
   // console.log("render details", muscleId);
   const dispatch = useDispatch();
 
   // selectors
-  const { current, exerciseList } = useSelector((state) => state.exercises);
+  const { current } = useSelector((state) => state.exercises);
 
   // states
   const [deleteMode, setDeleteMode] = useState(false);
@@ -40,7 +32,6 @@ export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
   // custom hooks
   const [formValues, handleInputChange, setSpecificValue, setForm] = useForm({
     ...current, //Contains the data of the selected exercise
-    muscleId: muscleId !== 0 ? muscleId : current.muscleId,
     newImage: null, //image file
   });
 
@@ -49,21 +40,18 @@ export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
   const inputImageName = "newImage";
 
   // functions
-  const isFormValid = () => {
+  const isFormValid = (muscleNames) => {
     if (!formValues.name) {
       dispatch(setSnackbar("error", "Invalid exercise name", true));
       return false;
     }
 
-    return true;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (isFormValid()) {
-      setLoading(true);
-      dispatch(startUpdatingExercise(formValues, muscleId));
+    if (muscleNames === "") {
+      dispatch(setSnackbar("error", "Select a valid muscle", true));
+      return false;
     }
+
+    return true;
   };
 
   const setNewImage = () => {
@@ -71,6 +59,21 @@ export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
       inputImageName,
       document.getElementById(inputImageName).files[0]
     );
+  };
+
+  // handler functions
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const muscleNames = document.getElementsByName("muscleNames")[0].value;
+
+    if (isFormValid(muscleNames)) {
+      let updateMuscles = muscleNames !== formValues.muscleNames;
+
+      setLoading(true);
+      dispatch(
+        startUpdatingExercise({ ...formValues, muscleNames, updateMuscles })
+      );
+    }
   };
 
   const handleCancelDelete = () => {
@@ -106,6 +109,10 @@ export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
     });
   };
 
+  const handleImageClick = () => {
+    if (formValues.imageUrl) window.open(formValues.imageUrl, "_blank");
+  };
+
   if (!deleteMode)
     return (
       <form onSubmit={handleSubmit} className="modal-details">
@@ -125,9 +132,10 @@ export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
         </button>
         <div className="modal-details__image-section">
           <img
+            onClick={handleImageClick}
             className="image"
             src={
-              formValues.imageUrl
+              formValues?.imageUrl
                 ? formValues.imageUrl
                 : `${process.env.PUBLIC_URL}/img/default.jpg`
             }
@@ -157,22 +165,12 @@ export const DetailsExerciseAdmin = ({ muscleId = 0 }) => {
               value={formValues.description}
             />
             <FormControl fullWidth>
-              <InputLabel id="labelMuscleId">Muscle</InputLabel>
-              <Select
-                id="ddlMuscleAddExercise" //drop down list
-                labelId="labelMuscleId"
-                label="Muscle"
-                size="small"
-                value={formValues.muscleId}
-                onChange={handleInputChange}
-                name="muscleId"
-              >
-                {muscleList.map((muscle) => (
-                  <MenuItem key={`ddlMuscles-${muscle.id}`} value={muscle.id}>
-                    {muscle.name}
-                  </MenuItem>
-                ))}
-              </Select>
+              <MultipleSelect
+                items={muscleList}
+                placeholder="Select muscles"
+                defaultValues={formValues.muscleNames}
+                name="muscleNames"
+              />
             </FormControl>
 
             <InputFile

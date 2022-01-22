@@ -15,10 +15,7 @@ export const Navbar = ({ openCloseSidebar }) => {
   };
   if (!user.id)
     return (
-      <div
-        className="navbar"
-        style={{ position: "absolute", display: "block" }}
-      >
+      <div className="navbar" style={{ position: "fixed", padding: "0 1rem" }}>
         <Typography variant="h4" component="h2">
           WorkoutsApp
         </Typography>
@@ -47,21 +44,6 @@ export const Navbar = ({ openCloseSidebar }) => {
             </ul>
           </div>
         </div>
-        {/* <div className="navbar__content">
-          <div className="navbar__icon">
-            <IconButton onClick={openCloseSidebar}>
-              <Menu fontSize="large" />
-            </IconButton>
-          </div>
-          <div className="navbar__user">
-            <ul>
-              <li>{user.name}</li>
-              <li className="logout m-x--1" onClick={handleLogout}>
-                Logout
-              </li>
-            </ul>
-          </div>
-        </div> */}
       </nav>
     );
 };

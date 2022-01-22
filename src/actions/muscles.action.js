@@ -106,8 +106,9 @@ export const startDeletingMuscle = (muscleId, imageUrl, deleteExercises) => {
       );
       if (resp.ok) {
         dispatch(successRemoveMuscle(muscleId));
-        dispatch(setSnackbar("success", "Muscle deleted", true));
         dispatch(setModal(false));
+        dispatch(setSnackbar("success", "Muscle deleted", true));
+        dispatch(setCurrentMuscle(null));
       } else {
         const { error } = await resp.json();
         dispatch(setSnackbar("error", error, true));

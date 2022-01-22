@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { Add, Search } from "@mui/icons-material";
 import {
   Fab,
@@ -13,46 +12,51 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   startGettingExercises,
   setCurrentExercise,
 } from "../../actions/exercise.action";
 import { setModal } from "../../actions/modal.action";
-import { componentsModal } from "../../helpers/componentsModal";
+import { setCurrentMuscle } from "../../actions/muscles.action";
+
 import { Modal } from "../ui/Modal";
 import { AddExerciseForm } from "./AddExerciseForm";
 import { DetailsExercise } from "./DetailsExercise";
 import { ExerciseItem } from "./ExerciseItem";
+import { DetailsExerciseAdmin } from "./DetailsExerciseAdmin";
+import WayToAddExercise from "./WayToAddExercise";
+import AddExistingExercise from "./AddExistingExercise";
 import { BtnExportToExcel } from "../data-export/BtnExportToExcel";
 import { BtnExportExercisesToPDF } from "../data-export/BtnExportExercisesToPDF";
-import { DetailsExerciseAdmin } from "./DetailsExerciseAdmin";
+import { componentsModal } from "../../helpers/componentsModal";
 
 export const ExerciseList = () => {
   // console.log("render <ExerciseList/>");
   const dispatch = useDispatch();
+
+  // constants & variables
+  const muscleList = JSON.parse(localStorage.getItem("muscleList"));
 
   // selectors
   const modalState = useSelector((state) => state.modal);
   const { isAdmin } = useSelector((state) => state.auth.user);
   const currentMuscle = useSelector((state) => state.muscles.current);
   const { exerciseList, loading } = useSelector((state) => state.exercises);
-  const [currentMuscleName, setCurrentMuscleName] = useState(
-    currentMuscle ? currentMuscle.name : "All"
-  );
 
   // states
-  const [muscleId, setMuscleId] = useState(
-    currentMuscle ? currentMuscle.id : 0
-  ); // 0 id when all exercises are selected
   const [filterWord, setFilterWord] = useState("");
   const [totalExercises, setTotalExercises] = useState(exerciseList.length);
 
   // functions
   const handleSelect = (e) => {
-    const id = e.target.value;
-    setMuscleId(id);
-    setCurrentMuscleName(
-      id === 0 ? "All" : muscleList.find((m) => m.id === id).name
+    const selectedMuscleId = e.target.value;
+    dispatch(
+      setCurrentMuscle(
+        selectedMuscleId !== 0
+          ? muscleList.find((muscle) => muscle.id === selectedMuscleId)
+          : null
+      )
     );
   };
 
@@ -73,6 +77,16 @@ export const ExerciseList = () => {
     else setTotalExercises(exerciseList.length);
   };
 
+  const handleAddClick = () => {
+    if (currentMuscle.id !== 0)
+      handleModal(
+        true,
+        "Add new or existing exercise",
+        componentsModal.exerciseNew
+      );
+    else handleModal(true, "Add new exercise", componentsModal.exerciseList);
+  };
+
   const countElements = (filterWord = "") => {
     let total = 0;
     exerciseList.map(
@@ -82,14 +96,18 @@ export const ExerciseList = () => {
     return total;
   };
 
-  // constants & variables
-  const muscleList = JSON.parse(localStorage.getItem("muscleList"));
+  // variables
+  const currentMuscleName = currentMuscle.name;
 
   // effects
   useEffect(() => {
     // console.log("effect startGettingExercises");
-    dispatch(startGettingExercises(muscleId));
-  }, [dispatch, muscleId]);
+    dispatch(startGettingExercises(currentMuscle.id));
+  }, [dispatch, currentMuscle.id]);
+
+  useEffect(() => {
+    setTotalExercises(exerciseList.length);
+  }, [exerciseList, setTotalExercises]);
 
   return (
     <div>
@@ -102,7 +120,7 @@ export const ExerciseList = () => {
               <InputLabel id="lblSelectMuscle">Muscle</InputLabel>
               <Select
                 id="ddlMuscle"
-                value={muscleId}
+                value={currentMuscle.id}
                 label="Muscle"
                 labelId="lblSelectMuscle"
                 onChange={handleSelect}
@@ -111,8 +129,8 @@ export const ExerciseList = () => {
                 <MenuItem value={0} name="All">
                   All
                 </MenuItem>
-                {muscleList.map((muscle) => (
-                  <MenuItem key={`ddlMuscle-${muscle.id}`} value={muscle.id}>
+                {muscleList.map((muscle, index) => (
+                  <MenuItem key={index} value={muscle.id}>
                     {muscle.name}
                   </MenuItem>
                 ))}
@@ -178,13 +196,7 @@ export const ExerciseList = () => {
                 }}
                 color="primary"
                 aria-label="add-exercise"
-                onClick={() =>
-                  handleModal(
-                    true,
-                    "Add new exercise",
-                    componentsModal.exerciseList
-                  )
-                }
+                onClick={handleAddClick}
               >
                 <Add />
               </Fab>
@@ -195,21 +207,29 @@ export const ExerciseList = () => {
             <Modal>
               <AddExerciseForm
                 muscleList={muscleList}
-                muscleId={muscleId}
+                selectedMuscleName={currentMuscleName}
                 handleModal={handleModal}
               />
+            </Modal>
+          )}
+
+          {modalState.componentName === componentsModal.exerciseAddExisting && (
+            <Modal modalSize="md2">
+              <AddExistingExercise />
             </Modal>
           )}
           {modalState.componentName === componentsModal.exerciseItem && (
             <Modal modalSize="md">
               {isAdmin ? (
-                <DetailsExerciseAdmin
-                  muscleId={muscleId}
-                  componentModalName={componentsModal.exerciseItem}
-                />
+                <DetailsExerciseAdmin exerciseList={exerciseList} />
               ) : (
-                <DetailsExercise />
+                <DetailsExercise exerciseList={exerciseList} />
               )}
+            </Modal>
+          )}
+          {modalState.componentName === componentsModal.exerciseNew && (
+            <Modal modalSize="sm">
+              <WayToAddExercise />
             </Modal>
           )}
         </>
