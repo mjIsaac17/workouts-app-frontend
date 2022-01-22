@@ -25,13 +25,6 @@ export const ExerciseCard = ({ exercise, onCardClick }) => {
           >
             {exercise.name}
           </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            className="workout-card__text-description"
-          >
-            {exercise.description}
-          </Typography>
         </CardContent>
       </CardActionArea>
     </Card>
